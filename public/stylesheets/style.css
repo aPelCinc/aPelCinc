@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  
+  background-image: url("../images/tauler.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 a {
