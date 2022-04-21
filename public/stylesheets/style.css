@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body {
+  background-color: #00B7FF;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
