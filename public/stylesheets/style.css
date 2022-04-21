@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -5,66 +9,3 @@ body {
 a {
   color: #00B7FF;
 }
-
-body{
-  background-image: url("../images/tauler.jpg");
-  background-size: cover;
-  background-repeat: none;
-}
-/*
-.carta:nth-child(1){
-  transform: rotate(140deg);
-  left: 0px;
-    top: -257px;
-  z-index: 1;
-
-}
-.carta:nth-child(2){
-  transform: rotate(150deg);
-  left: -113px;
-  top: -129px;
-  z-index: 2;
-}
-.carta:nth-child(3){
-  transform: rotate(-45deg);
-  right: 0px;
-  bottom: -257px;
-  z-index: 1;
-}
-.carta:nth-child(4){
-  transform: rotate(-40deg);
-  right: -143px;
-  bottom: -189px;
-  z-index: 2;
-}
-
-@media only screen and (max-width: 768px) {
-  body{
-    background-color: blue;
-  }
-  .carta:nth-child(1){
-    transform: rotate(140deg);
-    left: 0px;
-    top: 0px;
-    z-index: 1;
-    transition: 1s ;
-  }
-  .carta:nth-child(2){
-    transform: rotate(150deg);
-    left: 0px;
-    top: 0px;
-    z-index: 2;
-  }
-  .carta:nth-child(3){
-    transform: rotate(-45deg);
-    right: 0px;
-    bottom: 0px;
-    z-index: 1;
-  }
-  .carta:nth-child(4){
-    transform: rotate(-40deg);
-    right: 0px;
-    bottom: 0px;
-    z-index: 2;
-  }
-}*/
