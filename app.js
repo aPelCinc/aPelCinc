@@ -11,6 +11,9 @@ var roomsCreateRouter = require('./routes/rooms/create');
 var lobbyRouter = require('./routes/game');
 var joinroomRouter = require('./routes/joinroom');
 
+var lobbyRouter = require('./routes/lobby');
+var unirsalaRouter = require('./routes/unirsala');
+var gameroomRouter = require('./routes/gameroom');
 
 var app = express();
 
@@ -29,6 +32,9 @@ app.use('/users', usersRouter);
 app.use('/rooms/create', roomsCreateRouter);
 app.use('/game', lobbyRouter);
 app.use('/joinroom', joinroomRouter);
+app.use('/lobby', lobbyRouter);
+app.use('/unirsala', unirsalaRouter);
+app.use('/gameroom', gameroomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

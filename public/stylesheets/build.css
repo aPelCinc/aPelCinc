@@ -480,8 +480,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-screen {
   height: 100vh;
 }
-.h-1\/5 {
-  height: 20%;
+.h-1\/6 {
+  height: 16.666667%;
 }
 .h-2\/3 {
   height: 66.666667%;
@@ -495,14 +495,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-1\/2 {
   height: 50%;
 }
+.h-1\/5 {
+  height: 20%;
+}
 .w-full {
   width: 100%;
 }
-.w-40 {
-  width: 10rem;
-}
 .w-4\/5 {
   width: 80%;
+}
+.w-40 {
+  width: 10rem;
 }
 .rotate-\[140deg\] {
   --tw-rotate: 140deg;
@@ -576,13 +579,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-center {
   text-align: center;
 }
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.text-right {
+  text-align: right;
 }
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 .text-xl {
   font-size: 1.25rem;
@@ -674,6 +680,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 24rem;
   }
 
+  .md\:w-1\/5 {
+    width: 20%;
+  }
+
   .md\:rotate-\[140deg\] {
     --tw-rotate: 140deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -712,13 +722,18 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding-top: 0px;
   }
 
-  .md\:text-7xl {
-    font-size: 4.5rem;
-    line-height: 1;
-  }
-
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .md\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .md\:text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
   }
 }
