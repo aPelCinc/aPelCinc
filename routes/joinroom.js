@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('unirsala', { title: 'Express' });
+router.use('/', function(req, res, next) {
+  res.render('joinroom', { title: 'Unir-se' });
+  console.dir(req.nom);
 });
 
 module.exports = router;
