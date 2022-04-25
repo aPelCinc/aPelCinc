@@ -17,22 +17,24 @@
       <div class="h-1/5 flex justify-center items-end">
         <h1 class="text-4xl md:text-7xl font-bold text-center pb-5">Cinquillo</h1>
       </div>
-    <div class="flex justify-center items-center">
-      <div class="md:w-1/2 w-4/5 md:h-96 bg-[#5fc76b2b] p-10 rounded-3xl">
-        <section class="h-1/2">
-          <label for="inputRoomCreate" class="flex justify-center p-2 md:text-3xl text-2xl font-bold">Nom de la partida</label>
-          <div class="w-full flex justify-center">
-            <input id="inputRoomCreate" type="text" class="md:text-3xl p-1 text-xl text-black text-center" required>
+      <form method="GET" action="/lobby">
+        <div class="flex justify-center items-center">
+          <div class="md:w-1/2 w-4/5 md:h-96 bg-[#5fc76b2b] p-10 rounded-3xl">
+            <section class="h-1/2">
+              <label for="inputRoomCreate" class="flex justify-center p-2 md:text-3xl text-2xl font-bold">Nom de la partida</label>
+              <div class="w-full flex justify-center">
+                <input id="hostname" name="hostname" type="hidden" value="<%= nick %>" class="md:text-3xl p-1 text-xl text-black text-center" required>
+                <input id="inputRoomCreate" name="lobbyname" type="text" class="md:text-3xl p-1 text-xl text-black text-center" required>
+              </div>
+            </section>
+            <section class="block md:pt-0 pt-10 mt-10">
+              <div class="w-full flex justify-center">
+                <button class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">CREAR PARTIDA</button>
+              </div>
+            </section>
           </div>
-        </section>
-        <section class="block md:pt-0 pt-10 mt-10">
-          <div class="w-full flex justify-center">
-            <button class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">CREAR PARTIDA</button>
-          </div>
-        </section>
-        
-      </div>
-    </div>
+        </div>
+      </form>
   </div>
   </section>
     <!--<h1><%= title %></h1>
