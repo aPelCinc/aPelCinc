@@ -1,14 +1,22 @@
+let params = "hostname=aa&lobbyname=aaa"
 
 function controller(io) {
     io.on('connection', (socket) => {
-        JSON.parse('{"' + decodeURI(lobby).replace(/&/g, '","').replace(/\+/g, '" "').replace(/=/g, '":"') + '"}')
-        // io.emit('join')
+      
+        // socket.emit('join', lobby, function(err) {
+        //   if(err){
+        //     alert(err);
+        //     window.location.href = '/rooms/create';
+        //   }else {
+        //     console.log('No Error');
+        //   }
+        // })
 
 
-        // console.log('a user connected');
-        // socket.on('disconnect', () => {
-        //   console.log('user disconnected');
-        // });
+        console.log('a user connected');
+        socket.on('disconnect', () => {
+          console.log('user disconnected');
+        });
       });
 
       return io;

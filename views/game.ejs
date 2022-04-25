@@ -51,6 +51,8 @@
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      let params = window.location.search.substring(1);
+      
       var socket = io();
       const sections = document.querySelectorAll('body > section');
 
