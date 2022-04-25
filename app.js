@@ -11,9 +11,6 @@ var roomsCreateRouter = require('./routes/rooms/create');
 var lobbyRouter = require('./routes/game');
 var joinroomRouter = require('./routes/joinroom');
 
-
-var gameroomRouter = require('./routes/gameroom');
-
 var app = express();
 
 // view engine setup
@@ -31,7 +28,6 @@ app.use('/users', usersRouter);
 app.use('/rooms/create', roomsCreateRouter);
 app.use('/game', lobbyRouter);
 app.use('/joinroom', joinroomRouter);
-app.use('/gameroom', gameroomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
