@@ -451,19 +451,19 @@ Ensure the default browser behavior of the `hidden` attribute.
 .z-10 {
   z-index: 10;
 }
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
 }
-.mb-5 {
-  margin-bottom: 1.25rem;
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .mt-5 {
   margin-top: 1.25rem;
+}
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 .mt-10 {
   margin-top: 2.5rem;
@@ -474,14 +474,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .flex {
   display: flex;
 }
+.hidden {
+  display: none;
+}
 .h-screen {
   height: 100vh;
 }
 .h-1\/5 {
   height: 20%;
-}
-.h-1\/2 {
-  height: 50%;
 }
 .h-2\/3 {
   height: 66.666667%;
@@ -491,6 +491,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-4\/5 {
   height: 80%;
+}
+.h-1\/2 {
+  height: 50%;
 }
 .w-full {
   width: 100%;
@@ -647,23 +650,24 @@ Ensure the default browser behavior of the `hidden` attribute.
     height: 24rem;
   }
 
-  .md\:w-\[20\%\] {
+  .md\:w-1\/5 {
     width: 20%;
-  }
-  .md\:w-96 {
-    width: 24rem;
   }
 
   .md\:w-1\/2 {
     width: 50%;
   }
 
-  .md\:w-1\/5 {
+  .md\:w-3\/12 {
+    width: 25%;
+  }
+
+  .md\:w-\[20\%\] {
     width: 20%;
   }
 
-  .md\:w-3\/12 {
-    width: 25%;
+  .md\:w-96 {
+    width: 24rem;
   }
 
   .md\:rotate-\[140deg\] {
@@ -696,12 +700,12 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding: 2.5rem;
   }
 
-  .md\:pt-0 {
-    padding-top: 0px;
-  }
-
   .md\:pl-48 {
     padding-left: 12rem;
+  }
+
+  .md\:pt-0 {
+    padding-top: 0px;
   }
 
   .md\:text-7xl {
