@@ -20,20 +20,22 @@
     <div class=" flex justify-center items-center">
       <div class="md:w-1/2 w-4/5 md:h-96  bg-[#5fc76b2b] p-10 rounded-3xl">
           <section class="h-full z-20 relative">
-          <section class="h-1/2">
-            <p class="text-center md:text-3xl text-2xl font-bold">NOM</p>
-            <div class="w-full flex justify-center">
-              <input type="text" name="nom" class="md:text-2xl text-xl text-black text-center p-2" required>
-            </div>
-          </section>
-          <section class="block md:pt-0 pt-10">
-            <div class="w-full flex justify-center">
-              <button type="submit" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">CREAR TAULA</button>
-            </div>
-          <div class="w-full flex justify-center h-1/2">
-            <button class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">UNEIXTE A UNA TAULA</button>
-          </div>
-        </section>
+            <form method="GET" action="rooms/create" class="h-full">
+              <section class="h-1/2">
+                <p class="text-center md:text-3xl text-2xl font-bold">NOM</p>
+                <div class="w-full flex justify-center">
+                  <input type="text" name="nom" class="md:text-2xl text-xl text-black text-center p-2" required>
+                </div>
+              </section>
+              <section class="block md:pt-0 pt-10">
+                <div class="w-full flex justify-center">
+                  <button type="submit" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">CREAR TAULA</button>
+                </div>
+                <div class="w-full flex justify-center h-1/2">
+                  <button class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">UNEIXTE A UNA TAULA</button>
+                </div>
+              </section>
+            </form>
           </section>
       </div>
     </div>
