@@ -2,16 +2,21 @@ let partides = [];
 
  
 function controller(io) {
-  
-
-
-
     io.on('connection', (socket) => {
         console.log(socket.id);
+        console.log('a user connected');
 
         // io.on("create-room", (room) => {
         //   console.log(`room ${room} was created`);
         // });
+
+        // Defined a event websocket 'chat message' in server
+        socket.on('chat message', (msg) => {
+          console.log(socket.rooms);
+          console.log('message of '+socket.id+': '+msg);
+          // send var msg value call event websocket 'chat message' in client
+          io.emit('chat message', msg);
+        });
 
         socket.on("createroom",function(data){
           //console.log(data.id);
@@ -35,6 +40,5 @@ function controller(io) {
 
       return io;
 }
-
 
 module.exports = controller;
