@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/build.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+  <body class="w-full overflow-hidden text-white">
+    
+    <%- include('./partials/inici.ejs'); %>
+    <%- include('./partials/createroom.ejs'); %>
+    <%- include('./partials/joinroom.ejs'); %>
+    <%- include('./partials/lobby.ejs'); %>
+    <%- include('./partials/game.ejs'); %>
+
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/chat.js"></script>
+    <script>
+      var socket = io();
+      const sections = document.querySelectorAll('body > section');
+
+
+      function changetoscreen(id){
+        for(var i=0;i<sections.length;i++){
+          sections[i].classList.add("hidden");
+        }
+        document.getElementById(id).classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>

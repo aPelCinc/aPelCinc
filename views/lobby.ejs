@@ -38,6 +38,10 @@
       <div class="md:w-3/12 w-4/5 h-full  bg-[#5fc76b2b] md:p-10 p-2 rounded-3xl mx-auto md:mt-0 mt-5">
         <section class="h-1/2">
           <p class="text-center md:text-3xl text-2xl font-bold">CHAT</p>
+          <ul id="messages" class="flex flex-col justify-end"></ul>
+          <div class="mt-3">
+            <input id="input" type="text" placeholder="Enviar missatge ..." class="w-full p-2 text-black">
+          </div>
         </section>
 
         
@@ -49,8 +53,6 @@
     <p>Welcome to <%= title %></p>-->
     
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-    </script>
+    <script src="javascripts/chat.js"></script>
   </body>
 </html>
