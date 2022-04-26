@@ -44,6 +44,7 @@
       });
 
       socket.on('jugadors', function(data) {
+        data.jugadors.forEach(element => console.log(element));
         console.log('hola'+data.jugadors);
       });
 
