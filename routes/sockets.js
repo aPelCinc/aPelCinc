@@ -27,9 +27,9 @@ function controller(io) {
           //partida.jugadors.push("jugador2");
           partides[socket.id] = partida;
 
-          console.log("room created id: "+ partida.jugadors);
-          socket.emit('getid', {id: socket.id});
-          socket.emit('jugadors', {jugadors: partida.jugadors});
+          console.log("room created id: "+ socket.id);
+          io.emit('getid', {id: socket.id});
+          io.emit('jugadors', {jugadors: partida.jugadors});
 
         });
 
