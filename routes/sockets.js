@@ -3,8 +3,8 @@ let partides = [];
  
 function controller(io) {
     io.on('connection', (socket) => {
-        console.log(socket.id);
-        console.log('a user connected');
+        // console.log(socket.id);
+        // console.log('a user connected');
 
         // io.on("create-room", (room) => {
         //   console.log(`room ${room} was created`);
@@ -18,6 +18,12 @@ function controller(io) {
           io.emit('chat message', msg);
         });
 
+        socket.on("joinroom",function(data){   
+          let unir =  partides.admin = "WXsWKjs2OVsJeh0vAAAP"
+          socket.join(unir);
+          
+        });
+        
         socket.on("createroom",function(data){
           //console.log(data.id);
           socket.join(socket.id);

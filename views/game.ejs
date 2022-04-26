@@ -37,6 +37,11 @@
         socket.emit('createroom', {nom: "taula1"});
       });
 
+      $("#joinroombut").on("click", function(){
+        console.log("joinroom");
+        socket.emit('joinroom', {codi: "patata"});
+      });
+
       socket.on('getid', function(data) {
         console.log('id='+data.id);
       });
