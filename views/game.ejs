@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/build.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+  <body class="w-full overflow-hidden text-white">
+    
+    <%- include('./partials/inici.ejs'); %>
+    <%- include('./partials/createroom.ejs'); %>
+    <%- include('./partials/joinroom.ejs'); %>
+    <%- include('./partials/lobby.ejs'); %>
+    <%- include('./partials/game.ejs'); %>
+
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/chat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      var socket = io();
+      const sections = document.querySelectorAll('body > section');
+
+
+      function changetoscreen(id){
+        for(var i=0;i<sections.length;i++){
+          sections[i].classList.add("hidden");
+        }
+        document.getElementById(id).classList.remove("hidden");
+      }
+
+      $("#createroombut").on("click", function(){
+        console.log("createroom");
+        socket.emit('createroom', {nom: "taula1"});
+      });
+
+      socket.on('getid', function(data) {
+        console.log('id='+data.id);
+      });
+
+      socket.on('jugadors', function(data) {
+        console.log('hola'+data);
+      });
+    </script>
+  </body>
+</html>
