@@ -33,6 +33,13 @@
         document.getElementById(id).classList.remove("hidden");
       }
 
+      function username(){
+       var name =  $("#inputnomuser").val();
+       console.log(name);
+       socket.emit('name', {nom: name});
+
+      }
+
     </script>
     <script src="javascripts/chat.js"></script>
     <script src="javascripts/lobby.js"></script>

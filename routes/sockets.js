@@ -3,8 +3,13 @@ let partides = [];
  
 function controller(io) {
     io.on('connection', (socket) => {
-        console.log(socket.id);
         console.log('a user connected');
+        console.log('nom');
+
+        socket.on("name",function(data){
+          console.log('nom = '+data.nom);
+          socket.name = data.nom;
+        });
 
         // io.on("create-room", (room) => {
         //   console.log(`room ${room} was created`);
@@ -23,7 +28,7 @@ function controller(io) {
           socket.join(socket.id);
           partida = data;
           partida.admin = socket.id;
-          partida.jugadors = [[socket.id,"edu"]];
+          partida.jugadors = [[socket.id,socket.name]];
           //partida.jugadors.push("jugador2");
           partides[socket.id] = partida;
 
