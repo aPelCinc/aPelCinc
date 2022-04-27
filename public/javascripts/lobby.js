@@ -1,6 +1,6 @@
-   socket.on('getid', function(data) {
-    console.log('id='+data.id);
-  });
+  //  socket.on('getid', function(data) {
+  //   console.log('id='+data.id);
+  // });
 
   socket.on('getid', function(data) {
     console.log('id='+data.id);
