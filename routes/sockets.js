@@ -25,7 +25,7 @@ function controller(io) {
         socket.on("joinroom",function(data){   
 
           socket.join(data.codi);
-          partides[data.codi].jugadors.push([socket.id,'alex'])
+          partides[data.codi].jugadors.push([socket.id,socket.name])
           io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
 
         });
@@ -35,13 +35,8 @@ function controller(io) {
           socket.join(socket.id);
           partida = data;
           partida.admin = socket.id;
-<<<<<<< HEAD
           partida.jugadors = [[socket.id,socket.name]];
           //partida.jugadors.push("jugador2");
-=======
-          partida.jugadors = [[socket.id,"edu"]];
-
->>>>>>> b2ee5276e574167f72dbe900e928a15bd7328050
           partides[socket.id] = partida;
 
           console.log("room created id: "+ socket.id);
