@@ -40,10 +40,19 @@
 
       }
 
+      $("#createroombut").on("click", function(){
+        console.log("createroom");
+        socket.emit('createroom', {nom: "taula1"});
+      });
+
+      $("#joinroombut").on("click", function(){
+        let codi =  $("#inputval").val();
+        console.log("joinroom");
+        socket.emit('joinroom', {codi: codi});
+      });
     </script>
     <script src="javascripts/chat.js"></script>
     <script src="javascripts/lobby.js"></script>
-
 
   </body>
 </html>

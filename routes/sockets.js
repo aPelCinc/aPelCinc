@@ -4,7 +4,6 @@ let partides = [];
 function controller(io) {
     io.on('connection', (socket) => {
         console.log('a user connected');
-        console.log('nom');
 
         socket.on("name",function(data){
           console.log('nom = '+data.nom);
@@ -23,13 +22,26 @@ function controller(io) {
           io.emit('chat message', msg);
         });
 
+        socket.on("joinroom",function(data){   
+
+          socket.join(data.codi);
+          partides[data.codi].jugadors.push([socket.id,'alex'])
+          io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
+
+        });
+        
         socket.on("createroom",function(data){
-          //console.log(data.id);
+
           socket.join(socket.id);
           partida = data;
           partida.admin = socket.id;
+<<<<<<< HEAD
           partida.jugadors = [[socket.id,socket.name]];
           //partida.jugadors.push("jugador2");
+=======
+          partida.jugadors = [[socket.id,"edu"]];
+
+>>>>>>> b2ee5276e574167f72dbe900e928a15bd7328050
           partides[socket.id] = partida;
 
           console.log("room created id: "+ socket.id);
