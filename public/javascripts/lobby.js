@@ -1,10 +1,10 @@
-   socket.on('getid', function(data) {
-    console.log('id='+data.id);
-  });
+  //  socket.on('getid', function(data) {
+  //   console.log('id='+data.id);
+  // });
 
-  socket.on('getid', function(data) {
-    console.log('id='+data.id);
-    $("#coditaula").text(data.id);
+  socket.on('partida', function(data) {
+    console.log('id='+data.partida.admin);
+    $("#coditaula").text(data.partida.admin);
     
   });
 
