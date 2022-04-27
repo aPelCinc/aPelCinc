@@ -30,7 +30,8 @@ function controller(io) {
         socket.on("joinroom",function(data){
 
           socket.join(data.codi);
-          partides[data.codi].jugadors.push([socket.id,socket,socket.name])
+          console.log(socket);
+          partides[data.codi].jugadors.push([socket.id,socket.name])
           io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
           io.to(socket.id).emit('partida', {partida: partides[data.codi]});
 
@@ -41,7 +42,7 @@ function controller(io) {
           socket.join(socket.id);
           partida = data;
           partida.admin = socket.id;
-          partida.jugadors = [[socket.id,socket,socket.name]];
+          partida.jugadors = [[socket.id,socket.name]];
           //partida.jugadors.push("jugador2");
           partides[socket.id] = partida;
 
@@ -74,11 +75,12 @@ function controller(io) {
             for (let y = 0; y < quo; y++) {
               partides[socket.id].jugadors[i].cards.push(cards[y])
             }
+
+            //send cards to client
+          io.to(partides[socket.id].jugadors[i][0]).emit('initcards', {cards: partides[socket.id].jugadors[i]})
           }
 
-          io.emit('initcards', {cards: partides[socket.id].jugadors});
-
-
+          
         });
 
         socket.on('disconnect', () => {
