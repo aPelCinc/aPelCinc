@@ -16,10 +16,10 @@ function controller(io) {
 
         // Defined a event websocket 'chat message' in server
         socket.on('chat message', (msg) => {
-          console.log(socket.rooms);
+          console.log();
           console.log('message of '+socket.id+': '+msg);
           // send var msg value call event websocket 'chat message' in client
-          io.emit('chat message', msg);
+          io.emit('chat message', msg, socket.name);
         });
 
         socket.on("joinroom",function(data){   

@@ -12,6 +12,7 @@ input.forEach(function (item) {
         // If input value is correct
         if (item.value) {
             // send input value call event websocket 'chat message' in server
+            let codi = document.getElementById('coditaula').innerHTML;
             socket.emit('chat message', item.value);
             // restart input value
             item.value = '';
@@ -20,12 +21,17 @@ input.forEach(function (item) {
 });
 
 // Defined a event websocket 'chat message' in client
-socket.on('chat message', function (msg) {
+socket.on('chat message', function (msg, name) {
     messages.forEach(function (item) {
         // add item in list messages
-        let itemChat = document.createElement('li');
-        itemChat.innerText = msg;
-        item.appendChild(itemChat);
+        if (item.innerHTML != "") {
+            item.innerHTML = item.innerHTML + "\n" + msg + " - " + name;
+        } else {
+            item.innerHTML = msg + " - " + name;
+        }
+        // let itemChat = document.createElement('li');
+        // itemChat.innerText = msg;
+        // item.appendChild(itemChat);
         // modify scroll
         window.scrollTo(0, document.body.scrollHeight);
     });
