@@ -42,7 +42,8 @@
 
       $("#createroombut").on("click", function(){
         console.log("createroom");
-        socket.emit('createroom', {nom: "taula1"});
+        var name = $('#inputRoomCreate').val();
+        socket.emit('createroom', {nom: name});
       });
 
       $("#joinroombut").on("click", function(){
