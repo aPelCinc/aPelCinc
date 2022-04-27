@@ -3,8 +3,8 @@
   // });
 
   socket.on('partida', function(data) {
-    console.log('id='+data.partida.admin);
-    $("#coditaula").text(data.partida.admin);
+    console.log('id='+data.partida.id);
+    $("#coditaula").text(data.partida.id);
     
   });
 
