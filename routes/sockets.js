@@ -38,19 +38,22 @@ function controller(io) {
         });
         
         socket.on("createroom",function(data){
-
-          socket.join(socket.id);
+          let codiTaula = socket.id.substring(1,5);
+          socket.join(codiTaula);
           partida = data;
+          partida.id = codiTaula;
           partida.admin = socket.id;
           partida.jugadors = [[socket.id,socket.name]];
           //partida.jugadors.push("jugador2");
-          partides[socket.id] = partida;
+          partides[codiTaula] = partida;
 
           console.log("room created id: "+ socket.id);
-          console.log(partides[socket.id]);
+          console.log(partides[codiTaula]);
+          console.log(partides);
           //io.emit('getid', {id: socket.id});
-          io.to(socket.id).emit('partida', {partida: partides[socket.id]});
+          io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
           io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
+
 
         });
 
