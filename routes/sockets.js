@@ -22,11 +22,12 @@ function controller(io) {
           io.emit('chat message', msg);
         });
 
-        socket.on("joinroom",function(data){   
+        socket.on("joinroom",function(data){
 
           socket.join(data.codi);
           partides[data.codi].jugadors.push([socket.id,socket.name])
           io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
+          io.to(socket.id).emit('partida', {partida: partides[data.codi]});
 
         });
         
@@ -40,8 +41,10 @@ function controller(io) {
           partides[socket.id] = partida;
 
           console.log("room created id: "+ socket.id);
-          io.emit('getid', {id: socket.id});
-          io.emit('jugadors', {jugadors: partida.jugadors});
+          console.log(partides[socket.id]);
+          //io.emit('getid', {id: socket.id});
+          io.to(socket.id).emit('partida', {partida: partides[socket.id]});
+          io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
 
         });
 
