@@ -519,6 +519,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-\[90\%\] {
   height: 90%;
 }
+.h-32 {
+  height: 8rem;
+}
+.h-auto {
+  height: auto;
+}
+.h-fit {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
 .max-h-80 {
   max-height: 20rem;
 }
@@ -560,6 +571,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .resize-none {
   resize: none;
 }
+.snap-y {
+  -ms-scroll-snap-type: y var(--tw-scroll-snap-strictness);
+      scroll-snap-type: y var(--tw-scroll-snap-strictness);
+}
 .columns-2 {
   -moz-columns: 2;
        columns: 2;
@@ -579,8 +594,49 @@ Ensure the default browser behavior of the `hidden` attribute.
 .justify-center {
   justify-content: center;
 }
+.overflow-auto {
+  overflow: auto;
+}
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-clip {
+  overflow: clip;
+}
+.overflow-visible {
+  overflow: visible;
+}
+.overflow-scroll {
+  overflow: scroll;
+}
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+.overscroll-contain {
+  -ms-scroll-chaining: none;
+      overscroll-behavior: contain;
+}
+.overscroll-none {
+  -ms-scroll-chaining: none;
+      overscroll-behavior: none;
+}
+.overscroll-y-auto {
+  overscroll-behavior-y: auto;
+}
+.overscroll-x-auto {
+  overscroll-behavior-x: auto;
+}
+.scroll-auto {
+  scroll-behavior: auto;
+}
+.scroll-smooth {
+  scroll-behavior: smooth;
 }
 .rounded-3xl {
   border-radius: 1.5rem;
