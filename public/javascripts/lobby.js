@@ -5,6 +5,7 @@
   socket.on('partida', function(data) {
     console.log('id='+data.partida.id);
     $("#coditaula").text(data.partida.id);
+    $("#nomtaula").text(data.partida.nom);
     
   });
 
