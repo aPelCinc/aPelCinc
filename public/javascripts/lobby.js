@@ -19,3 +19,4 @@
   $('#startgame').click(function (){
     socket.emit('startgame');
   })
+
