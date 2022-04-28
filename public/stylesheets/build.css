@@ -430,6 +430,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
+.right-px {
+  right: 1px;
+}
+.top-0 {
+  top: 0px;
+}
+.bottom-0 {
+  bottom: 0px;
+}
+.right-0 {
+  right: 0px;
+}
 .left-0 {
   left: 0px;
 }
@@ -453,6 +465,33 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .bottom-\[20px\] {
   bottom: 20px;
+}
+.right-1\.5 {
+  right: 0.375rem;
+}
+.top-1\.5 {
+  top: 0.375rem;
+}
+.right-1 {
+  right: 0.25rem;
+}
+.top-1 {
+  top: 0.25rem;
+}
+.right-2\.5 {
+  right: 0.625rem;
+}
+.top-2\.5 {
+  top: 0.625rem;
+}
+.right-2 {
+  right: 0.5rem;
+}
+.top-2 {
+  top: 0.5rem;
+}
+.z-50 {
+  z-index: 50;
 }
 .z-10 {
   z-index: 10;
@@ -495,6 +534,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hidden {
   display: none;
 }
+.h-6 {
+  height: 1.5rem;
+}
 .h-screen {
   height: 100vh;
 }
@@ -525,6 +567,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-full {
   width: 100%;
 }
+.w-52 {
+  width: 13rem;
+}
+.w-6 {
+  width: 1.5rem;
+}
 .w-40 {
   width: 10rem;
 }
@@ -536,6 +584,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-\[30\%\] {
   width: 30%;
+}
+.w-\[40\%\] {
+  width: 40%;
 }
 .rotate-\[140deg\] {
   --tw-rotate: 140deg;
@@ -556,6 +607,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rotate-\[15deg\] {
   --tw-rotate: 15deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.resize-none {
+  resize: none;
 }
 .columns-2 {
   -moz-columns: 2;
@@ -579,11 +633,25 @@ Ensure the default browser behavior of the `hidden` attribute.
 .overflow-hidden {
   overflow: hidden;
 }
+.rounded {
+  border-radius: 0.25rem;
+}
 .rounded-3xl {
   border-radius: 1.5rem;
 }
-.rounded {
-  border-radius: 0.25rem;
+.border {
+  border-width: 1px;
+}
+.border-red-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity));
+}
+.bg-red-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+.rounded-md {
+  border-radius: 0.375rem;
 }
 .bg-\[\#00000070\] {
   background-color: #00000070;
@@ -601,6 +669,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .to-\[\#262D3D\] {
   --tw-gradient-to: #262D3D;
 }
+.fill-current {
+  fill: currentColor;
+}
 .p-10 {
   padding: 2.5rem;
 }
@@ -612,6 +683,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .p-3 {
   padding: 0.75rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 .py-2 {
   padding-top: 0.5rem;
@@ -661,9 +740,23 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
+}
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+@media (min-width: 640px) {
+
+  .sm\:inline {
+    display: inline;
+  }
 }
 @media (min-width: 768px) {
 
