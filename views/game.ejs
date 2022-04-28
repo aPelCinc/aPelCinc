@@ -34,7 +34,6 @@
       var socket = io();
       const sections = document.querySelectorAll('body > section');
 
-
       function changetoscreen(id){
         for(var i=0;i<sections.length;i++){
           sections[i].classList.add("hidden");
@@ -42,16 +41,16 @@
         document.getElementById(id).classList.remove("hidden");
       }
 
-      function username(){
+      function username(button){
        var name =  $("#inputnomuser").val();
        console.log(name);
-       socket.emit('name', {nom: name});
+       socket.emit('name', {nom: name, button: button});
 
       }
 
       $("#createroombut").on("click", function(){
         var name = $('#inputRoomCreate').val();
-        socket.emit('createroom', {nom: name});
+        socket.emit('createroom', {nom: name, button: 'lobby'});
       });
 
       $("#joinroombut").on("click", function(){
@@ -60,7 +59,7 @@
 
         let codi =  $("#inputval").val();
         console.log("joinroom");
-        socket.emit('joinroom', {codi: codi});
+        socket.emit('joinroom', {codi: codi, button: 'lobby'});
       });
 
       socket.on('error', function(data) {
@@ -68,6 +67,30 @@
          $('#error').removeClass( 'hidden' )
          $('#errormessage').empty()
          $('#errormessage').text(data)
+      });
+
+      socket.on('error name', function (data, type) {
+        console.log('Error'+data);
+        if (type == 'player') {
+          $("#errornameplayer").removeClass('hidden');
+          $("#errornameplayer").empty();
+          $("#errornameplayer").text(data);
+        } else if (type == 'roomcreate') {
+          $("#errornametablecreate").removeClass('hidden');
+          $("#errornametablecreate").empty();
+          $("#errornametablecreate").text(data);
+        } else if (type == 'roomjoin') {
+          $("#errornametablejoin").removeClass('hidden');
+          $("#errornametablejoin").empty();
+          $("#errornametablejoin").text(data);
+        }
+      });
+
+      socket.on('changetoscreen', function (id) {
+        for(var i=0;i<sections.length;i++){
+          sections[i].classList.add("hidden");
+        }
+        document.getElementById(id).classList.remove("hidden");
       });
 
       function closeerror(){
