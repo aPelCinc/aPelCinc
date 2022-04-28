@@ -92,6 +92,25 @@ function controller(io) {
           
         });
 
+        socket.on("leaveroom",function(data){
+          if(typeof socket.codi !== 'undefined'){
+            if(partides[socket.codi].jugadors.length !== 1){
+              for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
+                if(socket.id == partides[socket.codi].jugadors[y][0]){
+                 partides[socket.codi].jugadors.splice(y,1);
+                }
+              }
+              io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
+              socket.leave(socket.codi);
+              console.log("Room updated")
+            } else {
+              partides.splice(socket.codi,1);
+              socket.leave(socket.codi);
+              console.log("Room removed")
+            }
+          }
+        });
+
         socket.on('disconnect', () => {
 
           if(typeof socket.codi !== 'undefined'){
@@ -101,7 +120,7 @@ function controller(io) {
                  partides[socket.codi].jugadors.splice(y,1);
                 }
               }
-              console.log(partides[socket.codi]);
+              io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
               console.log("Room updated")
             } else {
               partides.splice(socket.codi,1);
@@ -109,13 +128,6 @@ function controller(io) {
             }
           }
           console.log('user disconnected');
-          /*for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
-            if(socket.id == partides[socket.codi].jhugadors[y][0]){
-              arrayRemove(partides[socket.codi].jugadors, y);
-            }
-          }
-          console.log('user disconnected');
-          console.log(partides[socket.codi]);*/
         });
       });
 
