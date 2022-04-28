@@ -79,24 +79,36 @@ function controller(io) {
           // Assign cards to players
           for(i=0;i<partides[socket.codi].jugadors.length;i++){
             console.log('cards');
-            partides[socket.id].jugadors[i].cards = [];
+            partides[socket.codi].jugadors[i].cards = [];
 
             for (let y = 0; y < quo; y++) {
               partides[socket.codi].jugadors[i].cards.push(cards[y])
             }
 
             //send cards to client
-            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.id].jugadors[i]})
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i]})
           }
         }
           
         });
 
         socket.on('disconnect', () => {
+
           if(typeof socket.codi !== 'undefined'){
-            console.log(socket.codi);
+            if(partides[socket.codi].jugadors.length !== 1){
+              for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
+                if(socket.id == partides[socket.codi].jugadors[y][0]){
+                 partides[socket.codi].jugadors.splice(y,1);
+                }
+              }
+              console.log(partides[socket.codi]);
+              console.log("Room updated")
+            } else {
+              partides.splice(socket.codi,1);
+              console.log("Room removed")
+            }
           }
-          console.log('no codi');
+          console.log('user disconnected');
           /*for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
             if(socket.id == partides[socket.codi].jhugadors[y][0]){
               arrayRemove(partides[socket.codi].jugadors, y);
