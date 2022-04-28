@@ -12,7 +12,12 @@ function controller(io) {
 
         socket.on("name",function(data){
           console.log('nom = '+data.nom);
-          socket.name = data.nom;
+          if (data.nom == '' || data.nom == ' ') {
+            io.emit('error name' , 'El nom del Jugador es obligatori', 'player');
+          } else {
+            socket.name = data.nom;
+            io.emit('changetoscreen', data.button);
+          }
         });
 
         // io.on("create-room", (room) => {
@@ -26,37 +31,46 @@ function controller(io) {
           io.to(partides[codi].id).emit('chat message', msg, socket.name);
         });
 
-        socket.on("joinroom",function(data){
-
-          socket.join(data.codi);
-          // console.log(socket);
-          partides[data.codi].jugadors.push([socket.id,socket.name])
-          io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
-          io.to(socket.id).emit('partida', {partida: partides[data.codi]});
+        socket.on("joinroom",function(data) {
+          if (data.codi == '' || data.codi == ' ') {
+            io.emit('error name' , 'El numero de la Sala es obligatori', 'roomjoin');
+          } else {
+            socket.join(data.codi);
+            // console.log(socket);
+            partides[data.codi].jugadors.push([socket.id,socket.name])
+            io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
+            io.to(socket.id).emit('partida', {partida: partides[data.codi]});
+            
+            io.emit('changetoscreen', data.button);
+          }
 
         });
         
         socket.on("createroom",function(data){
-          let codiTaula = socket.id.substring(1,5);
-          socket.codi = codiTaula;
-          socket.join(codiTaula);
-          partida = data;
-          partida.id = codiTaula;
-          partida.admin = socket.id;
-          partida.jugadors = [[socket.id,socket.name]];
-          //partida.jugadors.push("jugador2");
-          partides[codiTaula] = partida;
+          if (data.nom == '' || data.nom == ' ') {
+            io.emit('error name' , 'El nom de la Sala es obligatori', 'roomcreate');
+          } else {
+            let codiTaula = socket.id.substring(1,5);
+            socket.codi = codiTaula;
+            socket.join(codiTaula);
+            partida = data;
+            partida.id = codiTaula;
+            partida.admin = socket.id;
+            partida.jugadors = [[socket.id,socket.name]];
+            //partida.jugadors.push("jugador2");
+            partides[codiTaula] = partida;
 
-          console.log("room created id: "+ socket.id);
-          console.log(partides[codiTaula]);
-          console.log(partides);
-          //io.emit('getid', {id: socket.id});
-          io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
-          io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
+            console.log("room created id: "+ socket.id);
+            console.log(partides[codiTaula]);
+            console.log(partides);
+            //io.emit('getid', {id: socket.id});
+            io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
+            io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
 
-          console.log(partides);
+            console.log(partides);
 
-
+            io.emit('changetoscreen', data.button);
+          }
         });
 
         socket.on("startgame",function(data){
