@@ -430,8 +430,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
-.right-px {
-  right: 1px;
+.right-2\.5 {
+  right: 0.625rem;
+}
+.top-2\.5 {
+  top: 0.625rem;
+}
+.right-2 {
+  right: 0.5rem;
+}
+.top-2 {
+  top: 0.5rem;
 }
 .top-0 {
   top: 0px;
@@ -465,30 +474,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .bottom-\[20px\] {
   bottom: 20px;
-}
-.right-1\.5 {
-  right: 0.375rem;
-}
-.top-1\.5 {
-  top: 0.375rem;
-}
-.right-1 {
-  right: 0.25rem;
-}
-.top-1 {
-  top: 0.25rem;
-}
-.right-2\.5 {
-  right: 0.625rem;
-}
-.top-2\.5 {
-  top: 0.625rem;
-}
-.right-2 {
-  right: 0.5rem;
-}
-.top-2 {
-  top: 0.5rem;
 }
 .z-50 {
   z-index: 50;
@@ -567,8 +552,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-full {
   width: 100%;
 }
-.w-52 {
-  width: 13rem;
+.w-\[40\%\] {
+  width: 40%;
 }
 .w-6 {
   width: 1.5rem;
@@ -584,9 +569,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-\[30\%\] {
   width: 30%;
-}
-.w-\[40\%\] {
-  width: 40%;
 }
 .rotate-\[140deg\] {
   --tw-rotate: 140deg;
@@ -633,11 +615,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .overflow-hidden {
   overflow: hidden;
 }
+.overflow-scroll {
+  overflow: scroll;
+}
+.overflow-x-auto {
+  overflow-x: auto;
+}
 .rounded {
   border-radius: 0.25rem;
 }
 .rounded-3xl {
   border-radius: 1.5rem;
+}
+.rounded-md {
+  border-radius: 0.375rem;
 }
 .border {
   border-width: 1px;
@@ -649,9 +640,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-red-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
-}
-.rounded-md {
-  border-radius: 0.375rem;
 }
 .bg-\[\#00000070\] {
   background-color: #00000070;
