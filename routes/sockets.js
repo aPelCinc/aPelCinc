@@ -78,14 +78,14 @@ function controller(io) {
           // Assign cards to players
           for(i=0;i<partides[socket.codi].jugadors.length;i++){
             console.log('cards');
-            partides[socket.id].jugadors[i].cards = [];
+            partides[socket.codi].jugadors[i].cards = [];
 
             for (let y = 0; y < quo; y++) {
               partides[socket.codi].jugadors[i].cards.push(cards[y])
             }
 
             //send cards to client
-            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.id].jugadors[i]})
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i]})
           }
         }
           
