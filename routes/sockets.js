@@ -38,6 +38,7 @@ function controller(io) {
         
         socket.on("createroom",function(data){
           let codiTaula = socket.id.substring(1,5);
+          socket.codi = codiTaula;
           socket.join(codiTaula);
           partida = data;
           partida.id = codiTaula;
@@ -53,35 +54,40 @@ function controller(io) {
           io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
           io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
 
+          console.log(partides);
+
 
         });
 
         socket.on("startgame",function(data){
 
-          // shuffle cards
-          for (i=0;i<48;i++)
+          if(typeof partides[socket.codi] == 'undefined'){
+            io.emit('error','No tens permisos per iniciar la partida');
+          } else {
+                      // shuffle cards
+            for (i=0;i<48;i++)
             {
-            	posicion1=parseInt(Math.random()*48);
-            	tmp=cards[i];
-            	cards[i]=cards[posicion1];
-            	cards[posicion1]=tmp;
+              posicion1=parseInt(Math.random()*48);
+              tmp=cards[i];
+              cards[i]=cards[posicion1];
+              cards[posicion1]=tmp;
             }
 
-          var quo = Math.floor(48/partides[socket.id].jugadors.length);
+          var quo = Math.floor(48/partides[socket.codi].jugadors.length);
 
           // Assign cards to players
-          for(i=0;i<partides[socket.id].jugadors.length;i++){
+          for(i=0;i<partides[socket.codi].jugadors.length;i++){
             console.log('cards');
             partides[socket.id].jugadors[i].cards = [];
 
             for (let y = 0; y < quo; y++) {
-              partides[socket.id].jugadors[i].cards.push(cards[y])
+              partides[socket.codi].jugadors[i].cards.push(cards[y])
             }
 
             //send cards to client
-          io.to(partides[socket.id].jugadors[i][0]).emit('initcards', {cards: partides[socket.id].jugadors[i]})
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.id].jugadors[i]})
           }
-
+        }
           
         });
 
