@@ -24,14 +24,15 @@ input.forEach(function (item) {
 socket.on('chat message', function (msg, name) {
     messages.forEach(function (item) {
         // add item in list messages
-        if (item.innerHTML != "") {
-            item.innerHTML = item.innerHTML + "\n" + msg + " - " + name;
-        } else {
-            item.innerHTML = msg + " - " + name;
-        }
-        // let itemChat = document.createElement('li');
-        // itemChat.innerText = msg;
-        // item.appendChild(itemChat);
+        // if (item.innerHTML != "") {
+        //     item.innerHTML = item.innerHTML + "\n" + msg + " - " + name;
+        // } else {
+        //     item.innerHTML = msg + " - " + name;
+        // }
+
+        let itemChat = document.createElement('li');
+        itemChat.innerText = name + ": " + msg;
+        item.appendChild(itemChat);
         // modify scroll
         // window.scrollTo(0, document.body.scrollHeight);
     });

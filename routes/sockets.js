@@ -23,13 +23,13 @@ function controller(io) {
         socket.on('chat message', (msg, codi) => {
           console.log('message of '+socket.id+': '+msg);
           // send var msg value call event websocket 'chat message' in client
-          io.emit('chat message', msg, socket.name);
+          io.to(partides[codi].id).emit('chat message', msg, socket.name);
         });
 
         socket.on("joinroom",function(data){
 
           socket.join(data.codi);
-          console.log(socket);
+          // console.log(socket);
           partides[data.codi].jugadors.push([socket.id,socket.name])
           io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
           io.to(socket.id).emit('partida', {partida: partides[data.codi]});
