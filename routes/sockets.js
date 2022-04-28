@@ -29,6 +29,7 @@ function controller(io) {
         socket.on("joinroom",function(data){
 
           socket.join(data.codi);
+          socket.codi = data.codi;
           // console.log(socket);
           partides[data.codi].jugadors.push([socket.id,socket.name])
           io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
@@ -54,7 +55,7 @@ function controller(io) {
           io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
           io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
 
-          console.log(partides);
+          //console.log(partides);
 
 
         });
@@ -92,7 +93,17 @@ function controller(io) {
         });
 
         socket.on('disconnect', () => {
+          if(typeof socket.codi !== 'undefined'){
+            console.log(socket.codi);
+          }
+          console.log('no codi');
+          /*for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
+            if(socket.id == partides[socket.codi].jhugadors[y][0]){
+              arrayRemove(partides[socket.codi].jugadors, y);
+            }
+          }
           console.log('user disconnected');
+          console.log(partides[socket.codi]);*/
         });
       });
 
