@@ -19,4 +19,8 @@
   $('#startgame').click(function (){
     socket.emit('startgame');
   })
+  function leaveroom(){
+    socket.emit('leaveroom');
+    changetoscreen('inici')
+  }
 
