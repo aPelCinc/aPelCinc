@@ -29,6 +29,7 @@ function controller(io) {
         socket.on("joinroom",function(data){
 
           socket.join(data.codi);
+          socket.codi = data.codi;
           // console.log(socket);
           partides[data.codi].jugadors.push([socket.id,socket.name])
           io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
@@ -54,7 +55,7 @@ function controller(io) {
           io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
           io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
 
-          console.log(partides);
+          //console.log(partides);
 
 
         });
@@ -91,7 +92,41 @@ function controller(io) {
           
         });
 
+        socket.on("leaveroom",function(data){
+          if(typeof socket.codi !== 'undefined'){
+            if(partides[socket.codi].jugadors.length !== 1){
+              for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
+                if(socket.id == partides[socket.codi].jugadors[y][0]){
+                 partides[socket.codi].jugadors.splice(y,1);
+                }
+              }
+              io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
+              socket.leave(socket.codi);
+              console.log("Room updated")
+            } else {
+              partides.splice(socket.codi,1);
+              socket.leave(socket.codi);
+              console.log("Room removed")
+            }
+          }
+        });
+
         socket.on('disconnect', () => {
+
+          if(typeof socket.codi !== 'undefined'){
+            if(partides[socket.codi].jugadors.length !== 1){
+              for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
+                if(socket.id == partides[socket.codi].jugadors[y][0]){
+                 partides[socket.codi].jugadors.splice(y,1);
+                }
+              }
+              io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
+              console.log("Room updated")
+            } else {
+              partides.splice(socket.codi,1);
+              console.log("Room removed")
+            }
+          }
           console.log('user disconnected');
         });
       });
