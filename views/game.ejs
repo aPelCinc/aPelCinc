@@ -43,6 +43,7 @@
       }
 
       function username(button){
+      console.log(socket.id);
        var name =  $("#inputnomuser").val();
        console.log(name);
        socket.emit('name', {nom: name, button: button});
