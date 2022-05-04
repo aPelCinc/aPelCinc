@@ -51,7 +51,7 @@ function controller(io) {
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
             
             socket.emit('changetoscreen', data.button);
-          } //aslkdas
+          } 
         }
         });
         
