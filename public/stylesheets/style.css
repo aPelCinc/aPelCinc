@@ -12,3 +12,7 @@ background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(0,0,0,0.7822479
 a {
   color: #00B7FF;
 }
+
+.messages{
+  word-break: break-all;
+}
