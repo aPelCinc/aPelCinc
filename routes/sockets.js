@@ -42,8 +42,8 @@ function controller(io) {
             socket.codi = data.codi;
 
             if(partides[socket.codi].jugadors.length >= 4){
-              socket.emit('error name' , 'Sala llena!', 'roomjoin');
-              console.log('lleno')
+              socket.emit('error name' , 'La sala esta completa!', 'roomjoin');
+              console.log('completa')
             } else{
 
             partides[data.codi].jugadors.push([socket.id,socket.name])
