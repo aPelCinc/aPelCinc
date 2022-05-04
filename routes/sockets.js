@@ -13,7 +13,7 @@ function controller(io) {
         socket.on("name",function(data){
           console.log('nom = '+data.nom);
           if (data.nom == '' || data.nom == ' ') {
-            io.emit('error name' , 'El nom del Jugador es obligatori', 'player');
+            io.emit('error' , 'El nom del Jugador es obligatori', 'player');
           } else {
             socket.name = data.nom;
             io.emit('changetoscreen', data.button);
@@ -91,17 +91,21 @@ function controller(io) {
           var quo = Math.floor(48/partides[socket.codi].jugadors.length);
 
           // Assign cards to players
+          var numcard = 0;
           for(i=0;i<partides[socket.codi].jugadors.length;i++){
-            console.log('cards');
             partides[socket.codi].jugadors[i].cards = [];
+            
 
             for (let y = 0; y < quo; y++) {
-              partides[socket.codi].jugadors[i].cards.push(cards[y])
+              partides[socket.codi].jugadors[i].cards.push(cards[numcard])
+              numcard++;
             }
 
             //send cards to client
-            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards})
+            
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards});
           }
+          console.log(partides[socket.codi].jugadors);
         }
           
         });
