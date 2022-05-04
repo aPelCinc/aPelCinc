@@ -653,6 +653,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-\[\#5fc76b2b\] {
   background-color: #5fc76b2b;
 }
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
 .bg-gradient-to-b {
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
