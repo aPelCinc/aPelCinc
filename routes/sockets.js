@@ -13,6 +13,7 @@ function controller(io) {
         socket.on("name",function(data){
           console.log('nom = '+data.nom);
           if (data.nom == '' || data.nom == ' ') {
+            console.log(socket.id);
             io.emit('error name' , 'El nom del Jugador es obligatori', 'player');
           } else {
             socket.name = data.nom;
