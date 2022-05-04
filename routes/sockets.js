@@ -1,9 +1,9 @@
 let partides = [];
 
-var cards = ['1o','2o','3o','4o','5o','6o','7o','8o','9o','10o','11o','12o'];
-cards.push('1c','2c','3c','4c','5c','6c','7c','8c','9c','10c','11c','12c');
-cards.push('1b','2b','3b','4b','5b','6b','7b','8b','9b','10b','11b','12b');
-cards.push('1e','2e','3e','4e','5e','6e','7e','8e','9e','10e','11e','12e');
+var cards = ['o1','o2','o3','o4','o5','o6','o7','o8','o9','o10','o11','o12'];
+  cards.push('c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12');
+  cards.push('b1','b2','b3','b4','b5','b6','b7','b8','b9','b10','b11','b12');
+  cards.push('e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12');
 
  
 function controller(io) {
@@ -86,7 +86,7 @@ function controller(io) {
             }
 
             //send cards to client
-            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i]})
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards})
           }
         }
           
