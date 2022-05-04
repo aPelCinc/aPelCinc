@@ -13,10 +13,11 @@ function controller(io) {
         socket.on("name",function(data){
           console.log('nom = '+data.nom);
           if (data.nom == '' || data.nom == ' ') {
-            io.emit('error name' , 'El nom del Jugador es obligatori', 'player');
+            console.log(socket.id);
+            socket.emit('error name' , 'El nom del Jugador es obligatori', 'player');
           } else {
             socket.name = data.nom;
-            io.emit('changetoscreen', data.button);
+            socket.emit('changetoscreen', data.button);
           }
         });
 
@@ -32,9 +33,11 @@ function controller(io) {
         });
 
         socket.on("joinroom",function(data) {
-          if (data.codi == '' || data.codi == ' ') {
-            io.emit('error name' , 'El numero de la Sala es obligatori', 'roomjoin');
-          } else {
+          if(partides[data.codi] == undefined){
+            socket.emit('error name' , 'El codi de partida no existeix!', 'roomjoin');
+          }else if (data.codi == '' || data.codi == ' ') {
+            socket.emit('error name' , 'El numero de la Sala es obligatori', 'roomjoin');
+          }else {
             socket.join(data.codi);
             socket.codi = data.codi;
             // console.log(socket);
@@ -42,14 +45,14 @@ function controller(io) {
             io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
             
-            io.emit('changetoscreen', data.button);
+            socket.emit('changetoscreen', data.button);
           }
 
         });
         
         socket.on("createroom",function(data){
           if (data.nom == '' || data.nom == ' ') {
-            io.emit('error name' , 'El nom de la Sala es obligatori', 'roomcreate');
+            socket.emit('error name' , 'El nom de la Sala es obligatori', 'roomcreate');
           } else {
             let codiTaula = socket.id.substring(1,5);
             socket.codi = codiTaula;
@@ -70,7 +73,7 @@ function controller(io) {
 
             console.log(partides);
 
-            io.emit('changetoscreen', data.button);
+            socket.emit('changetoscreen', data.button);
           }
         });
 
