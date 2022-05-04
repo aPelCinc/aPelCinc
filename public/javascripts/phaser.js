@@ -70,7 +70,7 @@ function preload ()
     this.load.spritesheet('e9', 'images/cartes/e9.png',{frameWidth: 208,frameHeight: 319 });
     this.load.spritesheet('e10', 'images/cartes/e10.png',{frameWidth: 208,frameHeight: 319 });
     this.load.spritesheet('e11', 'images/cartes/e11.png',{frameWidth: 208,frameHeight: 319 });
-    this.load.spritesheet('e2', 'images/cartes/e12.png',{frameWidth: 208,frameHeight: 319 });
+    this.load.spritesheet('e12', 'images/cartes/e12.png',{frameWidth: 208,frameHeight: 319 });
 }
 
 
@@ -104,16 +104,6 @@ function create ()
             });
             card.on('pointerout', function (event) { phcards[element].y += 100 });
             card.on('pointerdown', selectedcard); // Start game on click.
-
-        
-
-            
-            
-            /*image = self.add.image(x, y, element);
-            image.setScale(0.5);
-            image.setInteractive();*/
-
-            
 
             x = x+20;
         });
