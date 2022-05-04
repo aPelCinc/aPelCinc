@@ -1,4 +1,4 @@
-var socket = io();
+//var socket = io();
 
 // Save input message value and list send messages
 let messages = document.querySelectorAll('.messages');
