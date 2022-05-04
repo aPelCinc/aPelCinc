@@ -40,14 +40,19 @@ function controller(io) {
           }else {
             socket.join(data.codi);
             socket.codi = data.codi;
-            // console.log(socket);
+
+            if(partides[socket.codi].jugadors.length >= 4){
+              socket.emit('error name' , 'La sala esta completa!', 'roomjoin');
+              console.log('completa')
+            } else{
+
             partides[data.codi].jugadors.push([socket.id,socket.name])
             io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
             
             socket.emit('changetoscreen', data.button);
-          }
-
+          } 
+        }
         });
         
         socket.on("createroom",function(data){
