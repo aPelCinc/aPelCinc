@@ -115,20 +115,37 @@ function controller(io) {
           }
           console.log(partides[socket.codi].jugadors);
           partides[socket.codi].torn=0;
+
+         startcounter();
         }
         });
 
+        function turnover(){
+          clearInterval(partides[socket.codi].contador);
+          io.to(socket.codi).emit('chat message',partides[socket.codi].jugadors[partides[socket.codi].torn][1]+' ha esgotat el seu torn','sistema');
+          nextturn();
+          startcounter();
+        }
+        function startcounter(){
+          partides[socket.codi].contador = setInterval(turnover, 60000);
+        }
+        function nextturn(){
+          if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
+            partides[socket.codi].torn ++;
+          } else {
+            partides[socket.codi].torn = 0;
+          }
+        }
+
         socket.on("turn",function(card){
           if(partides[socket.codi].jugadors[partides[socket.codi].torn][0]!= socket.id){
-            io.emit('error','No es el teu torn');
+            socket.emit('error','No es el teu torn');
           } else {
             io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
 
-            if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
-              partides[socket.codi].torn ++;
-            } else {
-              partides[socket.codi].torn = 0;
-            }
+            clearInterval(partides[socket.codi].contador);
+            nextturn();
+            startcounter();
 
             io.to(socket.codi).emit('chat message','torn de '+partides[socket.codi].jugadors[partides[socket.codi].torn][1],'sistema');
   
