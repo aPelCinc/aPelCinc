@@ -5,7 +5,52 @@ cards.push('1c','2c','3c','4c','5c','6c','7c','8c','9c','10c','11c','12c');
 cards.push('1b','2b','3b','4b','5b','6b','7b','8b','9b','10b','11b','12b');
 cards.push('1e','2e','3e','4e','5e','6e','7e','8e','9e','10e','11e','12e');
 
- 
+function checkCenterCards(typeCard, arrayCenterCards, allowedCards, quo) {
+  // Sort array in string
+  arrayCenterCards.sort();
+
+  // If center card array length is equals to 0
+  if (arrayCenterCards.length == 0) {
+    // Only allowed 5, and type card concat
+    allowedCards.push('5'+typeCard);
+
+  // If center card array length is equals to 1 and start with 5
+  } else if (arrayCenterCards.length == 1 && arrayCenterCards[0].startsWith('5')) {
+    // Only allowed 4 or 6, and type card concat
+    allowedCards.push('4'+typeCard);
+    allowedCards.push('6'+typeCard);
+
+  // If center card array length is greater that 1
+  } else if (arrayCenterCards.length > 1) {
+    // Create a copy of center card array
+    var arrayCenterCardsCopy = [];
+
+    // running center card array
+    for (let i = 0; i < arrayCenterCards.length; i++) {
+      // save in copy of center card array, value substring (the char 0 to final char) of the center card array
+      arrayCenterCardsCopy[i] = parseInt(arrayCenterCards[i].substring(0,arrayCenterCards[i].length-1));
+    }
+
+    // Sort array in integer
+    arrayCenterCardsCopy.sort(function(a, b){return a - b});
+
+    // Get a min and max to copy of center card array
+    var min = arrayCenterCardsCopy[0];
+    var max = arrayCenterCardsCopy[arrayCenterCardsCopy.length-1];
+
+    // If min is greater that 1
+    if (min > 1) {
+      // Only allowed min less 1, and type card concat
+      allowedCards.push((min-1)+typeCard);
+    }
+    // If max is minor that variable quo
+    if (max < quo) {
+      // Only allowed max more 1, and type card concat
+      allowedCards.push((max+1)+typeCard);
+    }
+  }
+}
+
 function controller(io) {
     io.on('connection', (socket) => {
         console.log('a user connected');
@@ -27,7 +72,8 @@ function controller(io) {
 
         // Defined a event websocket 'chat message' in server
         socket.on('chat message', (msg, codi) => {
-          console.log('message of '+socket.id+': '+msg);
+          console.log(partides);
+          // console.log('message of '+socket.id+': '+msg);
           // send var msg value call event websocket 'chat message' in client
           io.to(partides[codi].id).emit('chat message', msg, socket.name);
         });
@@ -65,24 +111,26 @@ function controller(io) {
             partides[codiTaula] = partida;
 
             console.log("room created id: "+ socket.id);
-            console.log(partides[codiTaula]);
-            console.log(partides);
+            // console.log(partides[codiTaula]);
+            // console.log(partides);
             //io.emit('getid', {id: socket.id});
             io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
             io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
 
-            console.log(partides);
+            // console.log(partides);
 
             socket.emit('changetoscreen', data.button);
           }
         });
 
         socket.on("startgame",function(data){
-
           if(typeof partides[socket.codi] == 'undefined'){
             io.emit('error','No tens permisos per iniciar la partida');
           } else {
-                      // shuffle cards
+
+            var allowedCards = [];
+
+            // shuffle cards
             for (i=0;i<48;i++)
             {
               posicion1=parseInt(Math.random()*48);
@@ -92,6 +140,17 @@ function controller(io) {
             }
 
           var quo = Math.floor(48/partides[socket.codi].jugadors.length);
+
+          partides[socket.codi]['CenterCards'] = [];
+          partides[socket.codi].CenterCards['or'] = [];
+          partides[socket.codi].CenterCards['copes'] = [];
+          partides[socket.codi].CenterCards['bastos'] = [];
+          partides[socket.codi].CenterCards['espasa'] = [];
+
+          checkCenterCards('o', partides[socket.codi].CenterCards.or, allowedCards, quo);
+          checkCenterCards('c', partides[socket.codi].CenterCards.copes, allowedCards, quo);
+          checkCenterCards('b', partides[socket.codi].CenterCards.bastos, allowedCards, quo);
+          checkCenterCards('e', partides[socket.codi].CenterCards.espasa, allowedCards, quo);
 
           // Assign cards to players
           for(i=0;i<partides[socket.codi].jugadors.length;i++){
@@ -104,6 +163,8 @@ function controller(io) {
 
             //send cards to client
             io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i]})
+
+            console.log(partides[socket.codi].jugadors[i].cards);
           }
         }
           
