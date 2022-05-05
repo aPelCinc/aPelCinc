@@ -111,7 +111,7 @@ function controller(io) {
 
             //send cards to client
             
-            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards});
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards,jugadors: partides[socket.codi].jugadors });
           }
           console.log(partides[socket.codi].jugadors);
         }
