@@ -178,8 +178,27 @@ function controller(io) {
                 allowedCards: allowedCards});
           }
           console.log(partides[socket.codi].jugadors);
+          partides[socket.codi].torn=0;
         }
+        });
+
+        socket.on("turn",function(card){
+          if(partides[socket.codi].jugadors[partides[socket.codi].torn][0]!= socket.id){
+            io.emit('error','No es el teu torn');
+          } else {
+            io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
+
+            if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
+              partides[socket.codi].torn ++;
+            } else {
+              partides[socket.codi].torn = 0;
+            }
+
+            io.to(socket.codi).emit('chat message','torn de '+partides[socket.codi].jugadors[partides[socket.codi].torn][1],'sistema');
+  
+          }
           
+
         });
 
         socket.on("leaveroom",function(data){
