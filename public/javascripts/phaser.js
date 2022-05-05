@@ -85,7 +85,7 @@ function create ()
 
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
-        var wtmp = data.cards.length *20 +50
+        var wtmp = data.cards.length *20 +70
       
         console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
         var x = (x - wtmp)/2;
@@ -103,7 +103,10 @@ function create ()
 
             });
             card.on('pointerout', function (event) { phcards[element].y += 100 });
-            card.on('pointerdown', selectedcard); // Start game on click.
+            card.on('pointerdown', function (event) {
+                     console.log('carta seleccionada '+ element);
+                    socket.emit('turn', element); 
+            }); // Start game on click.
 
             x = x+20;
         });
@@ -111,10 +114,7 @@ function create ()
     });
 }
 
-function selectedcard ()
-{
-    console.log('carta seleccionada');
-}
+
 function update ()
 {
 }
