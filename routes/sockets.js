@@ -70,8 +70,8 @@ function controller(io) {
             partides[codiTaula] = partida;
 
             console.log("room created id: "+ socket.id);
-            console.log(partides[codiTaula]);
-            console.log(partides);
+            console.log("coditaula: "+partides[codiTaula]);
+            console.log("partides: "+partides);
             //io.emit('getid', {id: socket.id});
             io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
             io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
@@ -114,8 +114,44 @@ function controller(io) {
             io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards,jugadors: partides[socket.codi].jugadors });
           }
           console.log(partides[socket.codi].jugadors);
+          partides[socket.codi].torn=0;
+
+         startcounter();
         }
+        });
+
+        function turnover(){
+          clearInterval(partides[socket.codi].contador);
+          io.to(socket.codi).emit('chat message',partides[socket.codi].jugadors[partides[socket.codi].torn][1]+' ha esgotat el seu torn','sistema');
+          nextturn();
+          startcounter();
+        }
+        function startcounter(){
+          partides[socket.codi].contador = setInterval(turnover, 60000);
+        }
+        function nextturn(){
+          if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
+            partides[socket.codi].torn ++;
+          } else {
+            partides[socket.codi].torn = 0;
+          }
+        }
+
+        socket.on("turn",function(card){
+          if(partides[socket.codi].jugadors[partides[socket.codi].torn][0]!= socket.id){
+            socket.emit('error','No es el teu torn');
+          } else {
+            io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
+
+            clearInterval(partides[socket.codi].contador);
+            nextturn();
+            startcounter();
+
+            io.to(socket.codi).emit('chat message','torn de '+partides[socket.codi].jugadors[partides[socket.codi].torn][1],'sistema');
+  
+          }
           
+
         });
 
         socket.on("leaveroom",function(data){
