@@ -1,9 +1,9 @@
 let partides = [];
 
-var cards = ['1o','2o','3o','4o','5o','6o','7o','8o','9o','10o','11o','12o'];
-cards.push('1c','2c','3c','4c','5c','6c','7c','8c','9c','10c','11c','12c');
-cards.push('1b','2b','3b','4b','5b','6b','7b','8b','9b','10b','11b','12b');
-cards.push('1e','2e','3e','4e','5e','6e','7e','8e','9e','10e','11e','12e');
+var cards = ['o1','o2','o3','o4','o5','o6','o7','o8','o9','o10','o11','o12'];
+  cards.push('c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12');
+  cards.push('b1','b2','b3','b4','b5','b6','b7','b8','b9','b10','b11','b12');
+  cards.push('e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12');
 
 function checkCenterCards(typeCard, arrayCenterCards, allowedCards, quo) {
   // Sort array in string
@@ -86,14 +86,19 @@ function controller(io) {
           }else {
             socket.join(data.codi);
             socket.codi = data.codi;
-            // console.log(socket);
+
+            if(partides[socket.codi].jugadors.length >= 4){
+              socket.emit('error name' , 'La sala esta completa!', 'roomjoin');
+              console.log('completa')
+            } else{
+
             partides[data.codi].jugadors.push([socket.id,socket.name])
             io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
             
             socket.emit('changetoscreen', data.button);
-          }
-
+          } 
+        }
         });
         
         socket.on("createroom",function(data){
@@ -128,6 +133,7 @@ function controller(io) {
             io.emit('error','No tens permisos per iniciar la partida');
           } else {
 
+            // Create a array of allowed cards
             var allowedCards = [];
 
             // shuffle cards
@@ -139,33 +145,39 @@ function controller(io) {
               cards[posicion1]=tmp;
             }
 
+          // Get a max number of cards of each player
           var quo = Math.floor(48/partides[socket.codi].jugadors.length);
 
-          partides[socket.codi]['CenterCards'] = [];
-          partides[socket.codi].CenterCards['or'] = [];
-          partides[socket.codi].CenterCards['copes'] = [];
-          partides[socket.codi].CenterCards['bastos'] = [];
-          partides[socket.codi].CenterCards['espasa'] = [];
+          // Declare empty arrays
+          partides[socket.codi].CenterCards = [];
+          partides[socket.codi].CenterCards.or = [];
+          partides[socket.codi].CenterCards.copes = [];
+          partides[socket.codi].CenterCards.bastos = [];
+          partides[socket.codi].CenterCards.espasa = [];
 
-          checkCenterCards('o', partides[socket.codi].CenterCards.or, allowedCards, quo);
-          checkCenterCards('c', partides[socket.codi].CenterCards.copes, allowedCards, quo);
-          checkCenterCards('b', partides[socket.codi].CenterCards.bastos, allowedCards, quo);
-          checkCenterCards('e', partides[socket.codi].CenterCards.espasa, allowedCards, quo);
+          // Execute a function check center cards
+          var typeCards = ['o', 'c', 'b', 'e'];
+          typeCards.forEach((item) => {
+            checkCenterCards(item, partides[socket.codi].CenterCards.or, allowedCards, quo);
+          });
 
           // Assign cards to players
+          var numcard = 0;
           for(i=0;i<partides[socket.codi].jugadors.length;i++){
-            console.log('cards');
             partides[socket.codi].jugadors[i].cards = [];
+            
 
             for (let y = 0; y < quo; y++) {
-              partides[socket.codi].jugadors[i].cards.push(cards[y])
+              partides[socket.codi].jugadors[i].cards.push(cards[numcard])
+              numcard++;
             }
 
             //send cards to client
-            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i]})
-
-            console.log(partides[socket.codi].jugadors[i].cards);
+            
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards, 
+                allowedCards: allowedCards});
           }
+          console.log(partides[socket.codi].jugadors);
         }
           
         });
