@@ -105,7 +105,7 @@ function create ()
             card.on('pointerout', function (event) { phcards[element].y += 100 });
             card.on('pointerdown', function (event) {
                      console.log('carta seleccionada '+ element);
-                    socket.emit('turn', element); 
+                    socket.emit('turn', element);
             }); // Start game on click.
 
             x = x+20;

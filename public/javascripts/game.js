@@ -1,6 +1,5 @@
 socket.on('initcards', function(data) {
     console.log('cartes = '+ data.cards);
-    console.log('cartes permesses = '+ data.allowedCards);
 });
 
 socket.on('jugadors', function(data) {

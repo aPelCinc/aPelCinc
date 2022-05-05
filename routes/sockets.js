@@ -1,24 +1,53 @@
 let partides = [];
 
+var allowedCards = [];
+
 var cards = ['o1','o2','o3','o4','o5','o6','o7','o8','o9','o10','o11','o12'];
   cards.push('c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12');
   cards.push('b1','b2','b3','b4','b5','b6','b7','b8','b9','b10','b11','b12');
   cards.push('e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12');
 
-function checkCenterCards(typeCard, arrayCenterCards, allowedCards, quo) {
+function addCardCenter(codi, card) {
+  if (card.startsWith('o')) {
+    partides[codi].CenterCards.or.push(card)
+  } else if (card.startsWith('c')) {
+    partides[codi].CenterCards.copes.push(card)
+  } else if (card.startsWith('b')) {
+    partides[codi].CenterCards.bastos.push(card)
+  } else if (card.startsWith('e')) {
+    partides[codi].CenterCards.espasa.push(card)
+  }
+}
+
+function isThrowCard(card) {
+  let comptador = 0;
+  allowedCards.forEach((item) => {
+    if (card == item) {
+      comptador++;
+    }
+  });
+
+  if (comptador > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkCenterCards(typeCard, arrayCenterCards, quo) {
   // Sort array in string
   arrayCenterCards.sort();
 
   // If center card array length is equals to 0
   if (arrayCenterCards.length == 0) {
     // Only allowed 5, and type card concat
-    allowedCards.push('5'+typeCard);
+    allowedCards.push(typeCard+'5');
 
   // If center card array length is equals to 1 and start with 5
-  } else if (arrayCenterCards.length == 1 && arrayCenterCards[0].startsWith('5')) {
+  } else if (arrayCenterCards.length == 1 && arrayCenterCards[0].endsWith('5')) {
     // Only allowed 4 or 6, and type card concat
-    allowedCards.push('4'+typeCard);
-    allowedCards.push('6'+typeCard);
+    allowedCards.push(typeCard+'4');
+    allowedCards.push(typeCard+'6');
 
   // If center card array length is greater that 1
   } else if (arrayCenterCards.length > 1) {
@@ -28,7 +57,7 @@ function checkCenterCards(typeCard, arrayCenterCards, allowedCards, quo) {
     // running center card array
     for (let i = 0; i < arrayCenterCards.length; i++) {
       // save in copy of center card array, value substring (the char 0 to final char) of the center card array
-      arrayCenterCardsCopy[i] = parseInt(arrayCenterCards[i].substring(0,arrayCenterCards[i].length-1));
+      arrayCenterCardsCopy[i] = parseInt(arrayCenterCards[i].substring(1,arrayCenterCards[i].length));
     }
 
     // Sort array in integer
@@ -41,12 +70,12 @@ function checkCenterCards(typeCard, arrayCenterCards, allowedCards, quo) {
     // If min is greater that 1
     if (min > 1) {
       // Only allowed min less 1, and type card concat
-      allowedCards.push((min-1)+typeCard);
+      allowedCards.push(typeCard+(min-1));
     }
     // If max is minor that variable quo
     if (max < quo) {
       // Only allowed max more 1, and type card concat
-      allowedCards.push((max+1)+typeCard);
+      allowedCards.push(typeCard+(max+1));
     }
   }
 }
@@ -133,9 +162,6 @@ function controller(io) {
             io.emit('error','No tens permisos per iniciar la partida');
           } else {
 
-            // Create a array of allowed cards
-            var allowedCards = [];
-
             // shuffle cards
             for (i=0;i<48;i++)
             {
@@ -156,10 +182,10 @@ function controller(io) {
           partides[socket.codi].CenterCards.espasa = [];
 
           // Execute a function check center cards
-          var typeCards = ['o', 'c', 'b', 'e'];
-          typeCards.forEach((item) => {
-            checkCenterCards(item, partides[socket.codi].CenterCards.or, allowedCards, quo);
-          });
+          checkCenterCards('o', partides[socket.codi].CenterCards.or, quo);
+          checkCenterCards('c', partides[socket.codi].CenterCards.copes, quo);
+          checkCenterCards('b', partides[socket.codi].CenterCards.bastos, quo);
+          checkCenterCards('e', partides[socket.codi].CenterCards.espasa, quo);
 
           // Assign cards to players
           var numcard = 0;
@@ -186,17 +212,36 @@ function controller(io) {
           if(partides[socket.codi].jugadors[partides[socket.codi].torn][0]!= socket.id){
             io.emit('error','No es el teu torn');
           } else {
-            io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
+            if (isThrowCard(card)) {
+              io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
 
-            if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
-              partides[socket.codi].torn ++;
+              addCardCenter(socket.codi, card);
+
+              // Get a max number of cards of each player              
+              var quo = Math.floor(48/partides[socket.codi].jugadors.length);
+
+              if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
+                partides[socket.codi].torn ++;
+              } else {
+                partides[socket.codi].torn = 0;
+              }
+
+              io.to(socket.codi).emit('chat message','torn de '+partides[socket.codi].jugadors[partides[socket.codi].torn][1],'sistema');
             } else {
-              partides[socket.codi].torn = 0;
+              console.log('En Aquests Moments no pots fer cap Moviment. :-(');
             }
-
-            io.to(socket.codi).emit('chat message','torn de '+partides[socket.codi].jugadors[partides[socket.codi].torn][1],'sistema');
   
           }
+          console.log(allowedCards);
+          console.log(partides[socket.codi].CenterCards);
+
+          allowedCards = [];
+
+          // Execute a function check center cards
+          checkCenterCards('o', partides[socket.codi].CenterCards.or, quo);
+          checkCenterCards('c', partides[socket.codi].CenterCards.copes, quo);
+          checkCenterCards('b', partides[socket.codi].CenterCards.bastos, quo);
+          checkCenterCards('e', partides[socket.codi].CenterCards.espasa, quo);
           
 
         });
