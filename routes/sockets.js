@@ -70,8 +70,8 @@ function controller(io) {
             partides[codiTaula] = partida;
 
             console.log("room created id: "+ socket.id);
-            console.log(partides[codiTaula]);
-            console.log(partides);
+            console.log("coditaula: "+partides[codiTaula]);
+            console.log("partides: "+partides);
             //io.emit('getid', {id: socket.id});
             io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
             io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
