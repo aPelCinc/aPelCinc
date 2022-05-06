@@ -159,6 +159,9 @@ function controller(io) {
         });
 
         socket.on("startgame",function(data){
+          if(partides[socket.codi].jugadors.length == 1 ){
+            io.emit('error','No hay suficientes jugadores');}
+            else{
           if(typeof partides[socket.codi] == 'undefined'){
             io.emit('error','No tens permisos per iniciar la partida');
           } else {
@@ -208,26 +211,37 @@ function controller(io) {
           console.log(partides[socket.codi].jugadors);
           partides[socket.codi].torn=0;
 
+        io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
          startcounter();
+          }
+         io.to(socket.codi).emit('counterfrontend');
         }
         });
 
+        
         function turnover(){
           clearInterval(partides[socket.codi].contador);
           io.to(socket.codi).emit('chat message',partides[socket.codi].jugadors[partides[socket.codi].torn][1]+' ha esgotat el seu torn','sistema');
           nextturn();
           startcounter();
         }
+        
         function startcounter(){
           partides[socket.codi].contador = setInterval(turnover, 60000);
         }
+        
         function nextturn(){
           if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
             partides[socket.codi].torn ++;
           } else {
             partides[socket.codi].torn = 0;
           }
+          io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
+          io.to(socket.codi).emit('chat message','torn de '+partides[socket.codi].jugadors[partides[socket.codi].torn][1],'sistema');
+          io.to(socket.codi).emit('counterfrontend');
         }
+
+
 
         socket.on("turn",function(card){
           if(partides[socket.codi].jugadors[partides[socket.codi].torn][0]!= socket.id){
@@ -235,6 +249,22 @@ function controller(io) {
           } else {
             if (isThrowCard(card)) {
               io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
+              console.log(' array: '+partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
+
+              var pos = -1;
+              for (let i = 0; i < partides[socket.codi].jugadors[partides[socket.codi].torn].cards.length; i++) {
+                if(partides[socket.codi].jugadors[partides[socket.codi].torn].cards[i]==card){
+                  pos=i;
+                  break;
+                }
+              }
+
+              partides[socket.codi].jugadors[partides[socket.codi].torn].cards.splice(pos,1);
+              console.log(' array: '+partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
+              console.log('carta eliminada: '+card);
+              socket.emit('initcards', {cards: partides[socket.codi].jugadors[partides[socket.codi].torn].cards,
+                jugadors: partides[socket.codi].jugadors, 
+                allowedCards: allowedCards});
 
               addCardCenter(socket.codi, card);
 
@@ -307,6 +337,7 @@ function controller(io) {
             }
           }
           console.log('user disconnected');
+          console.log(partides[socket.codi]);
         });
       });
 
