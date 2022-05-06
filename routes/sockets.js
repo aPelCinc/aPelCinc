@@ -158,6 +158,9 @@ function controller(io) {
         });
 
         socket.on("startgame",function(data){
+          if(partides[socket.codi].jugadors.length == 1 ){
+            io.emit('error','No hay suficientes jugadores');}
+            else{
           if(typeof partides[socket.codi] == 'undefined'){
             io.emit('error','No tens permisos per iniciar la partida');
           } else {
@@ -208,6 +211,7 @@ function controller(io) {
           partides[socket.codi].torn=0;
 
          startcounter();
+          }
         }
         });
 
