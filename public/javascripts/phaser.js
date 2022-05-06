@@ -79,10 +79,16 @@ function create ()
 {
     var x = $('#tablegame').width();
     self = this;
+    this.phcards = [];
     var torn = [];
-    var phcards = [];
     this.socket = io();
+
     socket.on('initcards', function(data) {
+        
+        self.phcards.forEach(element => {
+            element.destroy();
+        });
+
         changetoscreen('game');
         console.log('cartes1 = '+ data.cards);
 
@@ -103,26 +109,42 @@ function create ()
         
         var y = y - 200;
 
-        
-        data.cards.forEach(element => {
-            card = self.add.sprite(x, y, element).setInteractive();
+        for (let i = 0; i < data.cards.length; i++) {
+            card = self.add.sprite(x, y, data.cards[i]).setInteractive();
             card.setScale(0.50);
-            phcards[element] = card;
+            self.phcards[i] = card;
     
             card.on('pointerover', function (event) { 
-                phcards[element].y -= 100 
+                self.phcards[i].y -= 100 
 
             });
-            card.on('pointerout', function (event) { phcards[element].y += 100 });
+            card.on('pointerout', function (event) { self.phcards[i].y += 100 });
+            card.on('pointerdown', function (event) {
+                     console.log('carta seleccionada '+ data.cards[i]);
+                    socket.emit('turn', data.cards[i]); 
+            }); // Start game on click.
+
+            x = x+20;            
+        }
+        /*data.cards.forEach(element => {
+            card = self.add.sprite(x, y, element).setInteractive();
+            card.setScale(0.50);
+            self.phcards[element] = card;
+    
+            card.on('pointerover', function (event) { 
+                self.phcards[element].y -= 100 
+
+            });
+            card.on('pointerout', function (event) { self.phcards[element].y += 100 });
             card.on('pointerdown', function (event) {
                      console.log('carta seleccionada '+ element);
                     socket.emit('turn', element); 
             }); // Start game on click.
 
             x = x+20;
-        });
+        });*/
         
-
+        console.log(self.phcards)
     });
     var temporitzador = [];
     temporitzador[0] = 60;
