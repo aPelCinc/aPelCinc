@@ -240,15 +240,27 @@ function controller(io) {
           io.to(socket.codi).emit('counterfrontend');
         }
 
+
+
         socket.on("turn",function(card){
           if(partides[socket.codi].jugadors[partides[socket.codi].torn][0]!= socket.id){
             socket.emit('error','No es el teu torn');
           } else {
             if (isThrowCard(card)) {
               io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
+              console.log(' array: '+partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
 
-              partides[socket.codi].jugadors[partides[socket.codi].torn].cards.splice(card, 1);
-              console.log('cartes:'+partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
+              var pos = -1;
+              for (let i = 0; i < partides[socket.codi].jugadors[partides[socket.codi].torn].cards.length; i++) {
+                if(partides[socket.codi].jugadors[partides[socket.codi].torn].cards[i]==card){
+                  pos=i;
+                  break;
+                }
+              }
+
+              partides[socket.codi].jugadors[partides[socket.codi].torn].cards.splice(pos,1);
+              console.log(' array: '+partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
+              console.log('carta eliminada: '+card);
               socket.emit('initcards', {cards: partides[socket.codi].jugadors[partides[socket.codi].torn].cards,
                 jugadors: partides[socket.codi].jugadors, 
                 allowedCards: allowedCards});
