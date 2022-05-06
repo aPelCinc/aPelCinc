@@ -78,7 +78,16 @@ function create ()
     self = this;
     var phcards = [];
     this.socket = io();
+
     socket.on('initcards', function(data) {
+        console.log(phcards.length);
+        if(phcards.length!==0){
+            for (let i = 0; i < phcards.length; i++) {
+                console.log(i);
+                phcards[i].destroy();
+            }
+        }
+
         changetoscreen('game');
         console.log('cartes1 = '+ data.cards);
 

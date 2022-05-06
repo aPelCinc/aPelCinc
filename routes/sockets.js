@@ -235,6 +235,12 @@ function controller(io) {
             if (isThrowCard(card)) {
               io.to(socket.codi).emit('chat message','jugo la carta '+card, partides[socket.codi].jugadors[partides[socket.codi].torn][1]);
 
+              partides[socket.codi].jugadors[partides[socket.codi].torn].cards.splice(card, 1);
+              console.log('cartes:'+partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
+              socket.emit('initcards', {cards: partides[socket.codi].jugadors[partides[socket.codi].torn].cards,
+                jugadors: partides[socket.codi].jugadors, 
+                allowedCards: allowedCards});
+
               addCardCenter(socket.codi, card);
 
               // Get a max number of cards of each player              
