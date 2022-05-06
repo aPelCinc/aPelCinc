@@ -22,6 +22,8 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
+    this.load.image('torn', 'images/torn.png');
+
     this.load.spritesheet('b1', 'images/cartes/b1.png',{frameWidth: 262,frameHeight: 400 });
     this.load.spritesheet('b2', 'images/cartes/b2.png',{frameWidth: 262,frameHeight: 400 });
     this.load.spritesheet('b3', 'images/cartes/b3.png',{frameWidth: 262,frameHeight: 400 });
@@ -75,7 +77,9 @@ function preload ()
 
 function create ()
 {
+    var x = $('#tablegame').width();
     self = this;
+    var torn = [];
     var phcards = [];
     this.socket = io();
     socket.on('initcards', function(data) {
@@ -117,8 +121,63 @@ function create ()
 
             x = x+20;
         });
-        console.log(phcards);
+        
+
     });
+    var temporitzador = [];
+    temporitzador[0] = 60;
+
+    socket.on('counterfrontend', function(data) {
+        try {
+            temporitzador[2].destroy();
+            clearInterval(temporitzador[1]);
+          } catch (error) {
+          }
+        temporitzador[0] = 58;
+        temporitzador[2] = self.add.text(x/1.5, 0, 60).setOrigin( 1,0);
+        temporitzador[1] = setInterval(contador, 1000);
+    });
+
+    socket.on('turnfrontend', function(data) {
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();
+
+        torn[0] = self.add.graphics();
+        torn[0].lineStyle(150, 000000, 1);
+        torn[0].beginPath();
+        torn[0].moveTo(0, y/3);
+        torn[0].lineTo(x, y/3);
+        torn[0].closePath();
+        torn[0].strokePath();
+        
+    
+        var style = { font: "bold 84px Arial", fill: "#fff", align: "center"};
+    
+        torn[1] = self.add.text(x/2, y/3, "Es el teu torn", style).setOrigin( 1,0.5);
+        torn[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        torn[2] = setInterval(quitturn, 2000);
+
+    });
+
+    function contador(){
+        var x = $('#tablegame').width();
+        temporitzador[2].destroy();
+        temporitzador[2] = self.add.text(x/1.5, 0, temporitzador[0]).setOrigin( 1,0);
+
+        if(temporitzador[0]==0){
+            clearInterval(temporitzador[1]);
+            temporitzador[2].destroy();
+        } else {
+            temporitzador[0] --;
+        }
+    }
+
+    function quitturn(){
+        console.log('quit');
+        clearInterval(torn[2]);
+        torn[0].destroy();
+        torn[1].destroy();
+    }
 }
 
 
