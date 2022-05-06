@@ -62,6 +62,7 @@ function controller(io) {
             let codiTaula = socket.id.substring(1,5);
             socket.codi = codiTaula;
             socket.join(codiTaula);
+            console.log(socket.codi);
             partida = data;
             partida.id = codiTaula;
             partida.admin = socket.id;
@@ -166,8 +167,9 @@ function controller(io) {
               socket.leave(socket.codi);
               console.log("Room updated")
             } else {
-              partides.splice(socket.codi,1);
+              partides.slice(socket.codi,1);
               socket.leave(socket.codi);
+              console.log(partides);
               console.log("Room removed")
             }
           }
@@ -183,10 +185,10 @@ function controller(io) {
                 }
               }
               io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
-              console.log("Room updated")
+              console.log("Room updated");
             } else {
               partides.splice(socket.codi,1);
-              console.log("Room removed")
+              console.log("Room removed");
             }
           }
           console.log('user disconnected');

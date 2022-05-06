@@ -91,9 +91,7 @@ function create ()
         
         if(data.jugadors.length == 2){
             var x = (x - wtmp)/4;
-        }else if(data.jugadors.length == 3){
-            var x = (x - wtmp)/3;
-        }else if(data.jugadors.length == 4){
+        }else{
             var x = (x - wtmp)/3;
         }
         
