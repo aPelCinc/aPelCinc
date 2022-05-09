@@ -19,10 +19,6 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
-var cards1 = -1;
-var cards2 = -1;
-var cards3 = -1;
-var cards4 = -1;
 var cardtext1;
 var cardtext2;
 var cardtext3;
@@ -86,10 +82,6 @@ function preload ()
 function create ()
 {
     var x = $('#tablegame').width();
-    cardtext1 = this.add.text(680, 420, '' + cards1, { fontSize: '12px', fill: '#fff'});
-    cardtext2 = this.add.text(650, 420, '' + cards1, { fontSize: '12px', fill: '#fff' });
-    cardtext3 = this.add.text(180, 120, '' + cards1, { fontSize: '12px', fill: '#fff' });
-    cardtext4 = this.add.text(680, 120, '' + cards1, { fontSize: '12px', fill: '#fff' });
     self = this;
     var centercardsor = [];
     var centercardsespasa = [];
@@ -104,6 +96,15 @@ function create ()
         self.phcards.forEach(element => {
             element.destroy();
         });
+        var cards1 = data.num;
+        var cards2 = data.num;
+        var cards3 = data.num;
+        var cards4 = data.num;
+        cardtext1 = self.add.text(680, 400, '' + cards1, { fontSize: '12px', fill: '#fff' });
+        cardtext2 = self.add.text(660, 300, '' + cards2, { fontSize: '12px', fill: '#fff' });
+        cardtext3 = self.add.text(130, 120, '' + cards3, { fontSize: '12px', fill: '#fff' });
+        cardtext4 = self.add.text(620, 120, '' + cards4, { fontSize: '12px', fill: '#fff' });
+        console.log(data.num);
 
         changetoscreen('game');
 
@@ -124,7 +125,7 @@ function create ()
         }else{
             var x = (x - wtmp)/3;
         }
-        
+
         var y = y - 200;
 
         for (let i = 0; i < data.cards.length; i++) {
