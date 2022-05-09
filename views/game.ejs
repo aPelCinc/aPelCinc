@@ -23,37 +23,48 @@
     <%- include('./partials/lobby.ejs'); %>
     <%- include('./partials/game.ejs'); %>
 
-    <button id='regles' class="block text-yellow bg-[#696868] hover:bg-[#868686] focus:ring-4 focus:outline-none focus:ring-[#696868] font-medium rounded-lg text-sm px-2 py-px text-center absolute top-1.5 right-1.5" type="button" data-modal-toggle="defaultModal">
+    <button id='regles' class="regles block text-yellow bg-[#696868] hover:bg-[#868686] focus:ring-4 focus:outline-none focus:ring-[#696868] font-medium rounded-lg text-sm px-2 py-px text-center absolute top-1.5 right-1.5" type="button" data-modal-toggle="defaultModal">
       ?
     </button>
     
     <!-- Main modal -->
-    <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden absolute top-2 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+    <div id="defaultModal" tabindex="-1" aria-hidden="true" class="flex justify-center bg-[#0505053b] hidden absolute top-2 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto ">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 mx-auto">
                 <!-- Modal header -->
-                <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                <div class="max-h-full flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Terms of Service
+                        Regles del joc
                     </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
+                    <button type="button" class="regles text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
                     </button>
                 </div>
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
                     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
+                      L'objectiu del joc és que els jugadors col·loquin les cartes sobre la taula fins a quedar-se sense cap.
                     </p>
                     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                      La forma de col·locar les cartes és la següent: <br>
+                      
+                          Comença el jugador que posseeixi el cinc d'ors.<br>
+                          Continua el jugador de la dreta, i així successivament.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">       
+                      Només es poden col·locar cincs o totes aquelles cartes que segueixen en progressió ascendent o descendent les que hi ha a la taula i siguin del mateix coll. És a dir, si a la taula només hi ha el cinc d'ors, els jugadors només podran col·locar el sis o el quatre d'ors o un cinc d'un altre coll.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      Si un jugador no pot col·locar cap carta, passa, i el torn li correspon al següent jugador. Un jugador pot passar el seu torn, és a dir, no dipositar una carta, només si no té lloc per col·locar-la. Si un jugador pot posar diverses cartes, haurà de triar la que més li convingui per guanyar el joc.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                      El primer jugador que aconsegueix col·locar totes les seves cartes sobre la taula és el guanyador.                     
                     </p>
                 </div>
                 <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="defaultModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-                    <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600 flex justify-center">
+                    <button data-modal-toggle="defaultModal" type="button" class="regles text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">D'acord</button>
                 </div>
             </div>
         </div>
@@ -63,7 +74,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script> 
     <script>
-     $("#regles").on("click", function(){
+     $(".regles").on("click", function(){
         $('#defaultModal').toggleClass( 'hidden' );
       });
 
