@@ -76,33 +76,41 @@ function preload ()
 function create ()
 {
     self = this;
+    var centercardsor = [];
+    var centercardsespasa = [];
+    var centercardscopes = [];
+    var centercardsbastos = [];
     var phcards = [];
     this.socket = io();
     socket.on('initcards', function(data) {
+        phcards = [];
         changetoscreen('game');
-        console.log('cartes1 = '+ data.cards);
+
+        console.log(data.CenterCardsOr);
+        console.log(data.CenterCardsEspasa);
+        console.log(data.CenterCardsCopes);
+        console.log(data.CenterCardsBastos);
 
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
         var wtmp = data.cards.length *20 +70
-      
-        console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
-        console.log(data.jugadors);
+
+        // console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
+        // console.log(data.jugadors);
         
-        if(data.jugadors.length == 2){
-            var x = (x - wtmp)/4;
-        }else if(data.jugadors.length == 3){
-            var x = (x - wtmp)/3;
-        }else if(data.jugadors.length == 4){
-            var x = (x - wtmp)/3;
+        if (data.jugadors.length == 2){
+            var x = (x - wtmp) / 4;
+        } else if(data.jugadors.length == 3){
+            var x = (x - wtmp) / 3;
+        } else if(data.jugadors.length == 4){
+            var x = (x - wtmp) / 3;
         }
         
         var y = y - 200;
 
-        
         data.cards.forEach(element => {
             card = self.add.sprite(x, y, element).setInteractive();
-            card.setScale(0.50);
+            card.setScale(0.40);
             phcards[element] = card;
     
             card.on('pointerover', function (event) { 
@@ -115,9 +123,101 @@ function create ()
                     socket.emit('turn', element); 
             }); // Start game on click.
 
-            x = x+20;
+            x = x + 20;
         });
-        console.log(phcards);
+        // console.log(phcards);
+
+        // Or
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();        
+        if (data.jugadors.length == 2){
+            var wtmp = data.cards.length *23 +70
+        } else if(data.jugadors.length == 3){
+            var wtmp = data.cards.length *33 +70
+        } else if(data.jugadors.length == 4){
+            var wtmp = data.cards.length *46 +70
+        }
+
+        var x = (x - wtmp);
+        
+        var y = y - 510;
+
+        data.CenterCardsOr.forEach(element => {
+            card = self.add.sprite(x, y, element).setInteractive();
+            card.setScale(0.40);
+            centercardsor[element] = card;
+
+            y = y + 20;
+        });
+
+        // Copes
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();       
+        if (data.jugadors.length == 2){
+            var wtmp = data.cards.length *28 +70
+        } else if(data.jugadors.length == 3){
+            var wtmp = data.cards.length *40 +70
+        } else if(data.jugadors.length == 4){
+            var wtmp = data.cards.length *55 +70
+        }
+
+        var x = (x - wtmp);
+        
+        var y = y - 510;
+
+        data.CenterCardsCopes.forEach(element => {
+            card = self.add.sprite(x, y, element).setInteractive();
+            card.setScale(0.40);
+            centercardscopes[element] = card;
+
+            y = y + 20;
+        });
+
+        // Espasa
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();        
+        if (data.jugadors.length == 2){
+            var wtmp = data.cards.length *33 +70
+        } else if(data.jugadors.length == 3){
+            var wtmp = data.cards.length *47 +70
+        } else if(data.jugadors.length == 4){
+            var wtmp = data.cards.length *64 +70
+        }
+
+        var x = (x - wtmp);
+        
+        var y = y - 510;
+
+        data.CenterCardsEspasa.forEach(element => {
+            card = self.add.sprite(x, y, element).setInteractive();
+            card.setScale(0.40);
+            centercardsespasa[element] = card;
+
+            y = y + 20;
+        });
+
+        // Bastos
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();        
+        if (data.jugadors.length == 2){
+            var wtmp = data.cards.length *38 +70
+        } else if(data.jugadors.length == 3){
+            var wtmp = data.cards.length *54 +70
+        } else if(data.jugadors.length == 4){
+            var wtmp = data.cards.length *73 +70
+        }
+
+        var x = (x - wtmp);
+
+        var y = y - 510;
+
+        data.CenterCardsBastos.forEach(element => {
+            card = self.add.sprite(x, y, element).setInteractive();
+            card.setScale(0.40);
+            centercardsbastos[element] = card;
+
+            y = y + 20;
+        });
     });
 }
 
