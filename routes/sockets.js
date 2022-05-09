@@ -95,13 +95,22 @@ function controller(io) {
           }
         });
 
+        socket.on("publicroom",function(data){         
+          var rooms = [];
+
+          Object.keys(partides).forEach(key => {
+            rooms.push([partides[key].id,partides[key].nom,partides[key].jugadors.length]);
+          });
+
+          socket.emit('getpublicroom', rooms);
+        });
+
         // io.on("create-room", (room) => {
         //   console.log(`room ${room} was created`);
         // });
 
         // Defined a event websocket 'chat message' in server
         socket.on('chat message', (msg, codi) => {
-          console.log(partides);
           // console.log('message of '+socket.id+': '+msg);
           // send var msg value call event websocket 'chat message' in client
           io.to(partides[codi].id).emit('chat message', msg, socket.name);
@@ -155,6 +164,7 @@ function controller(io) {
             // console.log(partides);
 
             socket.emit('changetoscreen', data.button);
+
           }
         });
 
