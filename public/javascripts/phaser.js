@@ -22,6 +22,8 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
+    this.load.image('torn', 'images/torn.png');
+
     this.load.spritesheet('b1', 'images/cartes/b1.png',{frameWidth: 262,frameHeight: 400 });
     this.load.spritesheet('b2', 'images/cartes/b2.png',{frameWidth: 262,frameHeight: 400 });
     this.load.spritesheet('b3', 'images/cartes/b3.png',{frameWidth: 262,frameHeight: 400 });
@@ -75,15 +77,22 @@ function preload ()
 
 function create ()
 {
+    var x = $('#tablegame').width();
     self = this;
     var centercardsor = [];
     var centercardsespasa = [];
     var centercardscopes = [];
     var centercardsbastos = [];
-    var phcards = [];
+    this.phcards = [];
+    var torn = [];
     this.socket = io();
+
     socket.on('initcards', function(data) {
-        phcards = [];
+        
+        self.phcards.forEach(element => {
+            element.destroy();
+        });
+
         changetoscreen('game');
 
         console.log(data.CenterCardsOr);
@@ -98,33 +107,48 @@ function create ()
         // console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
         // console.log(data.jugadors);
         
-        if (data.jugadors.length == 2){
-            var x = (x - wtmp) / 4;
-        } else if(data.jugadors.length == 3){
-            var x = (x - wtmp) / 3;
-        } else if(data.jugadors.length == 4){
-            var x = (x - wtmp) / 3;
+        if(data.jugadors.length == 2){
+            var x = (x - wtmp)/4;
+        }else{
+            var x = (x - wtmp)/3;
         }
         
         var y = y - 200;
 
-        data.cards.forEach(element => {
-            card = self.add.sprite(x, y, element).setInteractive();
+        for (let i = 0; i < data.cards.length; i++) {
+            card = self.add.sprite(x, y, data.cards[i]).setInteractive();
             card.setScale(0.40);
-            phcards[element] = card;
+            self.phcards[i] = card;
     
             card.on('pointerover', function (event) { 
-                phcards[element].y -= 100 
+                self.phcards[i].y -= 100 
 
             });
-            card.on('pointerout', function (event) { phcards[element].y += 100 });
+            card.on('pointerout', function (event) { self.phcards[i].y += 100 });
+            card.on('pointerdown', function (event) {
+                     console.log('carta seleccionada '+ data.cards[i]);
+                    socket.emit('turn', data.cards[i]); 
+            }); // Start game on click.
+
+            x = x+20;            
+        }
+        /*data.cards.forEach(element => {
+            card = self.add.sprite(x, y, element).setInteractive();
+            card.setScale(0.50);
+            self.phcards[element] = card;
+    
+            card.on('pointerover', function (event) { 
+                self.phcards[element].y -= 100 
+
+            });
+            card.on('pointerout', function (event) { self.phcards[element].y += 100 });
             card.on('pointerdown', function (event) {
                      console.log('carta seleccionada '+ element);
                     socket.emit('turn', element); 
             }); // Start game on click.
 
             x = x + 20;
-        });
+        });*/
         // console.log(phcards);
 
         // Or
@@ -219,6 +243,60 @@ function create ()
             y = y + 20;
         });
     });
+    var temporitzador = [];
+    temporitzador[0] = 60;
+
+    socket.on('counterfrontend', function(data) {
+        try {
+            temporitzador[2].destroy();
+            clearInterval(temporitzador[1]);
+          } catch (error) {
+          }
+        temporitzador[0] = 58;
+        temporitzador[2] = self.add.text(x/1.5, 0, 60).setOrigin( 1,0);
+        temporitzador[1] = setInterval(contador, 1000);
+    });
+
+    socket.on('turnfrontend', function(data) {
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();
+
+        torn[0] = self.add.graphics();
+        torn[0].lineStyle(150, 000000, 1);
+        torn[0].beginPath();
+        torn[0].moveTo(0, y/3);
+        torn[0].lineTo(x, y/3);
+        torn[0].closePath();
+        torn[0].strokePath();
+        
+    
+        var style = { font: "bold 84px Arial", fill: "#fff", align: "center"};
+    
+        torn[1] = self.add.text(x/2, y/3, "Es el teu torn", style).setOrigin( 1,0.5);
+        torn[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        torn[2] = setInterval(quitturn, 2000);
+
+    });
+
+    function contador(){
+        var x = $('#tablegame').width();
+        temporitzador[2].destroy();
+        temporitzador[2] = self.add.text(x/1.5, 0, temporitzador[0]).setOrigin( 1,0);
+
+        if(temporitzador[0]==0){
+            clearInterval(temporitzador[1]);
+            temporitzador[2].destroy();
+        } else {
+            temporitzador[0] --;
+        }
+    }
+
+    function quitturn(){
+        console.log('quit');
+        clearInterval(torn[2]);
+        torn[0].destroy();
+        torn[1].destroy();
+    }
 }
 
 
