@@ -324,7 +324,34 @@ function controller(io) {
 
 
     });
+    socket.on("scoreserver", function (data) {
+      var num = [];
+      for(var i =0; i<partides[socket.codi].jugadors.length;i++) {
+        num[i]=partides[socket.codi].jugadors[i].cards.length
+      }
+      io.to(socket.codi).emit('scoreclient', {
+        num1: num[0], num2: num[1], num3: num[2], num4: num[3]
+      });
+    });
 
+    socket.on("leaveroom", function (data) {
+      if (typeof socket.codi !== 'undefined') {
+        if (partides[socket.codi].jugadors.length !== 1) {
+          for (let y = 0; y < partides[socket.codi].jugadors.length; y++) {
+            if (socket.id == partides[socket.codi].jugadors[y][0]) {
+              partides[socket.codi].jugadors.splice(y, 1);
+            }
+          }
+          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          socket.leave(socket.codi);
+          console.log("Room updated")
+        } else {
+          delete partides[socket.codi];
+          socket.leave(socket.codi);
+          console.log(partides);
+        }
+      }
+    });
     socket.on("leaveroom", function (data) {
       if (typeof socket.codi !== 'undefined') {
         if (partides[socket.codi].jugadors.length !== 1) {
