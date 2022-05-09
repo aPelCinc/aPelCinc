@@ -19,7 +19,8 @@
     
     <%- include('./partials/inici.ejs'); %>
     <%- include('./partials/createroom.ejs'); %>
-    <%- include('./partials/joinroom.ejs'); %>
+    <!--<%- include('./partials/joinroom.ejs'); %>-->
+    <%- include('./partials/roomlist.ejs'); %>
     <%- include('./partials/lobby.ejs'); %>
     <%- include('./partials/game.ejs'); %>
     
@@ -51,7 +52,7 @@
 
       $("#createroombut").on("click", function(){
         var name = $('#inputRoomCreate').val();
-        socket.emit('createroom', {nom: name, button: 'lobby'});
+        socket.emit('createroom', {nom: name, button: 'lobby', public: document.getElementById("inputRoomCreatepublic").checked});
       });
 
       $("#joinroombut").on("click", function(){

@@ -1,4 +1,5 @@
 let partides = [];
+let publicrooms = [];
 
 var allowedCards = [];
 
@@ -98,8 +99,8 @@ function controller(io) {
         socket.on("publicroom",function(data){         
           var rooms = [];
 
-          Object.keys(partides).forEach(key => {
-            rooms.push([partides[key].id,partides[key].nom,partides[key].jugadors.length]);
+          Object.keys(publicrooms).forEach(key => {
+            rooms.push(publicrooms[key]);
           });
 
           socket.emit('getpublicroom', rooms);
@@ -133,7 +134,7 @@ function controller(io) {
             partides[data.codi].jugadors.push([socket.id,socket.name])
             io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
-            
+            publicrooms[data.codi][2]++;
             socket.emit('changetoscreen', data.button);
           } 
         }
@@ -150,9 +151,11 @@ function controller(io) {
             partida = data;
             partida.id = codiTaula;
             partida.admin = socket.id;
+            partida.public= data.public;
             partida.jugadors = [[socket.id,socket.name]];
             //partida.jugadors.push("jugador2");
             partides[codiTaula] = partida;
+            
 
             console.log("room created id: "+ socket.id);
             // console.log(partides[codiTaula]);
@@ -160,6 +163,10 @@ function controller(io) {
             //io.emit('getid', {id: socket.id});
             io.to(socket.id).emit('partida', {partida: partides[codiTaula]});
             io.to(socket.id).emit('jugadors', {jugadors: partida.jugadors});
+            console.log(data.public)
+            if(data.public){
+              publicrooms[codiTaula] = [codiTaula,partida.nom,1];
+            }
 
             // console.log(partides);
 
@@ -170,9 +177,9 @@ function controller(io) {
 
         socket.on("startgame",function(data){
           if(partides[socket.codi].jugadors.length == 1 ){
-            io.emit('error','No hay suficientes jugadores');}
-            else{
-          if(typeof partides[socket.codi] == 'undefined'){
+            io.emit('error','No hay suficientes jugadores');
+          } else{
+          if(partides[socket.codi].jugadors[0][0] != socket.id){
             io.emit('error','No tens permisos per iniciar la partida');
           } else {
 
@@ -225,6 +232,7 @@ function controller(io) {
          startcounter();
           }
          io.to(socket.codi).emit('counterfrontend');
+         delete publicrooms[socket.codi];
         }
         });
 
@@ -321,9 +329,11 @@ function controller(io) {
               }
               io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
               socket.leave(socket.codi);
+              publicrooms[socket.codi][2]--;
               console.log("Room updated")
             }else {
               delete partides[socket.codi];
+              delete publicrooms[socket.codi];
               socket.leave(socket.codi);
               console.log(partides);
             }
@@ -340,10 +350,12 @@ function controller(io) {
                 }
               }
               io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
+              publicrooms[socket.codi][2]--;
               console.log("Room updated");
             } else {
               delete partides[socket.codi];
               console.log("Room removed");
+              delete publicrooms[socket.codi];
             }
           }
           console.log('user disconnected');
