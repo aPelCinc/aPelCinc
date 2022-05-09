@@ -125,6 +125,7 @@ function controller(io) {
             io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
             
+            io.to(socket.codi).emit('chat message', 'Un '+socket.name+' salvatje ha aparegut.', socket.name);
             socket.emit('changetoscreen', data.button);
           } 
         }
@@ -154,6 +155,7 @@ function controller(io) {
 
             // console.log(partides);
 
+            io.to(socket.codi).emit('chat message', socket.name+' ha creat la partida '+data.nom+'.', socket.name);
             socket.emit('changetoscreen', data.button);
           }
         });
@@ -203,12 +205,17 @@ function controller(io) {
             }
 
             //send cards to client
-            
+
             io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards,
-              jugadors: partides[socket.codi].jugadors, 
-              allowedCards: allowedCards});
+              jugadors: partides[socket.codi].jugadors,
+              allowedCards: allowedCards, 
+              CenterCardsOr: partides[socket.codi].CenterCards.or, 
+              CenterCardsEspasa: partides[socket.codi].CenterCards.espasa, 
+              CenterCardsCopes: partides[socket.codi].CenterCards.copes, 
+              CenterCardsBastos: partides[socket.codi].CenterCards.bastos, 
+            });
           }
-          console.log(partides[socket.codi].jugadors);
+          // console.log(partides[socket.codi]);
           partides[socket.codi].torn=0;
 
         io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
@@ -297,6 +304,19 @@ function controller(io) {
           checkCenterCards('c', partides[socket.codi].CenterCards.copes, quo);
           checkCenterCards('b', partides[socket.codi].CenterCards.bastos, quo);
           checkCenterCards('e', partides[socket.codi].CenterCards.espasa, quo);
+
+          // Refresh Cards before turn
+          for(i=0;i<partides[socket.codi].jugadors.length;i++){
+            //send cards to client
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {cards: partides[socket.codi].jugadors[i].cards,
+              jugadors: partides[socket.codi].jugadors,
+              allowedCards: allowedCards, 
+              CenterCardsOr: partides[socket.codi].CenterCards.or, 
+              CenterCardsEspasa: partides[socket.codi].CenterCards.espasa, 
+              CenterCardsCopes: partides[socket.codi].CenterCards.copes, 
+              CenterCardsBastos: partides[socket.codi].CenterCards.bastos, 
+            });
+          }
           
 
         });
