@@ -261,6 +261,9 @@ function controller(io) {
         }
         
         function nextturn(){
+          console.log(partides[socket.codi].torn);
+          console.log(partides[socket.codi].jugadors.length);
+
           if(partides[socket.codi].torn<partides[socket.codi].jugadors.length-1){
             partides[socket.codi].torn ++;
           } else {
@@ -303,11 +306,11 @@ function controller(io) {
           // Get a max number of cards of each player              
           var quo = Math.floor(48 / partides[socket.codi].jugadors.length);
 
-          if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
+          /*if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
             partides[socket.codi].torn++;
           } else {
             partides[socket.codi].torn = 0;
-          }
+          }*/
 
           clearInterval(partides[socket.codi].contador);
           nextturn();
@@ -394,13 +397,14 @@ function controller(io) {
               }
 
               console.log("Room updated");
+              io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+
             } else {
               delete partides[socket.codi];
               console.log("Room removed");
               delete publicrooms[socket.codi];
             }
           }
-          // io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
           console.log("Room updated");
   });
 });
