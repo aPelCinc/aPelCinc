@@ -319,7 +319,7 @@ function controller(io) {
           console.log('En Aquests Moments no pots fer cap Moviment. :-(');
         }
 
-      }
+      
       console.log(allowedCards);
       console.log(partides[socket.codi].CenterCards);
 
@@ -346,6 +346,7 @@ function controller(io) {
           CenterCardsBastos: partides[socket.codi].CenterCards.bastos,
         });
       }
+    }
     });
     socket.on("scoreserver", function (data) {
       var num = [];

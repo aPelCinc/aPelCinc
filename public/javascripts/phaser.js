@@ -132,15 +132,15 @@ function create() {
             x = x + 20;
         }
 
+
+        // SET CARDS ON TABLE
         var x = $('#tablegame').width(); 
         spacex =  x/5 - 70;
-
+console.log('initgame');
         if(data.type == 'o'){
             // Or
             var y = $('#tablegame').height();
             var x = $('#tablegame').width();        
-
-            // var x = (x - wtmp);
 
             var x = spacex;
 
@@ -149,10 +149,6 @@ function create() {
             console.log(tmpnum-5);
 
             y = y +(tmpnum -5)*20;
-
-            // data.CenterCardsOr.forEach(element => {
-            //     y = y + 20;
-            // });
 
             card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
             card.setScale(0.40);
@@ -163,19 +159,12 @@ function create() {
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();       
     
-
-        // var x = (x - wtmp);
-
         var x = spacex *2;
         
         var y = y - 510;
         var tmpnum = data.cardtoadd.substring(1,data.card);
 
         y =  y + (tmpnum -5)*20;
-
-        // data.CenterCardsCopes.forEach(element => {
-        //                 y = y + 20;
-        // });
 
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
             card.setScale(0.40);
@@ -186,9 +175,7 @@ function create() {
             // Espasa
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();        
-    
 
-        // var x = (x - wtmp);
         var x = spacex *3;
         
         var y = y - 510;
@@ -196,9 +183,6 @@ function create() {
 
         y =  y + (tmpnum -5)*20;
 
-        // data.CenterCardsEspasa.forEach(element => {
-        //     y = y + 20;
-        // });
 
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
         card.setScale(0.40);
@@ -210,8 +194,6 @@ function create() {
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();        
        
-
-        // var x = (x - wtmp);
         var x = spacex *4;
 
         var y = y - 510;
@@ -219,11 +201,6 @@ function create() {
         var tmpnum = data.cardtoadd.substring(1,data.card);
 
         y =  y + (tmpnum -5)*20;
-
-
-        // data.CenterCardsBastos.forEach(element => {
-        //     y = y + 20;
-        // });
 
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
         card.setScale(0.40);
