@@ -116,6 +116,7 @@ function create() {
 
         for (let i = 0; i < data.cards.length; i++) {
             card = self.add.sprite(x, y, data.cards[i]).setInteractive();
+            card.setDepth(13);
             card.setScale(0.40);
             self.phcards[i] = card;
 
@@ -135,14 +136,14 @@ function create() {
 
         // SET CARDS ON TABLE
         var x = $('#tablegame').width(); 
-        spacex =  x/5 - 70;
+        spacex =  x/7 - 70;
 console.log('initgame');
         if(data.type == 'o'){
             // Or
             var y = $('#tablegame').height();
             var x = $('#tablegame').width();        
 
-            var x = spacex;
+            var x = spacex * 2;
 
             var y = y - 510;
             var tmpnum = data.cardtoadd.substring(1,data.card);
@@ -159,7 +160,7 @@ console.log('initgame');
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();       
     
-        var x = spacex *2;
+        var x = spacex *3 +15;
         
         var y = y - 510;
         var tmpnum = data.cardtoadd.substring(1,data.card);
@@ -176,7 +177,7 @@ console.log('initgame');
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();        
 
-        var x = spacex *3;
+        var x = spacex *4 +30;
         
         var y = y - 510;
         var tmpnum = data.cardtoadd.substring(1,data.card);
@@ -194,7 +195,7 @@ console.log('initgame');
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();        
        
-        var x = spacex *4;
+        var x = spacex *5 +45;
 
         var y = y - 510;
 
@@ -238,6 +239,7 @@ console.log('initgame');
         var x = $('#tablegame').width();
 
         torn[0] = self.add.graphics();
+        torn[0].setDepth(13);
         torn[0].lineStyle(150, 000000, 1);
         torn[0].beginPath();
         torn[0].moveTo(0, y / 3);
@@ -249,6 +251,7 @@ console.log('initgame');
         var style = { font: "bold 84px Arial", fill: "#fff", align: "center" };
 
         torn[1] = self.add.text(x / 2, y / 3, "Es el teu torn", style).setOrigin(1, 0.5);
+        torn[1].setDepth(13);
         torn[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         torn[2] = setInterval(quitturn, 2000);
 
