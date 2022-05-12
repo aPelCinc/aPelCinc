@@ -397,6 +397,9 @@ function controller(io) {
              partides[socket.codi].jugadors.splice(y,1);
             }
           }
+          if(partides[socket.codi].admin == socket.id){
+            io.to(socket.codi).emit('closeroom');
+          }
           io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
           socket.leave(socket.codi);
 
@@ -421,6 +424,9 @@ function controller(io) {
                 if(socket.id == partides[socket.codi].jugadors[y][0]){
                  partides[socket.codi].jugadors.splice(y,1);
                 }
+              }
+              if(partides[socket.codi].admin == socket.id){
+                io.to(socket.codi).emit('closeroom');
               }
               io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
 
