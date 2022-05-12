@@ -292,6 +292,7 @@ function controller(io) {
           partides[socket.codi].jugadors[partides[socket.codi].torn].cards.splice(pos, 1);
           console.log(' array: ' + partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
           console.log('carta eliminada: ' + card);
+          partides[socket.codi].lastcard=card;
           socket.emit('initcards', {
             cards: partides[socket.codi].jugadors[partides[socket.codi].torn].cards,
             jugadors: partides[socket.codi].jugadors,
@@ -334,6 +335,8 @@ function controller(io) {
       for (i = 0; i < partides[socket.codi].jugadors.length; i++) {
         //send cards to client
         io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {
+          type: card.charAt(0),
+          cardtoadd: partides[socket.codi].lastcard,
           cards: partides[socket.codi].jugadors[i].cards,
           jugadors: partides[socket.codi].jugadors,
           allowedCards: allowedCards,
