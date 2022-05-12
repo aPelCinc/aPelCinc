@@ -28,55 +28,83 @@
       ?
     </button>
     
-    <!-- Main modal -->
+    <!-- Info Game modal -->
     <div id="defaultModal" tabindex="-1" aria-hidden="true" class="flex justify-center bg-[#0505053b] hidden absolute top-2 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto ">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 mx-auto">
-                <!-- Modal header -->
-                <div class="max-h-full flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Regles del joc
-                    </h3>
-                    <button type="button" class="regles text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <div class="p-6 space-y-6">
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                      L'objectiu del joc és que els jugadors col·loquin les cartes sobre la taula fins a quedar-se sense cap.
-                    </p>
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                      La forma de col·locar les cartes és la següent: <br>
-                      
-                          Comença el jugador que posseeixi el cinc d'ors.<br>
-                          Continua el jugador de la dreta, i així successivament.
-                    </p>
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">       
-                      Només es poden col·locar cincs o totes aquelles cartes que segueixen en progressió ascendent o descendent les que hi ha a la taula i siguin del mateix coll. És a dir, si a la taula només hi ha el cinc d'ors, els jugadors només podran col·locar el sis o el quatre d'ors o un cinc d'un altre coll.
-                    </p>
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                      Si un jugador no pot col·locar cap carta, passa, i el torn li correspon al següent jugador. Un jugador pot passar el seu torn, és a dir, no dipositar una carta, només si no té lloc per col·locar-la. Si un jugador pot posar diverses cartes, haurà de triar la que més li convingui per guanyar el joc.
-                    </p>
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                      El primer jugador que aconsegueix col·locar totes les seves cartes sobre la taula és el guanyador.                     
-                    </p>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600 flex justify-center">
-                    <button data-modal-toggle="defaultModal" type="button" class="regles text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">D'acord</button>
-                </div>
-            </div>
-        </div>
+      <div class="relative p-4 w-full max-w-2xl h-full md:h-auto ">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 mx-auto">
+              <!-- Modal header -->
+              <div class="max-h-full flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                      Regles del joc
+                  </h3>
+                  <button type="button" class="regles text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                  </button>
+              </div>
+              <!-- Modal body -->
+              <div class="p-6 space-y-6">
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    L'objectiu del joc és que els jugadors col·loquin les cartes sobre la taula fins a quedar-se sense cap.
+                  </p>
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    La forma de col·locar les cartes és la següent: <br>
+                    
+                        Comença el jugador que posseeixi el cinc d'ors.<br>
+                        Continua el jugador de la dreta, i així successivament.
+                  </p>
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">       
+                    Només es poden col·locar cincs o totes aquelles cartes que segueixen en progressió ascendent o descendent les que hi ha a la taula i siguin del mateix coll. És a dir, si a la taula només hi ha el cinc d'ors, els jugadors només podran col·locar el sis o el quatre d'ors o un cinc d'un altre coll.
+                  </p>
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    Si un jugador no pot col·locar cap carta, passa, i el torn li correspon al següent jugador. Un jugador pot passar el seu torn, és a dir, no dipositar una carta, només si no té lloc per col·locar-la. Si un jugador pot posar diverses cartes, haurà de triar la que més li convingui per guanyar el joc.
+                  </p>
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    El primer jugador que aconsegueix col·locar totes les seves cartes sobre la taula és el guanyador.                     
+                  </p>
+              </div>
+              <!-- Modal footer -->
+              <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600 flex justify-center">
+                  <button data-modal-toggle="defaultModal" type="button" class="regles text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">D'acord</button>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Winner Game modal -->
+    <div id="WinnerGameModal" tabindex="-1" aria-hidden="true" class="flex justify-center bg-[#0505053b] hidden absolute top-2 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+      <div class="relative p-4 w-full max-w-2xl h-full md:h-auto ">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 mx-auto">
+              <!-- Modal header -->
+              <div id="WinnerGameModalTitle" class="max-h-full flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                  </h3>
+              </div>
+              <!-- Modal body -->
+              <div id="WinnerGameModalContent" class="p-6 space-y-6">
+                  <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                  </p>
+              </div>
+              <!-- Modal footer -->
+              <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600 flex justify-center">
+                  <button data-modal-toggle="defaultModal" type="button" class="winnerbuttonGameFinal text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Finalitzar Partida</button>
+              </div>
+          </div>
+      </div>
     </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script> 
     <script>
-     $(".regles").on("click", function(){
+      $(".regles").on("click", function(){
         $('#defaultModal').toggleClass( 'hidden' );
+      });
+
+      $(".winnerbuttonGameFinal").on("click", function(){
+        $('#WinnerGameModal').toggleClass( 'hidden' );
+        location.reload();
       });
 
       var jugadors = [];
@@ -136,6 +164,17 @@
           $("#errornametablejoin").empty();
           $("#errornametablejoin").text(data);
         }
+      });
+
+      socket.on('finalGame', function (data) {
+        $("#WinnerGameModalTitle").children().remove();
+        $("#WinnerGameModalTitle").append(`<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Enorhabona ${ data.winner[1] } !!!</h3>`);
+        
+        $("#WinnerGameModalContent").children().remove();
+        $("#WinnerGameModalContent").append(`<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+          El Guanyador es ${ data.winner[1] }.</p>`);
+        $("#WinnerGameModal").removeClass("hidden");
       });
 
       socket.on('changetoscreen', function (id) {
