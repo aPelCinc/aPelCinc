@@ -410,6 +410,7 @@ function controller(io) {
           io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
           console.log("Room updated");
   });
+});
 
 
 
