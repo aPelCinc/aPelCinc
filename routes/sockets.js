@@ -134,8 +134,11 @@ function controller(io) {
             partides[data.codi].jugadors.push([socket.id,socket.name])
             io.to(data.codi).emit('jugadors', {jugadors: partides[data.codi].jugadors});
             io.to(socket.id).emit('partida', {partida: partides[data.codi]});
-            publicrooms[data.codi][2]++;
-            
+
+            if(publicrooms[data.codi] !== undefined){
+              publicrooms[data.codi][2]++;
+            }
+          
             io.to(socket.codi).emit('chat message', 'Un '+socket.name+' salvatje ha aparegut.', 'sistema');
             socket.emit('changetoscreen', data.button);
           } 
@@ -335,7 +338,7 @@ function controller(io) {
           jugadors: partides[socket.codi].jugadors,
           allowedCards: allowedCards,
           CenterCardsOr: partides[socket.codi].CenterCards.or,
-          CenterCardsEspasa: partides[socket.codi].CenterCards.espasa,
+        CenterCardsEspasa: partides[socket.codi].CenterCards.espasa,
           CenterCardsCopes: partides[socket.codi].CenterCards.copes,
           CenterCardsBastos: partides[socket.codi].CenterCards.bastos,
         });
@@ -353,7 +356,7 @@ function controller(io) {
 
     socket.on("leaveroom",function(data){
       if(typeof socket.codi !== 'undefined'){
-        if(partides[socket.codi].jugadors.length !== 1){
+        if(partides[socket.codi] !== undefined && partides[socket.codi].jugadors.length !== 1){
           for (let y = 0; y < partides[socket.codi].jugadors.length; y++){
             if(socket.id == partides[socket.codi].jugadors[y][0]){
              partides[socket.codi].jugadors.splice(y,1);
@@ -361,29 +364,15 @@ function controller(io) {
           }
           io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
           socket.leave(socket.codi);
-          publicrooms[socket.codi][2]--;
+
+          if(publicrooms[socket.codi] !== undefined){
+            publicrooms[socket.codi][2]--;
+          }
+
           console.log("Room updated")
         }else {
           delete partides[socket.codi];
           delete publicrooms[socket.codi];
-          socket.leave(socket.codi);
-          console.log(partides);
-        }
-      }
-    });
-    socket.on("leaveroom", function (data) {
-      if (typeof socket.codi !== 'undefined') {
-        if (partides[socket.codi].jugadors.length !== 1) {
-          for (let y = 0; y < partides[socket.codi].jugadors.length; y++) {
-            if (socket.id == partides[socket.codi].jugadors[y][0]) {
-              partides[socket.codi].jugadors.splice(y, 1);
-            }
-          }
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
-          socket.leave(socket.codi);
-          console.log("Room updated")
-        } else {
-          delete partides[socket.codi];
           socket.leave(socket.codi);
           console.log(partides);
         }
@@ -399,7 +388,11 @@ function controller(io) {
                 }
               }
               io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
-              publicrooms[socket.codi][2]--;
+
+              if(publicrooms[socket.codi] !== undefined){
+                publicrooms[socket.codi][2]--;
+              }
+
               console.log("Room updated");
             } else {
               delete partides[socket.codi];
@@ -407,7 +400,7 @@ function controller(io) {
               delete publicrooms[socket.codi];
             }
           }
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          // io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
           console.log("Room updated");
   });
 });
