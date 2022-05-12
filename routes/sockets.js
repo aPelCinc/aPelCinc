@@ -250,10 +250,12 @@ function controller(io) {
 
         
         function turnover(){
-          clearInterval(partides[socket.codi].contador);
-          io.to(socket.codi).emit('chat message',partides[socket.codi].jugadors[partides[socket.codi].torn][1]+' ha esgotat el seu torn','sistema');
-          nextturn();
-          startcounter();
+          if(partides[socket.codi] !== undefined){
+            clearInterval(partides[socket.codi].contador);
+            io.to(socket.codi).emit('chat message',partides[socket.codi].jugadors[partides[socket.codi].torn][1]+' ha esgotat el seu torn','sistema');
+            nextturn();
+            startcounter();
+          }
         }
         
         function startcounter(){
@@ -311,8 +313,10 @@ function controller(io) {
           } else {
             partides[socket.codi].torn = 0;
           }*/
+          if(partides[socket.codi] !== undefined){
+            clearInterval(partides[socket.codi].contador);
 
-          clearInterval(partides[socket.codi].contador);
+          }
           nextturn();
           startcounter();
 
