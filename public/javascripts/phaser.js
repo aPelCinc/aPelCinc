@@ -279,23 +279,24 @@ function create() {
     });
     var cardtext = [];
     socket.on("scoreclient", function (data) {
-        var cards1 = data.num1;
-        var cards2 = data.num2;
-        var cards3 = data.num3;
-        var cards4 = data.num4;
+        var cards = [];
+        cards[1] = data.num1;
+        cards[2] = data.num2;
+        cards[3] = data.num3;
+        cards[4] = data.num4;
         for (var i = 0; i < 3; i++) {
             if (cardtext[i] !== undefined) {
                 cardtext[i].destroy();
             }
         }
 
-        cardtext[0] = self.add.text(680, 400, '' + cards1, { fontSize: '12px', fill: '#fff' });
-        cardtext[1] = self.add.text(620, 120, '' + cards2, { fontSize: '12px', fill: '#fff' });
-        if (cards3 !== undefined) {
-            cardtext[2] = self.add.text(130, 120, '' + cards3, { fontSize: '12px', fill: '#fff' });
+        cardtext[0] = self.add.text(680, 400, '' + cards[1], { fontSize: '12px', fill: '#fff' });
+        cardtext[1] = self.add.text(620, 120, '' + cards[2], { fontSize: '12px', fill: '#fff' });
+        if (cards[3] !== undefined) {
+            cardtext[2] = self.add.text(130, 120, '' + cards[3], { fontSize: '12px', fill: '#fff' });
         }
-        if (cards4 !== undefined) {
-            cardtext[3] = self.add.text(660, 300, '' + cards4, { fontSize: '12px', fill: '#fff' });
+        if (cards[4] !== undefined) {
+            cardtext[3] = self.add.text(660, 300, '' + cards[4], { fontSize: '12px', fill: '#fff' });
         }
         
         console.log(data.num1);

@@ -223,8 +223,12 @@ function controller(io) {
             for (let y = 0; y < quo; y++) {
               partides[socket.codi].jugadors[i].cards.push(cards[numcard])
               numcard++;
+              if (cards[numcard] == "o5") {
+                //defines the player who has 5 gold card
+                partides[socket.codi].torn = i;
+                console.log("partides[socket.codi].torn " + partides[socket.codi].torn);
+              }
             }
-
             //send cards to client
 
             io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {
@@ -238,7 +242,6 @@ function controller(io) {
             });
           }
           // console.log(partides[socket.codi]);
-          partides[socket.codi].torn = 0;
 
         io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
          startcounter();
@@ -258,8 +261,21 @@ function controller(io) {
           }
         }
         
-        function startcounter(){
-          partides[socket.codi].contador = setInterval(turnover, 60000);
+        function startcounter() {
+          var compare;
+    
+          compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
+    
+          //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
+          console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
+          console.log("socket  " + socket.id)
+          console.log("cartas tirables "+compare)
+          if (compare == 0) {
+            console.log("turnover manual")
+            turnover();
+          } else {
+            partides[socket.codi].contador = setInterval(turnover, 60000);
+          }
         }
         
         function nextturn(){
@@ -353,11 +369,17 @@ function controller(io) {
     });
     socket.on("scoreserver", function (data) {
       var num = [];
-      for(var i =0; i<partides[socket.codi].jugadors.length;i++) {
-        num[i]=partides[socket.codi].jugadors[i].cards.length
+      var compare = [];
+      for (var i = 0; i < partides[socket.codi].jugadors.length; i++) {
+        num[i] = partides[socket.codi].jugadors[i].cards.length
+        compare[i] = partides[socket.codi].jugadors[i].cards.filter(element => allowedCards.includes(element)).length;
       }
+      //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
+      console.log("intersection " + partides[socket.codi].jugadors[partides[socket.codi].torn][0])
+      console.log("socket  " + socket.id)
       io.to(socket.codi).emit('scoreclient', {
-        num1: num[0], num2: num[1], num3: num[2], num4: num[3]
+        num1: num[0], num2: num[1], num3: num[2], num4: num[3],
+        jug1: compare[0], jug2: compare[1], jug3: compare[2], jug4: compare[3]
       });
     });
 
