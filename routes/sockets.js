@@ -326,12 +326,27 @@ function controller(io) {
     });
     socket.on("scoreserver", function (data) {
       var num = [];
-      for(var i =0; i<partides[socket.codi].jugadors.length;i++) {
-        num[i]=partides[socket.codi].jugadors[i].cards.length
+      var finalGame = false;
+      var winner = [];
+      for(var i = 0; i < partides[socket.codi].jugadors.length; i++) {
+        if (partides[socket.codi].jugadors[i].cards.length > 0) {
+          num[i] = partides[socket.codi].jugadors[i].cards.length;
+          finalGame = false;
+        } else {
+          winner = partides[socket.codi].jugadors[i];
+          finalGame = true;
+          break;
+        }
       }
-      io.to(socket.codi).emit('scoreclient', {
-        num1: num[0], num2: num[1], num3: num[2], num4: num[3]
-      });
+      if (finalGame) {
+        io.to(socket.codi).emit('finalGame', {
+          winner: winner
+        });
+      } else {
+        io.to(socket.codi).emit('scoreclient', {
+          num1: num[0], num2: num[1], num3: num[2], num4: num[3]
+        });
+      }
     });
 
     socket.on("leaveroom", function (data) {
