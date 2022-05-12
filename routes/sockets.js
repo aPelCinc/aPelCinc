@@ -326,16 +326,21 @@ function controller(io) {
         }
 
       }
-      console.log(allowedCards);
-      console.log(partides[socket.codi].CenterCards);
+      // console.log(allowedCards);
+      // console.log(partides[socket.codi].CenterCards);
 
       delete allowedCards;
+
+      allowedCards = [];
 
       // Execute a function check center cards
       checkCenterCards('o', partides[socket.codi].CenterCards.or, quo);
       checkCenterCards('c', partides[socket.codi].CenterCards.copes, quo);
       checkCenterCards('b', partides[socket.codi].CenterCards.bastos, quo);
       checkCenterCards('e', partides[socket.codi].CenterCards.espasa, quo);
+
+      console.log(allowedCards);
+      console.log(partides[socket.codi].CenterCards);
 
       // Refresh Cards before turn
       for (i = 0; i < partides[socket.codi].jugadors.length; i++) {
