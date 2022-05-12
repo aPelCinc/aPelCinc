@@ -23,4 +23,7 @@
     socket.emit('leaveroom');
     changetoscreen('inici')
   }
+  socket.on('closeroom', function () {
+    location.reload();
+  });
 
