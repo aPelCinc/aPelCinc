@@ -125,7 +125,7 @@ function controller(io) {
           io.to(data.codi).emit('jugadors', { jugadors: partides[data.codi].jugadors });
           io.to(socket.id).emit('partida', { partida: partides[data.codi] });
 
-          io.to(socket.codi).emit('chat message', 'Un ' + socket.name + ' salvatje ha aparegut.', socket.name);
+          io.to(socket.codi).emit('chat message', 'Un ' + socket.name + ' salvatje ha aparegut.', 'sistema');
           socket.emit('changetoscreen', data.button);
         }
       }
@@ -239,10 +239,15 @@ function controller(io) {
     }
 
     function nextturn() {
-      if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
+      if (partides[socket.codi].torn < partides[socket.codi].jugadors.length -1) {
         partides[socket.codi].torn++;
+        console.log("eeeeeee");
       } else {
+        if(partides[socket.codi].torn < partides[socket.codi].jugadors.length -1){
+
+        }
         partides[socket.codi].torn = 0;
+        console.log("aaaaa");
       }
       io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
       io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
