@@ -329,7 +329,7 @@ function controller(io) {
       // console.log(allowedCards);
       // console.log(partides[socket.codi].CenterCards);
 
-      delete allowedCards;
+      // delete allowedCards;
 
       allowedCards = [];
 
