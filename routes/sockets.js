@@ -299,6 +299,7 @@ function controller(io) {
           partides[socket.codi].jugadors[partides[socket.codi].torn].cards.splice(pos, 1);
           console.log(' array: ' + partides[socket.codi].jugadors[partides[socket.codi].torn].cards);
           console.log('carta eliminada: ' + card);
+          partides[socket.codi].lastcard=card;
           socket.emit('initcards', {
             cards: partides[socket.codi].jugadors[partides[socket.codi].torn].cards,
             jugadors: partides[socket.codi].jugadors,
@@ -323,45 +324,40 @@ function controller(io) {
           startcounter();
 
           io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
+        
+
+      
+          console.log(allowedCards);
+          console.log(partides[socket.codi].CenterCards);
+
+          delete allowedCards;
+
+          // Execute a function check center cards
+          checkCenterCards('o', partides[socket.codi].CenterCards.or, quo);
+          checkCenterCards('c', partides[socket.codi].CenterCards.copes, quo);
+          checkCenterCards('b', partides[socket.codi].CenterCards.bastos, quo);
+          checkCenterCards('e', partides[socket.codi].CenterCards.espasa, quo);
+
+          // Refresh Cards before turn
+          for (i = 0; i < partides[socket.codi].jugadors.length; i++) {
+            //send cards to client
+            io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {
+              type: card.charAt(0),
+              cardtoadd: partides[socket.codi].lastcard,
+              cards: partides[socket.codi].jugadors[i].cards,
+              jugadors: partides[socket.codi].jugadors,
+              allowedCards: allowedCards,
+              CenterCardsOr: partides[socket.codi].CenterCards.or,
+              CenterCardsEspasa: partides[socket.codi].CenterCards.espasa,
+                CenterCardsCopes: partides[socket.codi].CenterCards.copes,
+                CenterCardsBastos: partides[socket.codi].CenterCards.bastos,
+              });
+            }
         } else {
           console.log('En Aquests Moments no pots fer cap Moviment. :-(');
-        }
-
+          io.to(socket.codi).emit('error','En Aquests Moments no pots fer cap Moviment. :-(');
+          }
       }
-      // console.log(allowedCards);
-      // console.log(partides[socket.codi].CenterCards);
-
-      delete allowedCards;
-
-      allowedCards = [];
-
-      if (partides[socket.codi].CenterCards.or.length == 0 && partides[socket.codi].CenterCards.copes.length == 0
-         && partides[socket.codi].CenterCards.bastos.length == 0 && partides[socket.codi].CenterCards.espasa.length == 0) {
-        allowedCards.push('o5');
-      } else {
-        // Execute a function check center cards
-        checkCenterCards('o', partides[socket.codi].CenterCards.or, quo);
-        checkCenterCards('c', partides[socket.codi].CenterCards.copes, quo);
-        checkCenterCards('b', partides[socket.codi].CenterCards.bastos, quo);
-        checkCenterCards('e', partides[socket.codi].CenterCards.espasa, quo);
-
-        // Refresh Cards before turn
-        for (i = 0; i < partides[socket.codi].jugadors.length; i++) {
-          //send cards to client
-          io.to(partides[socket.codi].jugadors[i][0]).emit('initcards', {
-            cards: partides[socket.codi].jugadors[i].cards,
-            jugadors: partides[socket.codi].jugadors,
-            allowedCards: allowedCards,
-            CenterCardsOr: partides[socket.codi].CenterCards.or,
-          CenterCardsEspasa: partides[socket.codi].CenterCards.espasa,
-            CenterCardsCopes: partides[socket.codi].CenterCards.copes,
-            CenterCardsBastos: partides[socket.codi].CenterCards.bastos,
-          });
-        }
-      }
-
-      console.log(allowedCards);
-      console.log(partides[socket.codi].CenterCards);
     });
 
     socket.on("scoreserver", function (data) {
