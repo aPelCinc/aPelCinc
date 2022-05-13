@@ -183,10 +183,10 @@ function controller(io) {
 
     socket.on("startgame", function (data) {
       if (partides[socket.codi].jugadors.length == 1) {
-        io.emit('error', 'No hay suficientes jugadores');
+        socket.emit('error', 'No hay suficientes jugadores');
       } else {
         if (partides[socket.codi].jugadors[0][0] != socket.id) {
-          io.emit('error', 'No tens permisos per iniciar la partida');
+          socket.emit('error', 'No tens permisos per iniciar la partida');
         } else {
 
           // shuffle cards
@@ -372,7 +372,7 @@ function controller(io) {
             }
         } else {
           console.log('En Aquests Moments no pots fer cap Moviment. :-(');
-          io.to(socket.codi).emit('error','En Aquests Moments no pots fer cap Moviment. :-(');
+          socket.emit('error','En Aquests Moments no pots fer cap Moviment. :-(');
           }
       }
     });
@@ -441,34 +441,47 @@ function controller(io) {
               if(partides[socket.codi].admin == socket.id){
                 io.to(socket.codi).emit('closeroom');
               }
-              io.to(socket.codi).emit('jugadors', {jugadors: partides[socket.codi].jugadors});
+
+              if (partides[socket.codi] !== undefined) {
+                io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+              }
 
               if(publicrooms[socket.codi] !== undefined){
                 publicrooms[socket.codi][2]--;
               }
 
               console.log("Room updated");
-              io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+
+              if (partides[socket.codi] !== undefined) {
+                io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+              }
 
             } else {
               delete partides[socket.codi];
               console.log("Room removed");
               delete publicrooms[socket.codi];
             }
-          
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+
+          if (partides[socket.codi] !== undefined) {
+            io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          }
 
           if (publicrooms[socket.codi] !== undefined) {
             publicrooms[socket.codi][2]--;
           }
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          
+          if (partides[socket.codi] !== undefined) {
+            io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          }
 
           if (publicrooms[socket.codi] !== undefined) {
             publicrooms[socket.codi][2]--;
           }
 
           console.log("Room updated");
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          if (partides[socket.codi] !== undefined) {
+            io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+          }
 
         } else {
           delete partides[socket.codi];
