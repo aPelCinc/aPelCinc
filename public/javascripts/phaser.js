@@ -83,6 +83,7 @@ function create() {
     var centercardsbastos = [];
     this.phcards = [];
     var torn = [];
+    this.playernum=-1;
     this.socket = io();
 
     socket.on('initcards', function (data) {
@@ -99,17 +100,25 @@ function create() {
         console.log(data.CenterCardsCopes);
         console.log(data.CenterCardsBastos);
 
+        //defines the client number
+        console.log("pre if "+self.playernum)
+        if (data.num != undefined){
+            self.playernum = data.num;
+            console.log("inside if")
+        }
+        console.log("post if "+self.playernum)
+        console.log("players name "+data.num);
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
-        var wtmp = data.cards.length *20 +70
+        var wtmp = data.cards.length * 20 + 70
 
         // console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
         // console.log(data.jugadors);
-        
-        if(data.jugadors.length == 2){
-            var x = (x - wtmp)/4;
-        }else{
-            var x = (x - wtmp)/3;
+
+        if (data.jugadors.length == 2) {
+            var x = (x - wtmp) / 4;
+        } else {
+            var x = (x - wtmp) / 3;
         }
 
         var y = y - 200;
@@ -258,25 +267,49 @@ console.log('initgame');
     });
     var cardtext = [];
     socket.on("scoreclient", function (data) {
-        var cards1 = data.num1;
-        var cards2 = data.num2;
-        var cards3 = data.num3;
-        var cards4 = data.num4;
+        console.log("playernum "+ self.playernum);
+        var cards = [];
+        var index = self.playernum;
+        
+        cards[1] = data.num1;
+        cards[2] = data.num2;
+        cards[3] = data.num3;
+        cards[4] = data.num4;
         for (var i = 0; i < 3; i++) {
             if (cardtext[i] !== undefined) {
                 cardtext[i].destroy();
             }
         }
+        console.log("playernum "+ self.playernum);
+        cardtext[0] = self.add.text(680, 400, '' + cards[1+self.playernum], { fontSize: '12px', fill: '#fff' });
 
-        cardtext[0] = self.add.text(680, 400, '' + cards1, { fontSize: '12px', fill: '#fff' });
-        cardtext[1] = self.add.text(620, 120, '' + cards2, { fontSize: '12px', fill: '#fff' });
-        if (cards3 !== undefined) {
-            cardtext[2] = self.add.text(130, 120, '' + cards3, { fontSize: '12px', fill: '#fff' });
-        }
-        if (cards4 !== undefined) {
-            cardtext[3] = self.add.text(660, 300, '' + cards4, { fontSize: '12px', fill: '#fff' });
+        if(index+2>data.totalplayers){
+            cardtext[1] = self.add.text(620, 120, '' + cards[1], { fontSize: '12px', fill: '#fff' });          
+        }else{
+            cardtext[1] = self.add.text(620, 120, '' + cards[2+index], { fontSize: '12px', fill: '#fff' });
         }
         
+
+        
+        if (cards[3] !== undefined) {
+            if(index+3>data.totalplayers){
+                cardtext[2] = self.add.text(130, 120, cards[1], { fontSize: '12px', fill: '#fff' });            
+            }else{
+                cardtext[2] = self.add.text(130, 120, cards[3+index], { fontSize: '12px', fill: '#fff' });
+            }
+        }
+        if(index+4>data.totalplayers){
+            index = 0;            
+        }
+        if (cards[4] !== undefined) {
+            if(index+4>data.totalplayers){
+                cardtext[3] = self.add.text(660, 300, '' + cards[1], { fontSize: '12px', fill: '#fff' });          
+            }else{
+                cardtext[3] = self.add.text(660, 300, '' + cards[4], { fontSize: '12px', fill: '#fff' });
+            }
+            
+        }
+
         console.log(data.num1);
     })
     function contador() {
