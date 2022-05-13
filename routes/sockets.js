@@ -245,6 +245,7 @@ function controller(io) {
             });
           }
           // console.log(partides[socket.codi]);
+          partides[socket.codi].torn = 0;
 
           io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
           startcounter();
@@ -338,7 +339,6 @@ function controller(io) {
 
           }
           nextturn();
-          startcounter();
 
           io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
         
@@ -347,7 +347,7 @@ function controller(io) {
           console.log(allowedCards);
           console.log(partides[socket.codi].CenterCards);
 
-          delete allowedCards;
+          allowedCards = [];
 
           // Execute a function check center cards
           checkCenterCards('o', partides[socket.codi].CenterCards.or, quo);
@@ -376,7 +376,6 @@ function controller(io) {
           }
       }
     });
-
     socket.on("scoreserver", function (data) {
       var num = [];
       var finalGame = false;
@@ -396,8 +395,9 @@ function controller(io) {
           winner: winner
         });
       } else {
+        partides[socket.codi].jugadors[1].num=i+1;
         io.to(socket.codi).emit('scoreclient', {
-          num1: num[0], num2: num[1], num3: num[2], num4: num[3]
+          num1: num[0], num2: num[1], num3: num[2], num4: num[3], totalplayers: partides[socket.codi].jugadors.length
         });
       }
     });
@@ -461,6 +461,11 @@ function controller(io) {
           if (publicrooms[socket.codi] !== undefined) {
             publicrooms[socket.codi][2]--;
           }
+          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
+
+          if (publicrooms[socket.codi] !== undefined) {
+            publicrooms[socket.codi][2]--;
+          }
 
           console.log("Room updated");
           io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
@@ -470,7 +475,6 @@ function controller(io) {
           console.log("Room removed");
           delete publicrooms[socket.codi];
         }
-      
       console.log("Room updated");
     });
   });
