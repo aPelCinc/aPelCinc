@@ -257,11 +257,12 @@ function controller(io) {
 
 
     function turnover() {
+      console.log(partides[socket.codi])
       if (partides[socket.codi] !== undefined) {
         clearInterval(partides[socket.codi].contador);
         io.to(socket.codi).emit('chat message', partides[socket.codi].jugadors[partides[socket.codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
         nextturn();
-        startcounter();
+        // startcounter();
       }
     }
 
@@ -276,9 +277,10 @@ function controller(io) {
       console.log("cartas tirables " + compare)
       if (compare == 0) {
         console.log("turnover manual")
-        turnover();
+        nextturn();
       } else {
         partides[socket.codi].contador = setInterval(turnover, 60000);
+        console.log(partides[socket.codi].contador)
       }
     }
 
@@ -338,7 +340,9 @@ function controller(io) {
             clearInterval(partides[socket.codi].contador);
 
           }
+          console.log("nextturn");
           nextturn();
+          //startcounter();
 
           io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
         

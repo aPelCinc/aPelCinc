@@ -275,7 +275,7 @@ console.log('initgame');
         cards[2] = data.num2;
         cards[3] = data.num3;
         cards[4] = data.num4;
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i <= 3; i++) {
             if (cardtext[i] !== undefined) {
                 cardtext[i].destroy();
             }
@@ -298,14 +298,11 @@ console.log('initgame');
                 cardtext[2] = self.add.text(130, 120, cards[3+index], { fontSize: '12px', fill: '#fff' });
             }
         }
-        if(index+4>data.totalplayers){
-            index = 0;            
-        }
         if (cards[4] !== undefined) {
             if(index+4>data.totalplayers){
                 cardtext[3] = self.add.text(660, 300, '' + cards[1], { fontSize: '12px', fill: '#fff' });          
             }else{
-                cardtext[3] = self.add.text(660, 300, '' + cards[4], { fontSize: '12px', fill: '#fff' });
+                cardtext[3] = self.add.text(660, 300, '' + cards[4+index], { fontSize: '12px', fill: '#fff' });
             }
             
         }
