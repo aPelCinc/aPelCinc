@@ -245,10 +245,8 @@ function controller(io) {
             });
           }
           // console.log(partides[socket.codi]);
-          partides[socket.codi].torn = 0;
 
           io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
-          startcounter();
         }
         io.to(socket.codi).emit('counterfrontend');
         delete publicrooms[socket.codi];
@@ -277,7 +275,7 @@ function controller(io) {
       console.log("cartas tirables " + compare)
       if (compare == 0) {
         console.log("turnover manual")
-        nextturn();
+        turnover();
       } else {
         partides[socket.codi].contador = setInterval(turnover, 60000);
         console.log(partides[socket.codi].contador)
@@ -342,7 +340,7 @@ function controller(io) {
           }
           console.log("nextturn");
           nextturn();
-          //startcounter();
+          
 
           io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
         
@@ -375,6 +373,7 @@ function controller(io) {
               });
             }
         } else {
+          startcounter();
           console.log('En Aquests Moments no pots fer cap Moviment. :-(');
           socket.emit('error','En Aquests Moments no pots fer cap Moviment. :-(');
           }
