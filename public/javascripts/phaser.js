@@ -71,6 +71,7 @@ function preload() {
     this.load.spritesheet('e10', 'images/cartes/e10.png', { frameWidth: 262, frameHeight: 400 });
     this.load.spritesheet('e11', 'images/cartes/e11.png', { frameWidth: 262, frameHeight: 400 });
     this.load.spritesheet('e12', 'images/cartes/e12.png', { frameWidth: 262, frameHeight: 400 });
+    this.load.spritesheet('r0', 'images/cartes/r0.png', { frameWidth: 262, frameHeight: 400 });
 }
 
 
@@ -220,15 +221,7 @@ console.log('initgame');
         socket.emit('scoreserver');
     });
         
-        
-
-        
-
-        
-
-        
-
-        
+    
     var temporitzador = [];
     temporitzador[0] = 60;
 
@@ -265,7 +258,9 @@ console.log('initgame');
         torn[2] = setInterval(quitturn, 2000);
 
     });
+
     var cardtext = [];
+    this.playercards= [];
     socket.on("scoreclient", function (data) {
         console.log("playernum "+ self.playernum);
         var cards = [];
@@ -280,32 +275,126 @@ console.log('initgame');
                 cardtext[i].destroy();
             }
         }
-        console.log("playernum "+ self.playernum);
+ 
+        for (var i = 0; i <= self.playercards.length; i++) {
+            if (self.playercards[i] !== undefined) {
+                self.playercards[i].destroy();
+                console.log('destroyed');
+            }
+        }
+
+        // console.log("playernum "+ self.playernum);
         cardtext[0] = self.add.text(680, 400, '' + cards[1+self.playernum], { fontSize: '12px', fill: '#fff' });
 
+
+        var tmpindex=0;
+
+            //2 PLAYERS
         if(index+2>data.totalplayers){
-            cardtext[1] = self.add.text(620, 120, '' + cards[1], { fontSize: '12px', fill: '#fff' });          
+
+            var spacew = 200/cards[2];
+            var x=$('#tablegame').width()/2 -200;
+            var y = 10;
+            for (let i = 0; i < cards[2]; i++) {
+                card = self.add.sprite(x, y, 'r0').setInteractive();
+                card.setDepth(13);
+                card.setScale(0.20);
+
+                self.playercards[tmpindex]=card;
+                x=x+spacew;
+                tmpindex++; 
+            }     
+            cardtext[1] = self.add.text(x+30, y, '' + cards[1], { fontSize: '12px', fill: '#fff' });   
         }else{
-            cardtext[1] = self.add.text(620, 120, '' + cards[2+index], { fontSize: '12px', fill: '#fff' });
+            var spacew = 200/cards[2];
+            var x=$('#tablegame').width()/2 -200;
+            var y = 10;
+            for (let i = 0; i < cards[2]; i++) {
+                card = self.add.sprite(x, y, 'r0').setInteractive();
+                card.setDepth(13);
+                card.setScale(0.20);
+
+                self.playercards[tmpindex]=card;
+                x=x+spacew;
+                tmpindex++; 
+            }   
+            cardtext[1] = self.add.text(x+30, y, '' + cards[2+index], { fontSize: '12px', fill: '#fff' });
         }
         
 
         
         if (cards[3] !== undefined) {
             if(index+3>data.totalplayers){
-                cardtext[2] = self.add.text(130, 120, cards[1], { fontSize: '12px', fill: '#fff' });            
+                var spacew = 200/cards[3];
+                var x=0;
+                var y=$('#tablegame').height()/2 -200;
+
+                for (let i = 0; i < cards[3]; i++) {
+                    card = self.add.sprite(x, y, 'r0').setInteractive();
+                    card.setDepth(13);
+                    card.setScale(0.20);
+                    card.angle =90;
+
+                    self.playercards[tmpindex]=card;
+                    y=y+spacew;
+                    tmpindex++; 
+                }   
+                cardtext[2] = self.add.text(x+10, y+30, cards[1], { fontSize: '12px', fill: '#fff' });            
             }else{
-                cardtext[2] = self.add.text(130, 120, cards[3+index], { fontSize: '12px', fill: '#fff' });
+                var spacew = 200/cards[3];
+                var x=0;
+                var y=$('#tablegame').height()/2 -200;
+
+                for (let i = 0; i < cards[3]; i++) {
+                    card = self.add.sprite(x, y, 'r0').setInteractive();
+                    card.setDepth(13);
+                    card.setScale(0.20);
+                    card.angle =90;
+
+                    self.playercards[tmpindex]=card;
+                    y=y+spacew;
+                    tmpindex++; 
+                }   
+                cardtext[2] = self.add.text(x+10, y+30, cards[3+index], { fontSize: '12px', fill: '#fff' });
             }
         }
         if (cards[4] !== undefined) {
             if(index+4>data.totalplayers){
-                cardtext[3] = self.add.text(660, 300, '' + cards[1], { fontSize: '12px', fill: '#fff' });          
+                var spacew = 200/cards[4];
+                var x=$('#tablegame').width() -500;
+                var y=$('#tablegame').height()/2 -200;
+
+                for (let i = 0; i < cards[4]; i++) {
+                    card = self.add.sprite(x, y, 'r0').setInteractive();
+                    card.setDepth(13);
+                    card.setScale(0.20);
+                    card.angle =90;
+
+                    self.playercards[tmpindex]=card;
+                    y=y+spacew;
+                    tmpindex++; 
+                }   
+                cardtext[3] = self.add.text(x-10, y+30, '' + cards[1], { fontSize: '12px', fill: '#fff' });          
             }else{
-                cardtext[3] = self.add.text(660, 300, '' + cards[4+index], { fontSize: '12px', fill: '#fff' });
+                var spacew = 200/cards[4];
+                var x=$('#tablegame').width() -400;
+                var y=$('#tablegame').height()/2 -200;
+
+                for (let i = 0; i < cards[4]; i++) {
+                    card = self.add.sprite(x, y, 'r0').setInteractive();
+                    card.setDepth(13);
+                    card.setScale(0.20);
+                    card.angle =90;
+
+                    self.playercards[tmpindex]=card;
+                    y=y+spacew;
+                    tmpindex++; 
+                } 
+                cardtext[3] = self.add.text(x-10, y+30, '' + cards[4+index], { fontSize: '12px', fill: '#fff' });
             }
             
         }
+        console.log(tmpindex);
 
         console.log(data.num1);
     })
