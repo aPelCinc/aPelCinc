@@ -1,8 +1,8 @@
 <section id="createroom" class="w-full overflow-hidden text-white hidden">
-    <img class="md:rotate-[140deg] md:left-0 md:top-[-257px] rotate-[140deg] left-0 top-[-100px] z-10 absolute md:w-1/5 w-40" src="./../images/copa1.png" alt="">
-    <img class="md:rotate-[150deg] md:left-[-113px] md:top-[-119px] rotate-[150deg] left-[-42px] top-[-47px] absolute md:w-1/5 w-40" src="./../images/espasa1.png" alt="">
-    <img class="md:rotate-[-45deg] md:right-0 md:bottom-[-257px] rotate-[-25deg] right-[40%] bottom-[100px] absolute md:w-1/5 w-40" src="./../images/oro1.png" alt="">
-    <img class="md:rotate-[-40deg] md:right-[-143px] md:bottom-[-189px] rotate-[-25deg] right-[20%] bottom-[100px] z-10 absolute md:w-1/5 w-40" src="./../images/basto1.png" alt="">
+  <img class="absolute md:rotate-[120deg] rotate-[120deg] z-10 md:w-[20%] w-[30%] left-[-7%] top-[-10%] md:left-[-3%] md:top-[-15%]" src="./images/copa1.png" alt="">
+  <img class="absolute md:rotate-[120deg] rotate-[120deg] md:w-[20%] w-[30%] left-[-11%] top-[0%] md:left-[-7%] md:top-[0%]" src="./images/espasa1.png" alt="">
+  <img class="absolute md:rotate-[-60deg] rotate-[-60deg] z-10 md:w-[20%] w-[30%] max-h-80 right-[-10%] bottom-[-1%] md:right-[-3%] md:bottom-[0%] md:max-h-full" src="./images/oro1.png" alt="">
+  <img class="absolute md:rotate-[-60deg] rotate-[-60deg] md:w-[20%] w-[30%] max-h-80 right-[-3%] bottom-[-10%] md:right-[0%] md:bottom-[-15%] md:max-h-full" src="./images/basto1.png" alt="">
 
     <div class="w-full h-screen bg-[#00000070]">
       <div class="h-1/5 flex justify-center items-end">
@@ -16,14 +16,17 @@
               <div class="w-full flex justify-center">
                 <input id="inputRoomCreate" name="lobbyname" type="text" class="md:text-3xl p-1 text-xl text-black text-center" required>
               </div>
-              <div class="w-full flex justify-center pt-2">
-                <input id="inputRoomCreatepublic" name="lobbyname" type="checkbox" checked class="mr-2" required> Partida pública
+              <div class="form-check w-full flex justify-center pt-2">
+                <input class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" name="lobbyname" type="checkbox" id="inputRoomCreatepublic" checked required>
+                <label class="form-check-label inline-block text-white" for="inputRoomCreatepublic">
+                  Partida pública
+                </label>
               </div>
               <p id="errornametablecreate" class="hidden p-1 text-center md:text-3xl text-2xl font-bold mt-5 bg-red-600 rounded-md">Error</p>
             </section>
             <section class="block md:pt-0 pt-10 mt-10">
               <div class="w-full flex justify-center">
-                <button id="createroombut" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">CREAR PARTIDA</button>
+                <button id="createroombut" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">Crear Partida</button>
               </div>
             </section>
           </div>
