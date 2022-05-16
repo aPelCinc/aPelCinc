@@ -16,14 +16,17 @@
               <div class="w-full flex justify-center">
                 <input id="inputRoomCreate" name="lobbyname" type="text" class="md:text-3xl p-1 text-xl text-black text-center" required>
               </div>
-              <div class="w-full flex justify-center pt-2">
-                <input id="inputRoomCreatepublic" name="lobbyname" type="checkbox" checked class="mr-2" required> Partida pública
+              <div class="form-check w-full flex justify-center pt-2">
+                <input class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" name="lobbyname" type="checkbox" id="inputRoomCreatepublic" checked required>
+                <label class="form-check-label inline-block text-white" for="inputRoomCreatepublic">
+                  Partida pública
+                </label>
               </div>
               <p id="errornametablecreate" class="hidden p-1 text-center md:text-3xl text-2xl font-bold mt-5 bg-red-600 rounded-md">Error</p>
             </section>
             <section class="block md:pt-0 pt-10 mt-10">
               <div class="w-full flex justify-center">
-                <button id="createroombut" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">CREAR PARTIDA</button>
+                <button id="createroombut" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">Crear Partida</button>
               </div>
             </section>
           </div>
