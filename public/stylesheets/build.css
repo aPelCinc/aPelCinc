@@ -487,8 +487,65 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-\[20\%\] {
   right: 20%;
 }
+.left-\[-10\%\] {
+  left: -10%;
+}
+.top-\[-10\%\] {
+  top: -10%;
+}
+.top-\[-3\%\] {
+  top: -3%;
+}
+.right-\[-10\%\] {
+  right: -10%;
+}
+.bottom-\[-1\%\] {
+  bottom: -1%;
+}
+.right-\[-3\%\] {
+  right: -3%;
+}
+.bottom-\[-10\%\] {
+  bottom: -10%;
+}
 .bottom-\[20px\] {
   bottom: 20px;
+}
+.top-\[-1\%\] {
+  top: -1%;
+}
+.left-\[-1\%\] {
+  left: -1%;
+}
+.left-\[-5\%\] {
+  left: -5%;
+}
+.left-\[-7\%\] {
+  left: -7%;
+}
+.top-\[0\%\] {
+  top: 0%;
+}
+.left-\[-15\%\] {
+  left: -15%;
+}
+.left-\[-13\%\] {
+  left: -13%;
+}
+.left-\[-12\%\] {
+  left: -12%;
+}
+.left-\[-14\%\] {
+  left: -14%;
+}
+.top-\[-2\%\] {
+  top: -2%;
+}
+.top-\[1\%\] {
+  top: 1%;
+}
+.left-\[-11\%\] {
+  left: -11%;
 }
 .z-50 {
   z-index: 50;
@@ -633,6 +690,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .rotate-\[-25deg\] {
   --tw-rotate: -25deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-\[120deg\] {
+  --tw-rotate: 120deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-\[-60deg\] {
+  --tw-rotate: -60deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .rotate-\[-15deg\] {
@@ -1058,6 +1123,150 @@ Ensure the default browser behavior of the `hidden` attribute.
     bottom: -189px;
   }
 
+  .md\:left-\[0\%\] {
+    left: 0%;
+  }
+
+  .md\:top-\[0\%\] {
+    top: 0%;
+  }
+
+  .md\:left-\[10\%\] {
+    left: 10%;
+  }
+
+  .md\:left-\[-7\%\] {
+    left: -7%;
+  }
+
+  .md\:left-\[-10\%\] {
+    left: -10%;
+  }
+
+  .md\:top-\[-10\%\] {
+    top: -10%;
+  }
+
+  .md\:top-\[-13\%\] {
+    top: -13%;
+  }
+
+  .md\:top-\[-17\%\] {
+    top: -17%;
+  }
+
+  .md\:top-\[-20\%\] {
+    top: -20%;
+  }
+
+  .md\:top-\[-30\%\] {
+    top: -30%;
+  }
+
+  .md\:top-\[-25\%\] {
+    top: -25%;
+  }
+
+  .md\:top-\[-3\%\] {
+    top: -3%;
+  }
+
+  .md\:left-\[-8\%\] {
+    left: -8%;
+  }
+
+  .md\:left-\[-9\%\] {
+    left: -9%;
+  }
+
+  .md\:left-\[-6\%\] {
+    left: -6%;
+  }
+
+  .md\:left-\[-5\%\] {
+    left: -5%;
+  }
+
+  .md\:right-\[-10\%\] {
+    right: -10%;
+  }
+
+  .md\:bottom-\[-1\%\] {
+    bottom: -1%;
+  }
+
+  .md\:right-\[-3\%\] {
+    right: -3%;
+  }
+
+  .md\:bottom-\[-10\%\] {
+    bottom: -10%;
+  }
+
+  .md\:bottom-\[-25\%\] {
+    bottom: -25%;
+  }
+
+  .md\:bottom-\[-0\%\] {
+    bottom: -0%;
+  }
+
+  .md\:right-\[-25\%\] {
+    right: -25%;
+  }
+
+  .md\:right-\[-\%\] {
+    right: -%;
+  }
+
+  .md\:right-\[-5\%\] {
+    right: -5%;
+  }
+
+  .md\:bottom-\[3\%\] {
+    bottom: 3%;
+  }
+
+  .md\:bottom-\[0\%\] {
+    bottom: 0%;
+  }
+
+  .md\:right-\[-20\%\] {
+    right: -20%;
+  }
+
+  .md\:right-\[-7\%\] {
+    right: -7%;
+  }
+
+  .md\:right-\[-6\%\] {
+    right: -6%;
+  }
+
+  .md\:right-\[-4\%\] {
+    right: -4%;
+  }
+
+  .md\:top-\[-15\%\] {
+    top: -15%;
+  }
+
+  .md\:bottom-\[-15\%\] {
+    bottom: -15%;
+  }
+
+  .md\:left-\[-3\%\] {
+    left: -3%;
+  }
+
+  .md\:bottom-\[15\%\] {
+    bottom: 15%;
+  }
+
+  .md\:right-\[0\%\] {
+    right: 0%;
+  }
+
   .md\:mx-0 {
     margin-left: 0px;
     margin-right: 0px;
@@ -1124,6 +1333,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:rotate-\[-40deg\] {
     --tw-rotate: -40deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:rotate-\[120deg\] {
+    --tw-rotate: 120deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:rotate-\[-60deg\] {
+    --tw-rotate: -60deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 
