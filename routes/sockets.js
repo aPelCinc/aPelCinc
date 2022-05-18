@@ -1,3 +1,5 @@
+const { ignoreRoot } = require("nodemon/lib/config/defaults");
+
 let partides = [];
 let publicrooms = [];
 
@@ -250,6 +252,7 @@ function controller(io) {
         io.to(socket.codi).emit('counterfrontend');
         delete publicrooms[socket.codi];
       }
+    
     });
 
 
@@ -264,26 +267,16 @@ function controller(io) {
     }
 
     function startcounter(skip) {
-      var compare;
       console.log("skip " + skip)
-      compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
-
       //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
       console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
-      console.log("allowedCards  " + allowedCards)
-      console.log("cartas tirables " + compare)
       if (!skip) {
         console.log("turnover skip")
         turnover();
-      } else {
-        if (compare == 0) {
-          console.log("turnover manual")
-          turnover();
-        } else {
+      }else {
           partides[socket.codi].contador = setInterval(turnover, 60000);
           console.log(partides[socket.codi].contador)
         }
-      }
     }
 
     function nextturn() {
@@ -435,6 +428,18 @@ function controller(io) {
           console.log(partides);
         }
       }
+    });
+
+    
+    socket.on('compare', () => {
+      var compare;      
+      compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
+      if(compare == 0){
+        turnover();
+      }
+      console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
+      console.log("allowedCards  " + allowedCards)
+      console.log("cartas tirables " + compare)
     });
 
     socket.on('disconnect', () => {

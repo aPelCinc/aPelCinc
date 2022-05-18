@@ -88,7 +88,7 @@ function create() {
     this.socket = io();
 
     socket.on('initcards', function (data) {
-
+        socket.emit('compare');
         self.phcards.forEach(element => {
             element.destroy();
         });
@@ -138,7 +138,6 @@ function create() {
                 console.log('carta seleccionada ' + data.cards[i]);
                 socket.emit('turn', data.cards[i]);
             }); // Start game on click.
-
             x = x + 20;
         }
 
