@@ -1,16 +1,14 @@
-// Create games array, public rooms array and allowed cards array
+// Create games array, public rooms array, allowed cards array and array of cards
 let partides = [];
 let publicrooms = [];
 var allowedCards = [];
-
-// Create and prepare array of cards
-var cards = ['o1', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7', 'o8', 'o9', 'o10', 'o11', 'o12'];
-cards.push('c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12');
-cards.push('b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12');
-cards.push('e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12');
+var cards = ['o1', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7', 'o8', 'o9', 'o10', 'o11', 'o12', 
+             'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 
+             'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11', 'b12', 
+             'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12'];
 
 /**
- *  : Get a max number of cards of each player
+ * getQuo: Get a max number of cards of each player
  * 
  * @returns max number of cards of each player
  * **/
@@ -107,6 +105,7 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
       // Only allowed min less 1, and type card concat
       allowedCards.push(typeCard + (min - 1));
     }
+    
     // If max is minor that variable quo
     if (max < quo) {
       // Only allowed max more 1, and type card concat
