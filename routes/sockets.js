@@ -141,6 +141,7 @@ function nextturn(io, codi) {
   } else {
     partides[codi].torn = 0;
   }
+
   io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
   io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
   io.to(codi).emit('counterfrontend');
@@ -149,7 +150,7 @@ function nextturn(io, codi) {
 /**
  * turnover: player turn over
  * **/
- function turnover(io, codi) {
+function turnover(io, codi) {
   if (partides[codi] !== undefined) {
     clearInterval(partides[codi].contador);
     io.to(codi).emit('chat message', partides[codi].jugadors[partides[codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
@@ -185,7 +186,7 @@ function controller(io) {
     socket.on("publicroom", function (data) {
       var rooms = [];
 
-      // Get a list of public rooms
+      // Get a code of public rooms
       Object.keys(publicrooms).forEach(key => {
         rooms.push(publicrooms[key]);
       });
@@ -252,7 +253,6 @@ function controller(io) {
 
         io.to(socket.codi).emit('chat message', socket.name + ' ha creat la partida ' + data.nom + '.', socket.name);
         socket.emit('changetoscreen', data.button);
-
       }
     });
 
@@ -264,7 +264,6 @@ function controller(io) {
         if (partides[socket.codi].jugadors[0][0] != socket.id) {
           socket.emit('error', 'No tens permisos per iniciar la partida');
         } else {
-
           // shuffle cards
           for (i = 0; i < 48; i++) {
             posicion1 = parseInt(Math.random() * 48);
@@ -347,7 +346,6 @@ function controller(io) {
 
           if (partides[socket.codi] !== undefined) {
             clearInterval(partides[socket.codi].contador);
-
           }
 
           startcounter(false, io, socket.codi);
@@ -389,6 +387,7 @@ function controller(io) {
       var num = [];
       var finalGame = false;
       var winner = [];
+
       // checked the winner player of the game
       for (var i = 0; i < partides[socket.codi].jugadors.length; i++) {
         if (partides[socket.codi].jugadors[i].cards.length > 0) {
@@ -400,6 +399,7 @@ function controller(io) {
           break;
         }
       }
+
       // If final game is true, game final and return winner to client
       if (finalGame) {
         io.to(socket.codi).emit('finalGame', {
@@ -423,15 +423,18 @@ function controller(io) {
               partides[socket.codi].jugadors.splice(y, 1);
             }
           }
+
           if (partides[socket.codi].admin == socket.id) {
             io.to(socket.codi).emit('closeroom');
           }
+
           io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
           socket.leave(socket.codi);
 
           if (publicrooms[socket.codi] !== undefined) {
             publicrooms[socket.codi][2]--;
           }
+
         } else {
           delete partides[socket.codi];
           delete publicrooms[socket.codi];
@@ -449,6 +452,7 @@ function controller(io) {
               partides[socket.codi].jugadors.splice(y, 1);
             }
           }
+
           if (partides[socket.codi].admin == socket.id) {
             io.to(socket.codi).emit('closeroom');
           }
@@ -460,7 +464,6 @@ function controller(io) {
           if (publicrooms[socket.codi] !== undefined) {
             publicrooms[socket.codi][2]--;
           }
-
         } else {
           delete partides[socket.codi];
           delete publicrooms[socket.codi];
