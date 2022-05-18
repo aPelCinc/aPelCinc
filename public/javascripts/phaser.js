@@ -293,7 +293,7 @@ console.log('initgame');
         if(index+2>data.totalplayers){
 
             var spacew = 200/cards[2];
-            var x=$('#tablegame').width()/2 -200;
+            var x=$('#tablegame').width()/4;
             var y = 10;
             for (let i = 0; i < cards[2]; i++) {
                 card = self.add.sprite(x, y, 'r0').setInteractive();
@@ -307,7 +307,7 @@ console.log('initgame');
             cardtext[1] = self.add.text(x+30, y, '' + cards[1], { fontSize: '12px', fill: '#fff' });   
         }else{
             var spacew = 200/cards[2];
-            var x=$('#tablegame').width()/2 -200;
+            var x=$('#tablegame').width()/4;
             var y = 10;
             for (let i = 0; i < cards[2]; i++) {
                 card = self.add.sprite(x, y, 'r0').setInteractive();

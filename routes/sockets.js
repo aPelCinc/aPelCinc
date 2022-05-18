@@ -378,8 +378,8 @@ function controller(io) {
           }
         } else {
           startcounter(true);
-          console.log('En Aquests Moments no pots fer cap Moviment. :-(');
-          socket.emit('error', 'En Aquests Moments no pots fer cap Moviment. :-(');
+          console.log('En Aquests Moments no pots fer aquest Moviment. :-(');
+          socket.emit('error', 'En Aquests Moments no pots fer aquest Moviment. :-(');
         }
       }
     });
