@@ -326,9 +326,49 @@ function controller(io) {
         io.to(socket.codi).emit('counterfrontend');
         delete publicrooms[socket.codi];
       }
+    
     });
 
-    // Defined a event websocket 'turn' in server
+
+    function turnover() {
+      console.log(partides[socket.codi])
+      if (partides[socket.codi] !== undefined) {
+        clearInterval(partides[socket.codi].contador);
+        io.to(socket.codi).emit('chat message', partides[socket.codi].jugadors[partides[socket.codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
+        nextturn();
+        // startcounter();
+      }
+    }
+
+    function startcounter(skip) {
+      console.log("skip " + skip)
+      //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
+      console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
+      if (!skip) {
+        console.log("turnover skip")
+        turnover();
+      }else {
+          partides[socket.codi].contador = setInterval(turnover, 60000);
+          console.log(partides[socket.codi].contador)
+        }
+    }
+
+    function nextturn() {
+      console.log(partides[socket.codi].torn);
+      console.log(partides[socket.codi].jugadors.length);
+
+      if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
+        partides[socket.codi].torn++;
+      } else {
+        partides[socket.codi].torn = 0;
+      }
+      io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
+      io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
+      io.to(socket.codi).emit('counterfrontend');
+    }
+
+
+
     socket.on("turn", function (card) {
       if (partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id) {
         socket.emit('error', 'No es el teu torn');
@@ -451,6 +491,18 @@ function controller(io) {
           socket.leave(socket.codi);
         }
       }
+    });
+
+    
+    socket.on('compare', () => {
+      var compare;      
+      compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
+      if(compare == 0){
+        turnover();
+      }
+      console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
+      console.log("allowedCards  " + allowedCards)
+      console.log("cartas tirables " + compare)
     });
 
     // Defined a event websocket 'disconnect' in server
