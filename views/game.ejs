@@ -102,10 +102,10 @@
         $('#defaultModal').toggleClass( 'hidden' );
       });
 
-      $(".winnerbuttonGameFinal").on("click", function(){
-        $('#WinnerGameModal').toggleClass( 'hidden' );
-        location.reload();
-      });
+      // $(".winnerbuttonGameFinal").on("click", function(){
+      //   $('#WinnerGameModal').toggleClass( 'hidden' );
+      //   location.reload();
+      // });
 
       var jugadors = [];
       let params = window.location.search.substring(1);
@@ -169,16 +169,16 @@
         }
       });
 
-      socket.on('finalGame', function (data) {
-        $("#WinnerGameModalTitle").children().remove();
-        $("#WinnerGameModalTitle").append(`<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-          Enorhabona ${ data.winner[1] } !!!</h3>`);
+      // socket.on('finalGame', function (data) {
+      //   $("#WinnerGameModalTitle").children().remove();
+      //   $("#WinnerGameModalTitle").append(`<h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+      //     Enorhabona ${ data.winner[1] } !!!</h3>`);
         
-        $("#WinnerGameModalContent").children().remove();
-        $("#WinnerGameModalContent").append(`<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-          El Guanyador es ${ data.winner[1] }.</p>`);
-        $("#WinnerGameModal").removeClass("hidden");
-      });
+      //   $("#WinnerGameModalContent").children().remove();
+      //   $("#WinnerGameModalContent").append(`<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+      //     El Guanyador es ${ data.winner[1] }.</p>`);
+      //   $("#WinnerGameModal").removeClass("hidden");
+      // });
 
       socket.on('changetoscreen', function (id) {
         for(var i=0;i<sections.length;i++){
