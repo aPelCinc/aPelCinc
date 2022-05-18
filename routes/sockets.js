@@ -468,34 +468,7 @@ function controller(io) {
           console.log("Room removed");
           delete publicrooms[socket.codi];
         }
-
-        if (partides[socket.codi] !== undefined) {
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
-        }
-
-        if (publicrooms[socket.codi] !== undefined) {
-          publicrooms[socket.codi][2]--;
-        }
-
-        if (partides[socket.codi] !== undefined) {
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
-        }
-
-        if (publicrooms[socket.codi] !== undefined) {
-          publicrooms[socket.codi][2]--;
-        }
-
-        console.log("Room updated");
-        if (partides[socket.codi] !== undefined) {
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
-        }
-
-      } else {
-        delete partides[socket.codi];
-        console.log("Room removed");
-        delete publicrooms[socket.codi];
       }
-      console.log("Room updated");
     });
   });
 

@@ -111,7 +111,7 @@ function create() {
         console.log("players name "+data.num);
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
-        var wtmp = data.cards.length * 20 + 70
+        var wtmp = data.cards.length * 20 + 90
 
         // console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
         // console.log(data.jugadors);
@@ -127,14 +127,13 @@ function create() {
         for (let i = 0; i < data.cards.length; i++) {
             card = self.add.sprite(x, y, data.cards[i]).setInteractive();
             card.setDepth(13);
-            card.setScale(0.40);
+            card.setScale(0.40).setY(531.5);
             self.phcards[i] = card;
 
             card.on('pointerover', function (event) {
-                self.phcards[i].y -= 100
-
+                self.phcards[i].setScale(0.50).setY(485);
             });
-            card.on('pointerout', function (event) { self.phcards[i].y += 100 });
+            card.on('pointerout', function (event) { self.phcards[i].setScale(0.40).setY(531.5) });
             card.on('pointerdown', function (event) {
                 console.log('carta seleccionada ' + data.cards[i]);
                 socket.emit('turn', data.cards[i]);
