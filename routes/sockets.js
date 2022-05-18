@@ -387,7 +387,7 @@ function controller(io) {
           }
         } else {
           startcounter(true, io, socket.codi);
-          socket.emit('error', 'En Aquest Moments no pots tirar aquesta carta. :-(');
+          socket.emit('error', 'En Aquest Moment no pots tirar aquesta carta. :-(');
         }
       }
     });
