@@ -119,14 +119,20 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
  * startcounter: start counter
  * **/
 function startcounter(skip, io, codi) {
+  // Filter cards of players, if exists in allowed cards array
   var compare = partides[codi].jugadors[partides[codi].torn].cards.filter(element => allowedCards.includes(element)).length;
 
+  // If skip is false
   if (!skip) {
+    // Execute turn over
     turnover(io, codi);
   } else {
+    // If true, If compare is equals to 0
     if (compare == 0) {
-      turnover();
+      // Execute turn over
+      turnover(io, codi);
     } else {
+      // If else, start set interval turn over 60000 ms
       partides[codi].contador = setInterval(turnover, 60000, [io, codi]);
     }
   }
@@ -136,9 +142,11 @@ function startcounter(skip, io, codi) {
  * nextturn: next turn
  * **/
 function nextturn(io, codi) {
+  // If torn game is less to length players array less 1, increment torn to 1
   if (partides[codi].torn < partides[codi].jugadors.length - 1) {
     partides[codi].torn++;
   } else {
+    // If else, torn is equals to 0
     partides[codi].torn = 0;
   }
 
@@ -151,6 +159,7 @@ function nextturn(io, codi) {
  * turnover: player turn over
  * **/
 function turnover(io, codi) {
+  // If game is not equals to undefined, clear interval
   if (partides[codi] !== undefined) {
     clearInterval(partides[codi].contador);
     io.to(codi).emit('chat message', partides[codi].jugadors[partides[codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
@@ -234,7 +243,7 @@ function controller(io) {
       if (data.nom == '' || data.nom == ' ') {
         socket.emit('error', 'El nom de la Sala es obligatori', 'roomcreate');
       } else {
-        // create a new room
+        // create a new room and join to admin of room
         let codiTaula = socket.id.substring(1, 5);
         socket.codi = codiTaula;
         socket.join(codiTaula);
@@ -247,6 +256,8 @@ function controller(io) {
 
         io.to(socket.id).emit('partida', { partida: partides[codiTaula] });
         io.to(socket.id).emit('jugadors', { jugadors: partida.jugadors });
+        
+        // If room is public, save room in rooms public array
         if (data.public) {
           publicrooms[codiTaula] = [codiTaula, partida.nom, 1];
         }
@@ -468,17 +479,6 @@ function controller(io) {
           delete partides[socket.codi];
           delete publicrooms[socket.codi];
         }
-
-        if (partides[socket.codi] !== undefined) {
-          io.to(socket.codi).emit('jugadors', { jugadors: partides[socket.codi].jugadors });
-        }
-
-        if (publicrooms[socket.codi] !== undefined) {
-          publicrooms[socket.codi][2]--;
-        }
-      } else {
-        delete partides[socket.codi];
-        delete publicrooms[socket.codi];
       }
     });
   });

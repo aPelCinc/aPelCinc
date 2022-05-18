@@ -100,7 +100,7 @@ function create() {
         }
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
-        var wtmp = data.cards.length * 20 + 70
+        var wtmp = data.cards.length * 20 + 90
 
         if (data.jugadors.length == 2) {
             var x = (x - wtmp) / 4;
@@ -113,14 +113,13 @@ function create() {
         for (let i = 0; i < data.cards.length; i++) {
             card = self.add.sprite(x, y, data.cards[i]).setInteractive();
             card.setDepth(13);
-            card.setScale(0.40);
+            card.setScale(0.40).setY(531.5);
             self.phcards[i] = card;
 
             card.on('pointerover', function (event) {
-                self.phcards[i].y -= 100
-
+                self.phcards[i].setScale(0.50).setY(485);
             });
-            card.on('pointerout', function (event) { self.phcards[i].y += 100 });
+            card.on('pointerout', function (event) { self.phcards[i].setScale(0.40).setY(531.5) });
             card.on('pointerdown', function (event) {
                 socket.emit('turn', data.cards[i]);
             }); // Start game on click.
