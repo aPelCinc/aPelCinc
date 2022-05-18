@@ -72,16 +72,18 @@ function preload() {
     this.load.spritesheet('e11', 'images/cartes/e11.png', { frameWidth: 262, frameHeight: 400 });
     this.load.spritesheet('e12', 'images/cartes/e12.png', { frameWidth: 262, frameHeight: 400 });
     this.load.spritesheet('r0', 'images/cartes/r0.png', { frameWidth: 262, frameHeight: 400 });
+    this.load.spritesheet('win', 'images/winner.png', { frameWidth: 1280, frameHeight: 1278 });
+
+    this.load.image('spark0', 'images/blue.png');
+    this.load.image('spark1', 'images/red.png');
+
 }
 
 
 function create() {
     var x = $('#tablegame').width();
     self = this;
-    var centercardsor = [];
-    var centercardsespasa = [];
-    var centercardscopes = [];
-    var centercardsbastos = [];
+    this.centercardscopes = [];
     this.phcards = [];
     var torn = [];
     this.playernum=-1;
@@ -146,7 +148,6 @@ function create() {
         // SET CARDS ON TABLE
         var x = $('#tablegame').width(); 
         spacex =  x/7 - 70;
-console.log('initgame');
         if(data.type == 'o'){
             // Or
             var y = $('#tablegame').height();
@@ -163,7 +164,8 @@ console.log('initgame');
             card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
             card.setScale(0.40);
             card.setDepth(tmpnum);
-            centercardscopes[data.cardtoadd] = card;
+            self.centercardscopes.push(card);
+            
         } else if(data.type == 'c'){
             // Copes
         var y = $('#tablegame').height();
@@ -179,7 +181,7 @@ console.log('initgame');
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
             card.setScale(0.40);
             card.setDepth(tmpnum);
-            centercardscopes[data.cardtoadd] = card;
+            self.centercardscopes.push(card);
 
         } else if(data.type == 'e'){
             // Espasa
@@ -197,10 +199,11 @@ console.log('initgame');
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
         card.setScale(0.40);
         card.setDepth(tmpnum);
-        centercardscopes[data.cardtoadd] = card;
+        self.centercardscopes.push(card);
 
         } else if(data.type == 'b'){
-            // Bastos
+
+
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();        
        
@@ -215,8 +218,10 @@ console.log('initgame');
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
         card.setScale(0.40);
         card.setDepth(tmpnum);
-        centercardscopes[data.cardtoadd] = card;
+        self.centercardscopes.push(card);
     }
+    console.log('cards'+self.centercardscopes);
+
         socket.emit('scoreserver');
     });
         
@@ -397,6 +402,82 @@ console.log('initgame');
 
         console.log(data.num1);
     })
+
+    this.win = [];
+    this.part = [];
+
+    socket.on('finalGame',function (data) {
+        self.phcards.forEach(element => {
+            element.destroy();
+        });
+        for (let i = 0; i < self.centercardscopes.length; i++) {
+            self.centercardscopes[i].destroy();
+        }
+        var y = 250;
+        var x = 400;  
+
+        self.win[0] = self.add.sprite(x, y, 'win').setInteractive();
+        self.win[0].setDepth(20);
+        self.win[0].setScale(0.15);
+
+        var p0 = new Phaser.Math.Vector2(300, 300);
+        var p1 = new Phaser.Math.Vector2(300, 100);
+        var p2 = new Phaser.Math.Vector2(500, 100);
+        var p3 = new Phaser.Math.Vector2(500, 300);
+
+    var curve = new Phaser.Curves.CubicBezier(p0, p1, p2, p3);
+
+
+    var max = 28;
+    var points = [];
+    var tangents = [];
+
+    for (var c = 0; c <= max; c++)
+    {
+        var t = curve.getUtoTmapping(c / max);
+
+        points.push(curve.getPoint(t));
+        tangents.push(curve.getTangent(t));
+    }
+
+    var tempVec = new Phaser.Math.Vector2();
+    
+
+    var spark0 = self.add.particles('spark0');
+    var spark1 = self.add.particles('spark1');
+    spark0.setDepth(20);
+
+    for (var i = 0; i < points.length; i++)
+    {
+        var p = points[i];
+
+        tempVec.copy(tangents[i]).normalizeRightHand().scale(-32).add(p);
+
+        var angle = Phaser.Math.RadToDeg(Phaser.Math.Angle.BetweenPoints(p, tempVec));
+
+        self.part[i] = (i % 2 === 0) ? spark0 : spark1;
+
+        self.part[i].createEmitter({
+            x: tempVec.x,
+            y: tempVec.y,
+            angle: angle,
+            speed: { min: -100, max: 400 },
+            gravityY: 200,
+            scale: { start: 0.2, end: 0.05 },
+            lifespan: 500,
+            blendMode: 'SCREEN'
+        });
+    }
+
+    self.win[1] = self.add.text(575, 400, 'El guanyador es '+data.winner[1]+'!! Enorhabona!').setOrigin(1, 0);
+
+    var button = self.add.text(530, 450, 'Toca la imatge per continuar').setOrigin(1, 0);
+    self.win[0].on('pointerdown', function (event) {
+        location.reload();
+    });
+
+    });
+  
     function contador() {
         var x = $('#tablegame').width();
         temporitzador[2].destroy();
@@ -409,6 +490,8 @@ console.log('initgame');
             temporitzador[0]--;
         }
     }
+
+
 
     function quitturn() {
         console.log('quit');
