@@ -178,7 +178,12 @@ function controller(io) {
 
   // Defined a event websocket 'connection' in server
   io.on('connection', (socket) => {
-    console.log('a user connected');
+    
+    // Defined a event websocket 'chat message' in server
+    socket.on('chat message', (msg, codi) => {
+      // send var msg value call event websocket 'chat message' in client
+      io.to(partides[codi].id).emit('chat message', msg, socket.name);
+    });
 
     // Defined a event websocket 'name' in server, is checked name correctly
     socket.on("name", function (data) {
@@ -201,12 +206,6 @@ function controller(io) {
       });
 
       socket.emit('getpublicroom', rooms);
-    });
-
-    // Defined a event websocket 'chat message' in server
-    socket.on('chat message', (msg, codi) => {
-      // send var msg value call event websocket 'chat message' in client
-      io.to(partides[codi].id).emit('chat message', msg, socket.name);
     });
 
     // Defined a event websocket 'joinroom' in server
@@ -290,6 +289,7 @@ function controller(io) {
           partides[socket.codi].CenterCards.bastos = [];
           partides[socket.codi].CenterCards.espasa = [];
 
+          // Allow Only o5 card
           allowedCards.push('o5');
 
           // Assign cards to players
