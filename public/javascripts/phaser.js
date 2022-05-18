@@ -79,7 +79,6 @@ function preload() {
 
 }
 
-
 function create() {
     var x = $('#tablegame').width();
     self = this;
@@ -90,33 +89,20 @@ function create() {
     this.socket = io();
 
     socket.on('initcards', function (data) {
-
+        socket.emit('compare');
         self.phcards.forEach(element => {
             element.destroy();
         });
 
-
         changetoscreen('game');
 
-        console.log(data.CenterCardsOr);
-        console.log(data.CenterCardsEspasa);
-        console.log(data.CenterCardsCopes);
-        console.log(data.CenterCardsBastos);
-
         //defines the client number
-        console.log("pre if "+self.playernum)
         if (data.num != undefined){
             self.playernum = data.num;
-            console.log("inside if")
         }
-        console.log("post if "+self.playernum)
-        console.log("players name "+data.num);
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
         var wtmp = data.cards.length * 20 + 90
-
-        // console.log(x + 'cartes: ' + data.cards.length *20 + 'separacio: '+(x - wtmp)/2);
-        // console.log(data.jugadors);
 
         if (data.jugadors.length == 2) {
             var x = (x - wtmp) / 4;
@@ -137,10 +123,8 @@ function create() {
             });
             card.on('pointerout', function (event) { self.phcards[i].setScale(0.40).setY(531.5) });
             card.on('pointerdown', function (event) {
-                console.log('carta seleccionada ' + data.cards[i]);
                 socket.emit('turn', data.cards[i]);
             }); // Start game on click.
-
             x = x + 20;
         }
 
@@ -185,15 +169,15 @@ function create() {
 
         } else if(data.type == 'e'){
             // Espasa
-        var y = $('#tablegame').height();
-        var x = $('#tablegame').width();        
+            var y = $('#tablegame').height();
+            var x = $('#tablegame').width();        
 
-        var x = spacex *4 +30;
-        
-        var y = y - 510;
-        var tmpnum = data.cardtoadd.substring(1,data.card);
+            var x = spacex *4 +30;
+            
+            var y = y - 510;
+            var tmpnum = data.cardtoadd.substring(1,data.card);
 
-        y =  y + (tmpnum -5)*20;
+            y =  y + (tmpnum -5)*20;
 
 
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
@@ -209,23 +193,21 @@ function create() {
        
         var x = spacex *5 +45;
 
-        var y = y - 510;
+            var y = y - 510;
 
-        var tmpnum = data.cardtoadd.substring(1,data.card);
+            var tmpnum = data.cardtoadd.substring(1,data.card);
 
-        y =  y + (tmpnum -5)*20;
+            y =  y + (tmpnum -5)*20;
 
         card = self.add.sprite(x, y, data.cardtoadd).setInteractive();
         card.setScale(0.40);
         card.setDepth(tmpnum);
         self.centercardscopes.push(card);
     }
-    console.log('cards'+self.centercardscopes);
 
         socket.emit('scoreserver');
     });
-        
-    
+
     var temporitzador = [];
     temporitzador[0] = 60;
 
@@ -233,8 +215,8 @@ function create() {
         try {
             temporitzador[2].destroy();
             clearInterval(temporitzador[1]);
-        } catch (error) {
-        }
+        } catch (error) {  }
+
         temporitzador[0] = 58;
         temporitzador[2] = self.add.text(x / 1.5, 0, 60).setOrigin(1, 0);
         temporitzador[1] = setInterval(contador, 1000);
@@ -253,14 +235,12 @@ function create() {
         torn[0].closePath();
         torn[0].strokePath();
 
-
         var style = { font: "bold 84px Arial", fill: "#fff", align: "center" };
 
         torn[1] = self.add.text(x / 2, y / 3, "Es el teu torn", style).setOrigin(1, 0.5);
         torn[1].setDepth(13);
         torn[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         torn[2] = setInterval(quitturn, 2000);
-
     });
 
     var cardtext = [];
@@ -293,11 +273,10 @@ function create() {
 
         var tmpindex=0;
 
-            //2 PLAYERS
+        // 2 PLAYERS
         if(index+2>data.totalplayers){
-
             var spacew = 200/cards[2];
-            var x=$('#tablegame').width()/2 -200;
+            var x=$('#tablegame').width()/4;
             var y = 10;
             for (let i = 0; i < cards[2]; i++) {
                 card = self.add.sprite(x, y, 'r0').setInteractive();
@@ -309,9 +288,9 @@ function create() {
                 tmpindex++; 
             }     
             cardtext[1] = self.add.text(x+30, y, '' + cards[1], { fontSize: '12px', fill: '#fff' });   
-        }else{
+        } else {
             var spacew = 200/cards[2];
-            var x=$('#tablegame').width()/2 -200;
+            var x=$('#tablegame').width()/4;
             var y = 10;
             for (let i = 0; i < cards[2]; i++) {
                 card = self.add.sprite(x, y, 'r0').setInteractive();
@@ -324,8 +303,6 @@ function create() {
             }   
             cardtext[1] = self.add.text(x+30, y, '' + cards[2+index], { fontSize: '12px', fill: '#fff' });
         }
-        
-
         
         if (cards[3] !== undefined) {
             if(index+3>data.totalplayers){
@@ -500,7 +477,6 @@ function create() {
         torn[1].destroy();
     }
 }
-
 
 function update() {
 }
