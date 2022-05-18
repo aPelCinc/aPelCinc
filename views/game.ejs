@@ -142,11 +142,14 @@
         socket.emit('joinroom', {codi: codi, button: 'lobby'});
       });
 
+      var tmp_error;
       socket.on('error', function(data) {
          console.log("Error: "+data);
          $('#error').removeClass( 'hidden' )
          $('#errormessage').empty()
          $('#errormessage').text(data)
+         clearInterval(tmp_error);
+         tmp_error = setInterval(closeerror, 5000);
       });
 
       socket.on('error name', function (data, type) {
@@ -186,6 +189,7 @@
 
       function closeerror(){
         $('#error').addClass( 'hidden' );
+        clearInterval(tmp_error);
       }
 
     </script>
