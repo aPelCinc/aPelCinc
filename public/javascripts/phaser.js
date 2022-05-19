@@ -94,6 +94,7 @@ function create() {
             element.destroy();
         });
 
+
         changetoscreen('game');
 
         //defines the client number
@@ -206,6 +207,7 @@ function create() {
     }
 
         socket.emit('scoreserver');
+        socket.emit('nameplayerfrontendd');
     });
 
     var temporitzador = [];
@@ -380,9 +382,6 @@ function create() {
         console.log(data.num1);
     })
 
-    this.win = [];
-    this.part = [];
-
     socket.on('finalGame',function (data) {
         self.phcards.forEach(element => {
             element.destroy();
@@ -455,6 +454,85 @@ function create() {
 
     });
   
+
+    var nameText = [];   
+    socket.on('nameplayerfrontend', function(data) {
+    var index = self.playernum;
+    var nameCard = [];
+    nameCard[1] = data.name1[1];
+
+    for (var i = 0; i <= data.jugadors; i++) {
+       if (nameText[i] !== undefined) {
+           nameText[i].destroy();
+       }
+    }
+
+    var x = $('#tablegame').width();
+    var y = $('#tablegame').height();
+
+    //2 players
+    if (data.totalplayers == 2) {
+        nameCard[2] = data.name2[1]; 
+        nameText[0] = self.add.text(110, 400, '' + nameCard[1+self.playernum], { fontSize: '12px', fill: '#fff' });
+
+        if(index+2>data.totalplayers){
+            nameText[1] = self.add.text(220, 12, '' + nameCard[1], { fontSize: '12px', fill: '#fff' });    
+        }else{
+            nameText[1] = self.add.text(220, 12, '' + nameCard[2+index], { fontSize: '12px', fill: '#fff' });
+        }
+    }
+   
+        
+
+    //3 player
+    nameCard[2] = data.name2[1];  
+    nameCard[3] = data.name3[1];
+    if (data.totalplayers == 3) {  
+        
+        if(index+2>data.totalplayers){
+            nameText[1] = self.add.text(220, 12, '' + nameCard[1], { fontSize: '12px', fill: '#fff' });       
+        }else{
+            nameText[1] = self.add.text(220, 12, '' + nameCard[2+index], { fontSize: '12px', fill: '#fff' });  
+        }
+
+        if(index+3>data.totalplayers){
+            nameText[2] = self.add.text(10, 120, ''+nameCard[0+index], { fontSize: '12px', fill: '#fff' });            
+        }else{
+            nameText[2] = self.add.text(10, 120,'' +nameCard[3+index], { fontSize: '12px', fill: '#fff' });
+        } 
+        nameText[0] = self.add.text(110, 400, '' + nameCard[1+self.playernum], { fontSize: '12px', fill: '#fff' });
+    }
+   
+    // 4 players
+    nameCard[2] = data.name2[1];  
+    nameCard[3] = data.name3[1]; 
+    nameCard[4] = data.name4[1]; 
+
+    if (data.totalplayers == 4) {  
+        if(index+2>data.totalplayers){
+            nameText[1] = self.add.text(220, 12, '' + nameCard[1], { fontSize: '12px', fill: '#fff' });  
+            
+        }else{
+            nameText[1] = self.add.text(220, 12, '' + nameCard[2+index], { fontSize: '12px', fill: '#fff' });
+        }
+
+        if(index+3>data.totalplayers){
+            
+            nameText[2] = self.add.text(10, 120, ''+nameCard[index-1], { fontSize: '12px', fill: '#fff' });            
+        }else{
+            nameText[2] = self.add.text(10, 120,'' +nameCard[3+index], { fontSize: '12px', fill: '#fff' });
+        }
+
+        if(index+4>data.totalplayers){
+            nameText[3] = self.add.text(725, 120, nameCard[index], { fontSize: '12px', fill: '#fff' });            
+        }else{
+            nameText[3] = self.add.text(725, 120, nameCard[4+index], { fontSize: '12px', fill: '#fff' });
+        }
+        
+    nameText[0] = self.add.text(110, 400, '' + nameCard[1+self.playernum], { fontSize: '12px', fill: '#fff' });
+}
+});
+
     function contador() {
         var x = $('#tablegame').width();
         temporitzador[2].destroy();
