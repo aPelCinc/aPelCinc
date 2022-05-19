@@ -104,13 +104,21 @@ function create() {
         var x = $('#tablegame').width();
         var wtmp = data.cards.length * 20 + 90
 
-        if (data.jugadors.length == 2) {
-            var x = (x - wtmp) / 4;
+        if (window.innerWidth < 950) {
+            if (data.jugadors.length == 2) {
+                var x = (x - wtmp) * 11;
+            } else {
+                var x = (x - wtmp);
+            }
         } else {
-            var x = (x - wtmp) / 3;
+            if (data.jugadors.length == 2) {
+                var x = (x - wtmp) / 4;
+            } else {
+                var x = (x - wtmp) / 3;
+            }
         }
 
-        var y = y - 200;
+        var y = y + 200;
 
         for (let i = 0; i < data.cards.length; i++) {
             card = self.add.sprite(x, y, data.cards[i]).setInteractive();
@@ -128,7 +136,6 @@ function create() {
             x = x + 20;
         }
 
-
         // SET CARDS ON TABLE
         var x = $('#tablegame').width(); 
         spacex =  x/7 - 70;
@@ -139,7 +146,8 @@ function create() {
 
             var x = spacex * 2;
 
-            var y = y - 510;
+            var y = y - window.innerHeight / 1.6;
+            
             var tmpnum = data.cardtoadd.substring(1,data.card);
             console.log(tmpnum-5);
 
@@ -157,7 +165,7 @@ function create() {
     
         var x = spacex *3 +15;
         
-        var y = y - 510;
+        var y = y - window.innerHeight / 1.6;
         var tmpnum = data.cardtoadd.substring(1,data.card);
 
         y =  y + (tmpnum -5)*20;
@@ -174,7 +182,7 @@ function create() {
 
             var x = spacex *4 +30;
             
-            var y = y - 510;
+            var y = y - window.innerHeight / 1.6;
             var tmpnum = data.cardtoadd.substring(1,data.card);
 
             y =  y + (tmpnum -5)*20;
@@ -193,7 +201,7 @@ function create() {
        
         var x = spacex *5 +45;
 
-            var y = y - 510;
+        var y = y - window.innerHeight / 1.6;
 
             var tmpnum = data.cardtoadd.substring(1,data.card);
 
@@ -218,7 +226,11 @@ function create() {
         } catch (error) {  }
 
         temporitzador[0] = 58;
-        temporitzador[2] = self.add.text(x / 1.5, 0, 60).setOrigin(1, 0);
+        if (window.innerWidth < 950) {
+            temporitzador[2] = self.add.text(x * 1.5, 0, 60).setOrigin(1, 0);
+        } else {
+            temporitzador[2] = self.add.text(x / 1.5, 0, 60).setOrigin(1, 0);
+        }
         temporitzador[1] = setInterval(contador, 1000);
     });
 
@@ -226,18 +238,33 @@ function create() {
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
 
-        torn[0] = self.add.graphics();
-        torn[0].setDepth(13);
-        torn[0].lineStyle(150, 000000, 1);
-        torn[0].beginPath();
-        torn[0].moveTo(0, y / 3);
-        torn[0].lineTo(x, y / 3);
-        torn[0].closePath();
-        torn[0].strokePath();
+        if (window.innerWidth < 950) {
+            torn[0] = self.add.graphics();
+            torn[0].setDepth(13);
+            torn[0].lineStyle(150, 000000, 1);
+            torn[0].beginPath();
+            torn[0].moveTo(0, y / 3);
+            torn[0].lineTo(x * 2, y / 3);
+            torn[0].closePath();
+            torn[0].strokePath();
+        } else {
+            torn[0] = self.add.graphics();
+            torn[0].setDepth(13);
+            torn[0].lineStyle(150, 000000, 1);
+            torn[0].beginPath();
+            torn[0].moveTo(0, y / 3);
+            torn[0].lineTo(x, y / 3);
+            torn[0].closePath();
+            torn[0].strokePath();
+        }
 
         var style = { font: "bold 84px Arial", fill: "#fff", align: "center" };
 
-        torn[1] = self.add.text(x / 2, y / 3, "Es el teu torn", style).setOrigin(1, 0.5);
+        if (window.innerWidth < 950) {
+            torn[1] = self.add.text(x * 1.3, y / 3, "Es el teu torn", style).setOrigin(1, 0.5);
+        } else {
+            torn[1] = self.add.text(x / 2, y / 3, "Es el teu torn", style).setOrigin(1, 0.5);
+        }
         torn[1].setDepth(13);
         torn[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         torn[2] = setInterval(quitturn, 2000);
@@ -458,7 +485,11 @@ function create() {
     function contador() {
         var x = $('#tablegame').width();
         temporitzador[2].destroy();
-        temporitzador[2] = self.add.text(x / 1.5, 0, temporitzador[0]).setOrigin(1, 0);
+        if (window.innerWidth < 950) {
+            temporitzador[2] = self.add.text(x * 1.5, 0, temporitzador[0]).setOrigin(1, 0);
+        } else {
+            temporitzador[2] = self.add.text(x / 1.5, 0, temporitzador[0]).setOrigin(1, 0);
+        }
 
         if (temporitzador[0] == 0) {
             clearInterval(temporitzador[1]);
