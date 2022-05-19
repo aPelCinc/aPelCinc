@@ -126,30 +126,30 @@ function startcounter(io, codi) {
 }
 function comparator(io, codi) {
   ////console.log("compare");
-      ////console.log(partides[codi].contador)
-      var compare;
-      compare = partides[codi].jugadors[partides[codi].torn].cards.filter(element => allowedCards.includes(element)).length;
-      console.log(partides[codi].jugadors[partides[codi].torn][1])
-      console.log(allowedCards)
-      console.log(compare)
-      if (compare == 0) {
-        console.log("manual")
-        startcounter(io, codi);
-        turnover(io, codi);
-      }
+  ////console.log(partides[codi].contador)
+  var compare;
+  compare = partides[codi].jugadors[partides[codi].torn].cards.filter(element => allowedCards.includes(element)).length;
+  //console.log(partides[codi].jugadors[partides[codi].torn][1])
+  //console.log(allowedCards)
+  //console.log(compare)
+  if (compare == 0) {
+    console.log("manual")
+    startcounter(io, codi);
+    turnover(io, codi);
+  }
 }
 /**
  * nextturn: next turn
  * **/
 function nextturn(io, codi) {
-      if (partides[codi].torn < partides[codi].jugadors.length - 1) {
-        partides[codi].torn++;
-      } else {
-        partides[codi].torn = 0;
-      }
-      io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
-      io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
-      io.to(codi).emit('counterfrontend');
+  if (partides[codi].torn < partides[codi].jugadors.length - 1) {
+    partides[codi].torn++;
+  } else {
+    partides[codi].torn = 0;
+  }
+  io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
+  io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
+  io.to(codi).emit('counterfrontend');
 }
 /**
  * turnover: player turn over
@@ -328,7 +328,7 @@ function controller(io) {
         io.to(socket.codi).emit('counterfrontend');
         delete publicrooms[socket.codi];
       }
-    
+
     });
 
     socket.on("turn", function (card) {
@@ -429,14 +429,14 @@ function controller(io) {
 
     socket.on("nameplayerfrontendd", function (data) {
       var name = partides[socket.codi].jugadors;
-      for(var i =0; i<partides[socket.codi].jugadors;i++) {
-        name[i]=partides[socket.codi].jugadors[i]
+      for (var i = 0; i < partides[socket.codi].jugadors; i++) {
+        name[i] = partides[socket.codi].jugadors[i]
       }
       io.to(socket.codi).emit('nameplayerfrontend', {
         name1: name[0], name2: name[1], name3: name[2], name4: name[3], totalplayers: partides[socket.codi].jugadors.length
       });
     });
-    
+
     // Defined a event websocket 'leaveroom' in server
     socket.on("leaveroom", function (data) {
       if (typeof socket.codi !== 'undefined') {
