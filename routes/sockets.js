@@ -117,15 +117,9 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
 /**
  * startcounter: start counter
  * **/
-function startcounter(skip, io, codi) {
-  // If skip is false
-  if (!skip) {
-    // Execute turn over
-    turnover(io, codi);
-  }else {
+function startcounter(io, codi) {
       // If else, start set interval turn over 60000 ms
-      partides[codi].contador = setInterval(turnover, 60000, [io, codi]);
-    }
+      partides[codi].contador = setInterval(turnover, 6000, [io, codi]);
 }
 
 /**
@@ -151,7 +145,6 @@ function nextturn(io, codi) {
 function turnover(io, codi) {
   // If game is not equals to undefined, clear interval
   if (partides[codi] !== undefined) {
-    console.log(partides[codi].contador);
     clearInterval(partides[codi].contador);
     io.to(codi).emit('chat message', partides[codi].jugadors[partides[codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
     nextturn(io, codi);
@@ -321,46 +314,6 @@ function controller(io) {
     
     });
 
-
-    // function turnover() {
-    //   console.log(partides[socket.codi])
-    //   if (partides[socket.codi] !== undefined) {
-    //     clearInterval(partides[socket.codi].contador);
-    //     io.to(socket.codi).emit('chat message', partides[socket.codi].jugadors[partides[socket.codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
-    //     nextturn();
-    //     // startcounter();
-    //   }
-    // }
-
-    // function startcounter(skip) {
-    //   console.log("skip " + skip)
-    //   //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
-    //   console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
-    //   if (!skip) {
-    //     console.log("turnover skip")
-    //     turnover();
-    //   }else {
-    //       partides[socket.codi].contador = setInterval(turnover, 60000);
-    //       console.log(partides[socket.codi].contador)
-    //     }
-    // }
-
-    // function nextturn() {
-    //   console.log(partides[socket.codi].torn);
-    //   console.log(partides[socket.codi].jugadors.length);
-
-    //   if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
-    //     partides[socket.codi].torn++;
-    //   } else {
-    //     partides[socket.codi].torn = 0;
-    //   }
-    //   io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
-    //   io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
-    //   io.to(socket.codi).emit('counterfrontend');
-    // }
-
-
-
     socket.on("turn", function (card) {
       if (partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id) {
         socket.emit('error', 'No es el teu torn');
@@ -390,7 +343,7 @@ function controller(io) {
             clearInterval(partides[socket.codi].contador);
           }
 
-          startcounter(false, io, socket.codi);
+          turnover(io, socket.codi);
 
           io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
 
@@ -418,7 +371,7 @@ function controller(io) {
             });
           }
         } else {
-          startcounter(true, io, socket.codi);
+          startcounter(io, socket.codi);
           socket.emit('error', 'En Aquest Moment no pots tirar aquesta carta. :-(');
         }
       }
@@ -500,13 +453,12 @@ function controller(io) {
       var compare;      
       compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
       if(compare == 0){
-        startcounter(false,io,socket.codi);
+        turnover(io,socket.codi);
       }
       console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
       console.log("allowedCards  " + allowedCards)
       console.log("cartas tirables " + compare)
     });
-
     // Defined a event websocket 'disconnect' in server
     socket.on('disconnect', () => {
       if (typeof socket.codi !== 'undefined') {
