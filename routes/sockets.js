@@ -118,40 +118,31 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
  * startcounter: start counter
  * **/
 function startcounter(skip, io, codi) {
-  // Filter cards of players, if exists in allowed cards array
-  var compare = partides[codi].jugadors[partides[codi].torn].cards.filter(element => allowedCards.includes(element)).length;
-
   // If skip is false
   if (!skip) {
     // Execute turn over
     turnover(io, codi);
-  } else {
-    // If true, If compare is equals to 0
-    if (compare == 0) {
-      // Execute turn over
-      turnover(io, codi);
-    } else {
+  }else {
       // If else, start set interval turn over 60000 ms
       partides[codi].contador = setInterval(turnover, 60000, [io, codi]);
     }
-  }
 }
 
 /**
  * nextturn: next turn
  * **/
 function nextturn(io, codi) {
-  // If torn game is less to length players array less 1, increment torn to 1
-  if (partides[codi].torn < partides[codi].jugadors.length - 1) {
-    partides[codi].torn++;
-  } else {
-    // If else, torn is equals to 0
-    partides[codi].torn = 0;
-  }
+      console.log(partides[codi].torn);
+      console.log(partides[codi].jugadors.length);
 
-  io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
-  io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
-  io.to(codi).emit('counterfrontend');
+      if (partides[codi].torn < partides[codi].jugadors.length - 1) {
+        partides[codi].torn++;
+      } else {
+        partides[codi].torn = 0;
+      }
+      io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
+      io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
+      io.to(codi).emit('counterfrontend');
 }
 
 /**
@@ -160,6 +151,7 @@ function nextturn(io, codi) {
 function turnover(io, codi) {
   // If game is not equals to undefined, clear interval
   if (partides[codi] !== undefined) {
+    console.log(partides[codi].contador);
     clearInterval(partides[codi].contador);
     io.to(codi).emit('chat message', partides[codi].jugadors[partides[codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
     nextturn(io, codi);
@@ -330,42 +322,42 @@ function controller(io) {
     });
 
 
-    function turnover() {
-      console.log(partides[socket.codi])
-      if (partides[socket.codi] !== undefined) {
-        clearInterval(partides[socket.codi].contador);
-        io.to(socket.codi).emit('chat message', partides[socket.codi].jugadors[partides[socket.codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
-        nextturn();
-        // startcounter();
-      }
-    }
+    // function turnover() {
+    //   console.log(partides[socket.codi])
+    //   if (partides[socket.codi] !== undefined) {
+    //     clearInterval(partides[socket.codi].contador);
+    //     io.to(socket.codi).emit('chat message', partides[socket.codi].jugadors[partides[socket.codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
+    //     nextturn();
+    //     // startcounter();
+    //   }
+    // }
 
-    function startcounter(skip) {
-      console.log("skip " + skip)
-      //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
-      console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
-      if (!skip) {
-        console.log("turnover skip")
-        turnover();
-      }else {
-          partides[socket.codi].contador = setInterval(turnover, 60000);
-          console.log(partides[socket.codi].contador)
-        }
-    }
+    // function startcounter(skip) {
+    //   console.log("skip " + skip)
+    //   //partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id
+    //   console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
+    //   if (!skip) {
+    //     console.log("turnover skip")
+    //     turnover();
+    //   }else {
+    //       partides[socket.codi].contador = setInterval(turnover, 60000);
+    //       console.log(partides[socket.codi].contador)
+    //     }
+    // }
 
-    function nextturn() {
-      console.log(partides[socket.codi].torn);
-      console.log(partides[socket.codi].jugadors.length);
+    // function nextturn() {
+    //   console.log(partides[socket.codi].torn);
+    //   console.log(partides[socket.codi].jugadors.length);
 
-      if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
-        partides[socket.codi].torn++;
-      } else {
-        partides[socket.codi].torn = 0;
-      }
-      io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
-      io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
-      io.to(socket.codi).emit('counterfrontend');
-    }
+    //   if (partides[socket.codi].torn < partides[socket.codi].jugadors.length - 1) {
+    //     partides[socket.codi].torn++;
+    //   } else {
+    //     partides[socket.codi].torn = 0;
+    //   }
+    //   io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
+    //   io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
+    //   io.to(socket.codi).emit('counterfrontend');
+    // }
 
 
 
@@ -498,7 +490,7 @@ function controller(io) {
       var compare;      
       compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
       if(compare == 0){
-        turnover();
+        startcounter(false,io,socket.codi);
       }
       console.log("jugadors[] " + partides[socket.codi].jugadors[partides[socket.codi].torn])
       console.log("allowedCards  " + allowedCards)

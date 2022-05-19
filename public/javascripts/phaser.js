@@ -94,6 +94,7 @@ function create() {
             element.destroy();
         });
 
+
         changetoscreen('game');
 
         //defines the client number
