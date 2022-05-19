@@ -392,9 +392,13 @@ function create() {
         var y = 250;
         var x = 400;  
 
-        self.win[0] = self.add.sprite(x, y, 'win').setInteractive();
-        self.win[0].setDepth(20);
-        self.win[0].setScale(0.15);
+        let win = [];
+        win[0] = self.add.sprite(x, y, 'win').setInteractive();
+        win[0].setDepth(20);
+        win[0].setScale(0.15);
+        win[0].on('pointerdown', function (event) {
+            location.reload();
+        });
 
         var p0 = new Phaser.Math.Vector2(300, 300);
         var p1 = new Phaser.Math.Vector2(300, 100);
@@ -422,6 +426,7 @@ function create() {
     var spark0 = self.add.particles('spark0');
     var spark1 = self.add.particles('spark1');
     spark0.setDepth(20);
+    let part = [];
 
     for (var i = 0; i < points.length; i++)
     {
@@ -431,9 +436,9 @@ function create() {
 
         var angle = Phaser.Math.RadToDeg(Phaser.Math.Angle.BetweenPoints(p, tempVec));
 
-        self.part[i] = (i % 2 === 0) ? spark0 : spark1;
+        part[i] = (i % 2 === 0) ? spark0 : spark1;
 
-        self.part[i].createEmitter({
+        part[i].createEmitter({
             x: tempVec.x,
             y: tempVec.y,
             angle: angle,
@@ -445,12 +450,10 @@ function create() {
         });
     }
 
-    self.win[1] = self.add.text(575, 400, 'El guanyador es '+data.winner[1]+'!! Enorhabona!').setOrigin(1, 0);
+    win[1] = self.add.text(575, 400, 'El guanyador es '+data.winner[1]+'!! Enorhabona!').setOrigin(1, 0);
 
     var button = self.add.text(530, 450, 'Toca la imatge per continuar').setOrigin(1, 0);
-    self.win[0].on('pointerdown', function (event) {
-        location.reload();
-    });
+
 
     });
   
