@@ -118,34 +118,40 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
  * startcounter: start counter
  * **/
 function startcounter(io, codi) {
+  console.log('counter start');
       // If else, start set interval turn over 60000 ms
-      partides[codi].contador = setInterval(turnover, 6000, [io, codi]);
+      partides[codi].contador = setInterval(turnover, 10000,io, codi);
+      io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
+      io.to(codi).emit('counterfrontend');
 }
 
 /**
  * nextturn: next turn
  * **/
 function nextturn(io, codi) {
-      console.log(partides[codi].torn);
-      console.log(partides[codi].jugadors.length);
-
-      if (partides[codi].torn < partides[codi].jugadors.length - 1) {
-        partides[codi].torn++;
-      } else {
-        partides[codi].torn = 0;
-      }
-      io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
-      io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
-      io.to(codi).emit('counterfrontend');
+  // If torn game is less to length players array less 1, increment torn to 1
+  if (partides[codi].torn < partides[codi].jugadors.length - 1) {
+    partides[codi].torn++;
+  } else {
+    // If else, torn is equals to 0
+    partides[codi].torn = 0;
+  }
+  io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
+  io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
+  io.to(codi).emit('counterfrontend');
+  startcounter(io,codi);
 }
 
 /**
  * turnover: player turn over
  * **/
 function turnover(io, codi) {
+  console.log('turnover function');
+
   // If game is not equals to undefined, clear interval
   if (partides[codi] !== undefined) {
-    clearInterval(partides[codi].contador);
+    console.log('turnoverconditional')
+    console.log(clearInterval(partides[codi].contador));
     io.to(codi).emit('chat message', partides[codi].jugadors[partides[codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
     nextturn(io, codi);
   }
@@ -306,10 +312,13 @@ function controller(io) {
             });
           }
 
-          io.to(partides[socket.codi].jugadors[partides[socket.codi].torn][0]).emit('turnfrontend');
+
+          console.log('satrtcounter');
+          startcounter( io, socket.codi);
+          
         }
-        io.to(socket.codi).emit('counterfrontend');
-        delete publicrooms[socket.codi];
+        //io.to(socket.codi).emit('counterfrontend');
+        //delete publicrooms[socket.codi];
       }
     
     });
