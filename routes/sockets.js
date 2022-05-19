@@ -119,12 +119,25 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
  * **/
 function startcounter(io, codi) {
   // If else, start set interval turn over 60000 ms
-  console.log("startcounter")
-  console.log(partides[codi].contador)
-  partides[codi].contador = setInterval(turnover, 60000, io, codi);
-  console.log(partides[codi].contador)
+  ////console.log("startcounter")
+  ////console.log(partides[codi].contador)
+  partides[codi].contador = setInterval(comparator, 20000, io, codi);
+  ////console.log(partides[codi].contador)
 }
-
+function comparator(io, codi) {
+  ////console.log("compare");
+      ////console.log(partides[codi].contador)
+      var compare;
+      compare = partides[codi].jugadors[partides[codi].torn].cards.filter(element => allowedCards.includes(element)).length;
+      console.log(partides[codi].jugadors[partides[codi].torn][1])
+      console.log(allowedCards)
+      console.log(compare)
+      if (compare == 0) {
+        console.log("manual")
+        startcounter(io, codi);
+        turnover(io, codi);
+      }
+}
 /**
  * nextturn: next turn
  * **/
@@ -142,11 +155,11 @@ function nextturn(io, codi) {
  * turnover: player turn over
  * **/
 function turnover(io, codi) {
-  console.log("turnover")
-  console.log(partides[codi].contador)
+  //console.log("turnover")
+  //console.log(partides[codi].contador)
   if (partides[codi] !== undefined) {
-    console.log("turnover in")
-    console.log(partides[codi].contador)
+    //console.log("turnover in")
+    //console.log(partides[codi].contador)
     clearInterval(partides[codi].contador);
     io.to(codi).emit('chat message', partides[codi].jugadors[partides[codi].torn][1] + ' ha esgotat el seu torn', 'sistema');
     nextturn(io, codi);
@@ -319,9 +332,9 @@ function controller(io) {
     });
 
     socket.on("turn", function (card) {
-      console.log("Turn")
-      //console.log(socket.codi)
-      //console.log(partides[socket.codi])
+      //console.log("Turn")
+      ////console.log(socket.codi)
+      ////console.log(partides[socket.codi])
       if (partides[socket.codi].jugadors[partides[socket.codi].torn][0] != socket.id) {
         socket.emit('error', 'No es el teu torn');
       } else {
@@ -349,7 +362,7 @@ function controller(io) {
           if (partides[socket.codi] !== undefined) {
             clearInterval(partides[socket.codi].contador);
           }
-          //console.log(partides[codi].contador)
+          ////console.log(partides[codi].contador)
           startcounter(io, socket.codi);
           turnover(io, socket.codi);
           io.to(socket.codi).emit('chat message', 'torn de ' + partides[socket.codi].jugadors[partides[socket.codi].torn][1], 'sistema');
@@ -456,17 +469,9 @@ function controller(io) {
 
 
     socket.on('compare', () => {
-      //console.log("compare");
-      //console.log(partides[codi].contador)
-      var compare;
-      compare = partides[socket.codi].jugadors[partides[socket.codi].torn].cards.filter(element => allowedCards.includes(element)).length;
-      //console.log(compare)
-      if (compare == 0) {
-        console.log("manual")
-        startcounter(io, socket.codi);
-        turnover(io, socket.codi);
-      }
+      comparator(io, socket.codi);
     });
+
     // Defined a event websocket 'disconnect' in server
     socket.on('disconnect', () => {
       if (typeof socket.codi !== 'undefined') {
