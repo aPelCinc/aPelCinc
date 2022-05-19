@@ -118,8 +118,9 @@ function checkCenterCards(typeCard, arrayCenterCards, quo) {
  * startcounter: start counter
  * **/
 function startcounter(io, codi) {
+  console.log('counter start');
       // If else, start set interval turn over 60000 ms
-      partides[codi].contador = setInterval(turnover, 6000,io, codi);
+      partides[codi].contador = setInterval(turnover, 10000,io, codi);
       io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
       io.to(codi).emit('counterfrontend');
 }
@@ -138,7 +139,7 @@ function nextturn(io, codi) {
   io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('turnfrontend');
   io.to(codi).emit('chat message', 'torn de ' + partides[codi].jugadors[partides[codi].torn][1], 'sistema');
   io.to(codi).emit('counterfrontend');
-  startcounter(false,io,codi);
+  startcounter(io,codi);
 }
 
 /**
@@ -313,7 +314,7 @@ function controller(io) {
 
 
           console.log('satrtcounter');
-          startcounter(false, io, socket.codi);
+          startcounter( io, socket.codi);
           
         }
         //io.to(socket.codi).emit('counterfrontend');
