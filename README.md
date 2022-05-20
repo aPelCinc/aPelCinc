@@ -1,6 +1,6 @@
 # aPelCinc
 
-MIT License
+![MIT License](https://github.com/aPelCinc/aPelCinc/blob/develop/LICENSE)
 
 Copyright (c) 2022 Cinquillo 3
 
