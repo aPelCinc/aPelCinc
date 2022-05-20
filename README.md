@@ -1,5 +1,9 @@
 # aPelCinc
 
+MIT License
+
+Copyright (c) 2022 Cinquillo 3
+
 # Authors
 
 - Àlex Aguilera
