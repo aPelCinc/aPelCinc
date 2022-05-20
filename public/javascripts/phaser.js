@@ -238,6 +238,46 @@ function create() {
         temporitzador[1] = setInterval(contador, 1000);
     });
 
+    socket.on('passedturn', function (data) {
+        var y = $('#tablegame').height();
+        var x = $('#tablegame').width();
+        var pass = [];
+        if (window.innerWidth < 950) {
+            pass[0] = self.add.graphics();
+            pass[0].setDepth(13);
+            pass[0].lineStyle(150, 000000, 1);
+            pass[0].beginPath();
+            pass[0].moveTo(0, y / 3);
+            pass[0].lineTo(x * 2, y / 3);
+            pass[0].closePath();
+            pass[0].strokePath();
+        } else {
+            pass[0] = self.add.graphics();
+            pass[0].setDepth(13);
+            pass[0].lineStyle(150, 000000, 1);
+            pass[0].beginPath();
+            pass[0].moveTo(0, y / 3);
+            pass[0].lineTo(x, y / 3);
+            pass[0].closePath();
+            pass[0].strokePath();
+        }
+
+        var style = { font: "bold 48px Arial", fill: "#fff", align: "center" };
+
+        if (window.innerWidth < 950) {
+            pass[1] = self.add.text(x * 1.3, y / 3, "No pots tirar, es passa el torn", style).setOrigin(1, 0.5);
+        } else {
+            pass[1] = self.add.text(x / 1.6, y / 3, "No pots tirar, es passa el torn", style).setOrigin(1, 0.5);
+        }
+        pass[1].setDepth(13);
+        pass[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        setTimeout(function(){ 
+            pass[0].destroy();
+            pass[1].destroy();
+         }, 6000)
+    });
+
+
     socket.on('turnfrontend', function (data) {
         var y = $('#tablegame').height();
         var x = $('#tablegame').width();
@@ -271,7 +311,10 @@ function create() {
         }
         torn[1].setDepth(13);
         torn[1].setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
-        torn[2] = setInterval(quitturn, 2000);
+        setTimeout(function(){ 
+            torn[0].destroy();
+            torn[1].destroy();
+         }, 2000)
     });
 
     var cardtext = [];

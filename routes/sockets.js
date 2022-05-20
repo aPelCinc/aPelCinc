@@ -132,6 +132,7 @@ function comparator(io, codi) {
 
     if (compare == 0) {
       startcounter(io, codi);
+      io.to(partides[codi].jugadors[partides[codi].torn][0]).emit('passedturn');
       turnover(io, codi);
     }
   }
