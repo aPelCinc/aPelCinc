@@ -418,8 +418,8 @@ function create() {
         for (let i = 0; i < self.centercardscopes.length; i++) {
             self.centercardscopes[i].destroy();
         }
-        var y = 250;
-        var x = 400;
+        var y = $("#tablegame").height() / 2.7;
+        var x = $("#tablegame").width() / 3;
 
         let win = [];
         win[0] = self.add.sprite(x, y, 'win').setInteractive();
