@@ -1,5 +1,9 @@
 # aPelCinc
 
+MIT License
+
+Copyright (c) 2022 Cinquillo 3
+
 # Authors
 
 - Àlex Aguilera
@@ -24,4 +28,8 @@ And to start the Server you need to run it.
 $ npm start o ./run.sh
 ```
 
-And to access the application, in the browser we access the address (192.168.0.10:8080).
+And to access the application, in the browser we access the address ({SERVER_IP}:8080).
+
+{SERVER_IP} => The IP address of your Server.
+
+![imatge](https://user-images.githubusercontent.com/83291394/169581247-d5065750-38bb-4c62-ac29-842a6dd18435.png)
