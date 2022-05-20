@@ -521,7 +521,7 @@ function create() {
             });
         }
 
-        win[1] = self.add.text(575, 400, 'El guanyador es ' + data.winner[1] + '!! Enorhabona!').setOrigin(1, 0);
+        win[1] = self.add.text(575, 400, 'El guanyador es ' + data.winner[1] + '!! Enhorabona!').setOrigin(1, 0);
 
         var button = self.add.text(530, 450, 'Toca la imatge per continuar').setOrigin(1, 0);
         win[0].on('pointerdown', function (event) {
