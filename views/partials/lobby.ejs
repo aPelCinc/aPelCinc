@@ -1,0 +1,40 @@
+<section id="lobby" class="w-full overflow-hidden text-white hidden">
+  <img class="absolute md:rotate-[120deg] rotate-[120deg] z-10 md:w-[20%] w-[30%] left-[-7%] top-[-10%] md:left-[-3%] md:top-[-15%]" src="./images/copa1.png" alt="">
+  <img class="absolute md:rotate-[120deg] rotate-[120deg] md:w-[20%] w-[30%] left-[-11%] top-[0%] md:left-[-7%] md:top-[0%]" src="./images/espasa1.png" alt="">
+    <div class="w-full h-screen bg-[#00000070]">
+      <div class="h-1/5 flex justify-center items-end">
+        <h1 class="text-4xl md:text-7xl font-bold text-center pb-5">Cinquillo</h1>
+      </div>
+    <div class=" md:flex justify-center items-center md:space-x-16 md:pl-48 md:mx-0 md:h-2/3 h-2/5">
+
+      <div class="md:w-1/2 w-4/5 h-full  bg-[#5fc76b2b] p-10 rounded-3xl md:mx-0 mx-auto">
+        <section class="h-4/5">
+          <button class="float-right" onclick="leaveroom()"><i class="fa-solid fa-arrow-right-from-bracket text-white text-2xl"></i></button>
+          <p class="text-center md:text-3xl text-2xl font-bold"><span id="nomtaula"></span> #<span id="coditaula"></span></p>
+
+          <div id="playerlist" class="md:pt-10 pt-2 md:text-2xl text-xl columns-2 md:columns-1">
+
+          </div>
+
+
+        </section>
+        <div class="w-full flex justify-center">
+
+          <button id="startgame" onclick="" class="md:text-3xl text-2xl py-2 px-10 rounded bg-gradient-to-b from-[#53565B] to-[#262D3D] my-2 mx-auto">INICIAR</button>
+          <p id="noadmin" class="md:text-3xl text-2xl py-2 px-10 my-2 mx-auto hidden" >esperant l'amfitrió...</p>
+        </div>
+
+      </div>
+      <div class="md:w-3/12 w-4/5 md:h-full h-[90%]  bg-[#5fc76b2b] md:p-10 p-2 rounded-3xl mx-auto md:mt-0 mt-5 md:mb-none mb-2">
+        <section class="h-[85%]">
+          <p class="text-center md:text-3xl text-2xl font-bold">CHAT</p>
+          <ul id="messages" class="messages p-2 flex flex-col justify-end overflow-scroll overflow-x-auto h-full"></ul>
+          <!-- <textarea id="messages" class="messages resize-none rounded-md w-full h-full bg-[#5fc76b2b] p-2 text-white" disabled></textarea> -->
+            <div class="mt-3">
+              <input id="input" type="text" placeholder="Enviar missatge ..." class="input w-full bg-[#5fc76b2b] p-2 text-white">
+            </div>
+        </section>        
+      </div>
+  </div>
+  </div>
+  </section>
