@@ -2,6 +2,20 @@
 // Save input message value and list send messages
 let messages = document.querySelectorAll('.messages');
 let input = document.querySelectorAll('.input');
+let btnSelectEmoji = document.querySelectorAll('.btnSelectEmoji');
+
+btnSelectEmoji.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.getElementById('selectEmoji').classList.toggle('hidden');
+    });
+});
+
+input.forEach(function (item) {
+    // Call click event
+    document.querySelector('emoji-picker').addEventListener('emoji-click', event => item.value += event.detail.unicode);
+});
 
 input.forEach(function (item) {
     // Call change event

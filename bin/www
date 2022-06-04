@@ -22,9 +22,11 @@ app.set('port', port);
  var server = http.createServer(app);
 
  var io = require('socket.io')(server);
+ var emoji = require("node-emoji");
+
  var socketsController = require('../routes/sockets');
  
- io = socketsController(io);
+ io = socketsController(io, emoji);
 
 
 /**
