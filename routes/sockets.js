@@ -164,12 +164,16 @@ function turnover(io, codi) {
   }
 }
 
+var onMissing = function (name) {
+  return name;
+};
+
 /**
  * controller: Controller the Web Sockets 
  * 
  * @param io web global socket
  * **/
-function controller(io) {
+function controller(io, emoji) {
   // io is a web global socket
   // socket is a web local socket
 
@@ -178,6 +182,8 @@ function controller(io) {
 
     // Defined a event websocket 'chat message' in server
     socket.on('chat message', (msg, codi) => {
+      msg = emoji.emojify(msg, onMissing);
+
       // send var msg value call event websocket 'chat message' in client
       io.to(partides[codi].id).emit('chat message', msg, socket.name);
     });
@@ -266,7 +272,7 @@ function controller(io) {
     // Defined a event websocket 'startgame' in server
     socket.on("startgame", function (data) {
       if (partides[socket.codi].jugadors.length == 1) {
-        socket.emit('error', 'No hay suficientes jugadores');
+        socket.emit('error', 'No hi ha prou jugadors');
       } else {
         if (partides[socket.codi].jugadors[0][0] != socket.id) {
           socket.emit('error', 'No tens permisos per iniciar la partida');
